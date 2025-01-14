@@ -1,0 +1,282 @@
+[
+  {
+    "model": "Hector Diesel",
+    "entryAge": "0-30 days",
+    "twelveMonthPerhundredK_KMS": 19864,
+    "twentyFourMonthPerhundredK_KMS": 32831,
+    "twelveMonthPerUnlimited_KMS": 23254,
+    "twentyFourMonthPerUnlimited_KMS": 36220
+  },
+  {
+    "model": "Hector Diesel",
+    "entryAge": "31-180 days",
+    "twelveMonthPerhundredK_KMS": 21305,
+    "twentyFourMonthPerhundredK_KMS": 35458,
+    "twelveMonthPerUnlimited_KMS": 25034,
+    "twentyFourMonthPerUnlimited_KMS": 39186
+  },
+  {
+    "model": "Hector Diesel",
+    "entryAge": "181-365 days",
+    "twelveMonthPerhundredK_KMS": 22068,
+    "twentyFourMonthPerhundredK_KMS": 36814,
+    "twelveMonthPerUnlimited_KMS": 25966,
+    "twentyFourMonthPerUnlimited_KMS": 40712
+  },
+  {
+    "model": "Hector Diesel",
+    "entryAge": "366-700 days",
+    "twelveMonthPerhundredK_KMS": 25068,
+    "twentyFourMonthPerhundredK_KMS": 42314,
+    "twelveMonthPerUnlimited_KMS": 29666,
+    "twentyFourMonthPerUnlimited_KMS": 46912
+  },
+  {
+    "model": "Hector Diesel",
+    "entryAge": "731-1065 days",
+    "twelveMonthPerhundredK_KMS": 28868,
+    "twentyFourMonthPerhundredK_KMS": 49114,
+    "twelveMonthPerUnlimited_KMS": 34366,
+    "twentyFourMonthPerUnlimited_KMS": 54612
+  },
+  {
+    "model": "Hector Petrol",
+    "entryAge": "0-30 days",
+    "twelveMonthPerhundredK_KMS": 19017,
+    "twentyFourMonthPerhundredK_KMS": 30288,
+    "twelveMonthPerUnlimited_KMS": 22407,
+    "twentyFourMonthPerUnlimited_KMS": 33678
+  },
+  {
+    "model": "Hector Petrol",
+    "entryAge": "31-180 days",
+    "twelveMonthPerhundredK_KMS": 20373,
+    "twentyFourMonthPerhundredK_KMS": 32661,
+    "twelveMonthPerUnlimited_KMS": 24102,
+    "twentyFourMonthPerUnlimited_KMS": 36390
+  },
+  {
+    "model": "Hector Petrol",
+    "entryAge": "181-365 days",
+    "twelveMonthPerhundredK_KMS": 21051,
+    "twentyFourMonthPerhundredK_KMS": 33847,
+    "twelveMonthPerUnlimited_KMS": 24949,
+    "twentyFourMonthPerUnlimited_KMS": 37746
+  },
+  {
+    "model": "Hector Petrol",
+    "entryAge": "366-700 days",
+    "twelveMonthPerhundredK_KMS": 23851,
+    "twentyFourMonthPerhundredK_KMS": 38847,
+    "twelveMonthPerUnlimited_KMS": 28449,
+    "twentyFourMonthPerUnlimited_KMS": 43346
+  },
+  {
+    "model": "Hector Petrol",
+    "entryAge": "731-1065 days",
+    "twelveMonthPerhundredK_KMS": 27351,
+    "twentyFourMonthPerhundredK_KMS": 45047,
+    "twelveMonthPerUnlimited_KMS": 32849,
+    "twentyFourMonthPerUnlimited_KMS": 50446
+  },
+  {
+    "model": "Astor - Manual/CVT",
+    "entryAge": "0-30 days",
+    "twelveMonthPerhundredK_KMS": 15034,
+    "twentyFourMonthPerhundredK_KMS": 20034,
+    "twelveMonthPerUnlimited_KMS": 18424,
+    "twentyFourMonthPerUnlimited_KMS": 23424
+  },
+  {
+    "model": "Astor - Manual/CVT",
+    "entryAge": "31-180 days",
+    "twelveMonthPerhundredK_KMS": 16051,
+    "twentyFourMonthPerhundredK_KMS": 21475,
+    "twelveMonthPerUnlimited_KMS": 19780,
+    "twentyFourMonthPerUnlimited_KMS": 25203
+  },
+  {
+    "model": "Astor - Manual/CVT",
+    "entryAge": "181-365 days",
+    "twelveMonthPerhundredK_KMS": 16559,
+    "twentyFourMonthPerhundredK_KMS": 22237,
+    "twelveMonthPerUnlimited_KMS": 20458,
+    "twentyFourMonthPerUnlimited_KMS": 26136
+  },
+  {
+    "model": "Astor - Manual/CVT",
+    "entryAge": "366-700 days",
+    "twelveMonthPerhundredK_KMS": 18659,
+    "twentyFourMonthPerhundredK_KMS": 25237,
+    "twelveMonthPerUnlimited_KMS": 23258,
+    "twentyFourMonthPerUnlimited_KMS": 29836
+  },
+  {
+    "model": "Astor - Manual/CVT",
+    "entryAge": "731-1065 days",
+    "twelveMonthPerhundredK_KMS": 21359,
+    "twentyFourMonthPerhundredK_KMS": 29037,
+    "twelveMonthPerUnlimited_KMS": 26758,
+    "twentyFourMonthPerUnlimited_KMS": 34536
+  },
+  {
+    "model": "Astor - Automatic",
+    "entryAge": "0-30 days",
+    "twelveMonthPerhundredK_KMS": 15881,
+    "twentyFourMonthPerhundredK_KMS": 20881,
+    "twelveMonthPerUnlimited_KMS": 19271,
+    "twentyFourMonthPerUnlimited_KMS": 23424
+  },
+  {
+    "model": "Astor - Automatic",
+    "entryAge": "31-180 days",
+    "twelveMonthPerhundredK_KMS": 16983,
+    "twentyFourMonthPerhundredK_KMS": 22407,
+    "twelveMonthPerUnlimited_KMS": 20712,
+    "twentyFourMonthPerUnlimited_KMS": 25203
+  },
+  {
+    "model": "Astor - Automatic",
+    "entryAge": "181-365 days",
+    "twelveMonthPerhundredK_KMS": 17576,
+    "twentyFourMonthPerhundredK_KMS": 23169,
+    "twelveMonthPerUnlimited_KMS": 21475,
+    "twentyFourMonthPerUnlimited_KMS": 26136
+  },
+  {
+    "model": "Astor - Automatic",
+    "entryAge": "366-700 days",
+    "twelveMonthPerhundredK_KMS": 19876,
+    "twentyFourMonthPerhundredK_KMS": 26269,
+    "twelveMonthPerUnlimited_KMS": 24475,
+    "twentyFourMonthPerUnlimited_KMS": 29836
+  },
+  {
+    "model": "Astor - Automatic",
+    "entryAge": "731-1065 days",
+    "twelveMonthPerhundredK_KMS": 22776,
+    "twentyFourMonthPerhundredK_KMS": 30269,
+    "twelveMonthPerUnlimited_KMS": 28275,
+    "twentyFourMonthPerUnlimited_KMS": 34536
+  },
+  {
+    "model": "Gloster",
+    "entryAge": "0-30 days",
+    "twelveMonthPerhundredK_KMS": 38169,
+    "twentyFourMonthPerhundredK_KMS": 60719,
+    "twelveMonthPerUnlimited_KMS": 39864,
+    "twentyFourMonthPerUnlimited_KMS": 67414
+  },
+  {
+    "model": "Gloster",
+    "entryAge": "31-180 days",
+    "twelveMonthPerhundredK_KMS": 41475,
+    "twentyFourMonthPerhundredK_KMS": 66225,
+    "twelveMonthPerUnlimited_KMS": 43339,
+    "twentyFourMonthPerUnlimited_KMS": 73389
+  },
+  {
+    "model": "Gloster",
+    "entryAge": "181-365 days",
+    "twelveMonthPerhundredK_KMS": 43085,
+    "twentyFourMonthPerhundredK_KMS": 68835,
+    "twelveMonthPerUnlimited_KMS": 45034,
+    "twentyFourMonthPerUnlimited_KMS": 76484
+  },
+  {
+    "model": "Gloster",
+    "entryAge": "366-700 days",
+    "twelveMonthPerhundredK_KMS": 49885,
+    "twentyFourMonthPerhundredK_KMS": 81935,
+    "twelveMonthPerUnlimited_KMS": 52134,
+    "twentyFourMonthPerUnlimited_KMS": 91284
+  },
+  {
+    "model": "Gloster",
+    "entryAge": "731-1065 days",
+    "twelveMonthPerhundredK_KMS": 58385,
+    "twentyFourMonthPerhundredK_KMS": 98235,
+    "twelveMonthPerUnlimited_KMS": 61134,
+    "twentyFourMonthPerUnlimited_KMS": 109884
+  },
+  {
+    "model": "Comet EV",
+    "entryAge": "0-30 days",
+    "twelveMonthPerhundredK_KMS": 18254,
+    "twentyFourMonthPerhundredK_KMS": 32661,
+    "twelveMonthPerUnlimited_KMS": 19525,
+    "twentyFourMonthPerUnlimited_KMS": 34356
+  },
+  {
+    "model": "Comet EV",
+    "entryAge": "31-180 days",
+    "twelveMonthPerhundredK_KMS": 19610,
+    "twentyFourMonthPerhundredK_KMS": 35288,
+    "twelveMonthPerUnlimited_KMS": 21051,
+    "twentyFourMonthPerUnlimited_KMS": 37153
+  },
+  {
+    "model": "Comet EV",
+    "entryAge": "181-365 days",
+    "twelveMonthPerhundredK_KMS": 20288,
+    "twentyFourMonthPerhundredK_KMS": 36644,
+    "twelveMonthPerUnlimited_KMS": 21814,
+    "twentyFourMonthPerUnlimited_KMS": 38593
+  },
+  {
+    "model": "Comet EV",
+    "entryAge": "366-700 days",
+    "twelveMonthPerhundredK_KMS": 23088,
+    "twentyFourMonthPerhundredK_KMS": 42144,
+    "twelveMonthPerUnlimited_KMS": 24914,
+    "twentyFourMonthPerUnlimited_KMS": 44393
+  },
+  {
+    "model": "Comet EV",
+    "entryAge": "731-1065 days",
+    "twelveMonthPerhundredK_KMS": 26588,
+    "twentyFourMonthPerhundredK_KMS": 48944,
+    "twelveMonthPerUnlimited_KMS": 28714,
+    "twentyFourMonthPerUnlimited_KMS": 51693
+  },
+  {
+    "model": "ZSEV",
+    "entryAge": "0-30 days",
+    "twelveMonthPerhundredK_KMS": 22915,
+    "twentyFourMonthPerhundredK_KMS": 33932,
+    "twelveMonthPerUnlimited_KMS": 26305,
+    "twentyFourMonthPerUnlimited_KMS": 35627
+  },
+  {
+    "model": "ZSEV",
+    "entryAge": "31-180 days",
+    "twelveMonthPerhundredK_KMS": 24695,
+    "twentyFourMonthPerhundredK_KMS": 36644,
+    "twelveMonthPerUnlimited_KMS": 28424,
+    "twentyFourMonthPerUnlimited_KMS": 38508
+  },
+  {
+    "model": "ZSEV",
+    "entryAge": "181-365 days",
+    "twelveMonthPerhundredK_KMS": 25627,
+    "twentyFourMonthPerhundredK_KMS": 38000,
+    "twelveMonthPerUnlimited_KMS": 29525,
+    "twentyFourMonthPerUnlimited_KMS": 39949
+  },
+  {
+    "model": "ZSEV",
+    "entryAge": "366-700 days",
+    "twelveMonthPerhundredK_KMS": 29327,
+    "twentyFourMonthPerhundredK_KMS": 43600,
+    "twelveMonthPerUnlimited_KMS": 34025,
+    "twentyFourMonthPerUnlimited_KMS": 45949
+  },
+  {
+    "model": "ZSEV",
+    "entryAge": "731-1065 days",
+    "twelveMonthPerhundredK_KMS": 34027,
+    "twentyFourMonthPerhundredK_KMS": 50700,
+    "twelveMonthPerUnlimited_KMS": 39525,
+    "twentyFourMonthPerUnlimited_KMS": 53449
+  }
+]

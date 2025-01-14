@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tax Invoice</title>
+</head>
+<body style="font-family: 'Times New Roman', serif; font-size: 12px;">
+
+  <div style=" border: 1px solid black; padding: 36px;">
+    <div style="display: flex; flex-direction: row; align-items: start; gap: 20%; font-size: 11px;">
+      <img src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FInvoice%20logo%20360.png?alt=media&token=65bc5a9d-a94d-4f72-8dc7-aeeea0a7434f" alt="logo" style="width: 11%;">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <h2 style="margin: 0;">360 Car Protect India LLP</h2>
+    <h3 style="margin: 0;">3-4-138, A/Flat No. 501, Royal Elegance, Barkatpura, Hyderabad, Telangana</h3>
+    <h3 style="margin: 0;">TS-500027</h3>
+    <h3 style="margin: 0;">State Code: 36, GSTIN: 36AADFZ5034G1Z5</h3>
+    <h3 style="margin: 0;">PAN: AADFZ5034G</h3>
+  </div></div>
+
+  <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 10px;">
+    <tr>
+   
+      <td style=" width: 60%; border: 1px solid black; padding: 8px;">
+        <h2 style="font-size:14px ;">Tax Invoice </h2>
+       
+      </td>
+      
+      <th style=" border-collapse: collapse; width: 100%; text-align: left; ">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <th style="width: 50%; border:1px solid black ; padding: 5px; text-align: left;">Invoice Type:</th>
+            <td style="width: 50%; border: 1px solid black; padding: 5px;">360 Car Protect</td>
+          </tr>
+          <tr>
+            <th style="width: 50%; border:1px solid black ; padding: 5px; text-align: left;">Invoice Number</th>
+            <td style="width: 50%; border: 1px solid black; padding: 5px;"> <%= data.invoiceId %></td>
+          </tr>  <tr>
+            <th style="width: 50%; border:1px solid black ; padding: 5px; text-align: left;">Invoice Date</th>
+            <td style="width: 50%; border: 1px solid black; padding: 5px;"><%= date %></td>
+          </tr>
+        </table>
+      </th>
+       
+    </tr>
+    
+  </table>
+  <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 10px;">
+    <tr>
+      <td style="width: 33%; border: 1px solid black; padding: 8px;">
+        <b>Bill To:</b><br>
+        <%= data.billingDetail.address %>
+       <br>
+       <%= data.billingDetail.city %><br>
+       <%= data.billingDetail.state %><br>
+        State Code: <%= data.billingDetail.stateCode %><br>
+        GST Registration Type: <%= data.billingDetail.gstRegType %><br>
+        GSTIN: <%= data.billingDetail.gstInNumber %><br>
+        PAN: <%= data.billingDetail.pan %><br>
+        Contact No: <%= data.billingDetail.contact %>
+      </td>
+      <td style="width: 33%; border: 1px solid black; padding: 8px;">
+        <b>Place of Supply:</b><br>
+        <%= data.supplyDetails.address %>
+       <br>
+       <%= data.supplyDetails.city %><br>
+       <%= data.supplyDetails.state %><br>
+        State Code: <%= data.supplyDetails.stateCode %><br>
+        GST Registration Type: <%= data.supplyDetails.gstRegType %><br>
+        GSTIN: <%= data.supplyDetails.gstInNumber %><br>
+        PAN: <%= data.supplyDetails.pan %><br>
+        Contact No: <%= data.supplyDetails.contact %>
+      </td>
+      <td style="width: 33%; border: 1px solid black; padding: 8px;">
+        <b>Place of Delivery:</b><br>
+        <%= data.deliveryDetails.address %>
+       <br>
+       <%= data.deliveryDetails.city %><br>
+       <%= data.deliveryDetails.state %><br>
+        State Code: <%= data.deliveryDetails.stateCode %><br>
+        GST Registration Type: <%= data.deliveryDetails.gstRegType %><br>
+        GSTIN: <%= data.deliveryDetails.gstInNumber %><br>
+        PAN: <%= data.deliveryDetails.pan %><br>
+        Contact No: <%= data.deliveryDetails.contact %>
+      </td>
+    </tr>
+
+
+
+<table style="border-collapse: collapse;  font-size: 9px; ">
+    <tr>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">S.No</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2; word-wrap: break-word;">Description of Goods/Services</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;  word-wrap: break-word;">HSN/S AC Code</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Qty.</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Rate</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Total</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Discount</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;  word-wrap: break-word;">Taxable Value</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">CGST</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">SGST</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">IGST</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">UTGST</th>
+        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">CESS</th>
+
+
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">1</td>
+        <td style="border: 1px solid black; padding: 8px;  word-wrap: break-word;"><%= data.customerBillingDetails.description %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.hsnCode %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.quantity %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.rate %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.total %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.discount %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.taxValue %></td>
+        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
+        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
+        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
+        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
+        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
+        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
+        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
+        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
+        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
+        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
+
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;" colspan="8"></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cgstpercentage %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cgst %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.sgstpercentage %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.sgst %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.igstpercentage %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.igst %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.ugstpercentage %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.ugst %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cesspercentage %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cess %></td>
+
+
+        <tr>
+            <td style="border: 1px solid black; padding: 8px;" colspan="16"></td>
+            <th style="border: 1px solid black; padding: 8px; width: 12%;">Total Invoice Amount (INR)</th>
+         
+            <td style="border: 1px solid black; padding: 8px;  word-wrap: break-word;">₹<%= data.customerBillingDetails.totalinvoiceamount %></td>
+        </tr>
+    </tr>
+  </table>
+</table>
+
+<table style="border-collapse: collapse; width: 100%;  margin-top: 20px; font-size: 10px;">
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">Veh No:</td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.vehnumber %></td>
+        <td style="border: none; padding: 8px;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">VIN NO:</td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.vinnumber %></td>
+        <td style="border: none; padding: 8px;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">Engine No:</td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.enginenumber %></td>
+        <td style="border: none; padding: 8px;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">Model:</td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.vehiclemodel %></td>
+        <td style="border: none; padding: 8px;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">Total Invoice Price Value (in figure):</td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.totalpriceinfigure %></td>
+        <td style="border: none; padding: 8px;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">Whether Reverse Charge Applicable (Y/N):</td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.reversechargeapplication %></td>
+        <td style="border: none; padding: 8px;"></td>
+    </tr>
+</table>
+
+<p style=" font-size: 10px;">Declaration/Terms and Conditions:</p>
+<p style=" font-size: 10px;">Above package can be availed only at all branches of Silver Star (Hyderabad, Vizag, Pune, Kolhapur, Nashik, Aurangabad)</p>
+
+<table style="border-collapse: collapse; width: 100%;  margin-top: 20px; font-size: 10px;">
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">Warranty Validity:</td>
+        <td style="border: 1px solid black; padding: 8px;">Start Date</td>
+        <td style="border: 1px solid black; padding: 8px;">End Date</td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;"></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.warrantystartdate %></td>
+        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.warrantyenddate %></td>
+    </tr>
+</table>
+
+<p style="font-size: 10px;"></p>">Certified that the particulars given above are true and correct</p>
+<p style="font-size: 10px;">All Disputes Subject to Jurisdiction of Hyderabad</p>
+
+<p style="text-align: right;  font-size: 10px;">For 360 Car Protect India LLP</p>
+<p style="text-align: right;  font-size: 10px;">Authorized Signatory</p>
+
+ 
+
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+[{
+  "_id": {
+    "$oid": "66e5366dc305461e7008b5fe"
+  },
+  "customerName": "growel Formulation",
+  "panNumber": "AAACG7485L",
+  "address": "dfrht",
+  "email": "vinay.p@silver-star.co.in",
+  "contactNumber": "7331100790",
+  "customerGstNumber": "36AABCM1789L1Z1",
+  "vehicleManufacturer": "Mercedes-Benz",
+  "vehicleModel": "S 580 4M CBU",
+  "vehicleIdNumber": "W1K6X7GB7RL004134",
+  "vehicleEngineNumber": "17698030183727",
+  "vehicleRegNumber": "TG08GO567",
+  "exshowroomPrice": "27100000",
+  "fuelType": "petrol",
+  "typeOfPackage": "prevPlusFifthYear",
+  "vehiclePurchaseDate": "2024-07-05",
+  "odometerReading": "788",
+  "coolingOffPeriod": "30 days",
+  "extWarrantyStartDate": "05-07-2027",
+  "extWarrantyEndDate": "05-07-2029",
+  "product": "360 Car Protect Warranty",
+  "productPrice": 695500,
+  "hypothecation": "",
+  "gst": 125190,
+  "totalPrice": 820690,
+  "price": 695500,
+  "variant": "",
+  "transactionId": "T2409132036533105963480",
+  "userId": {
+    "$oid": "66e53496c305461e7008b5f1"
+  },
+  "policyStatus": "approved",
+  "isCancelReq": "approvedReq",
+  "isDisabled": true,
+  "approvedAt": {
+    "$date": "2024-09-14T07:09:34.354Z"
+  },
+  "createdAt": {
+    "$date": "2024-09-14T07:08:29.974Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-14T07:15:09.254Z"
+  },
+  "__v": 0,
+  "policyId": "360-RG-2024-0011",
+  "disabledAt": {
+    "$date": "2024-10-14T07:09:34.354Z"
+  }
+}]

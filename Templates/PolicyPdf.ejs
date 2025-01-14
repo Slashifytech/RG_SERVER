@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy Document</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      color: #333;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    h1 {
+      color: #0056b3;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .text-align {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .list-outside {
+      list-style-position: outside;
+      font-size: 13px;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div
+      style="display: flex; flex-direction: row; align-items: center; margin: 20px; justify-content: center; gap: 25px;">
+
+
+
+      <h1
+        style="font-size: 16px; font-weight: bold; color: #2c3e50; text-align: center; margin-bottom: 20px; border: 3px solid black; padding: 20px; margin-left: 30px;">
+        Welcome to 360 Car Protect Extended Warranty
+      </h1>
+
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2F360%20CAR%20PROTECT%20LOGO.png?alt=media&token=d2c749aa-abf0-4459-a8c1-384cef9f8f90"
+        alt="img" style="width: 12%;">
+    </div>
+    <div>
+      <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Dear Customer,</p>
+      <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">
+        Congratulations &amp; thank you for choosing to protect your Vehicle
+        with the <span style=" font-weight: bold;">360 Car Protect Extended Warranty</span>.
+      </p>
+      <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">
+        You can now enjoy the benefits of <span style=" font-weight: bold;">360 Car Protect Extended Warranty</span>,
+        as per the terms &amp; conditions set out in Annexure A.
+      </p>
+      <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">
+        We assure you pleasant memories &amp; happy driving with your favorite Vehicle.
+        We request you to keep this document and its Annexures carefully as they would
+        be required to be produced at the time of availing the <span style=" font-weight: bold;">360 Car Protect
+          Extended Warranty</span>.
+      </p>
+      <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Wish you happy &amp; safe driving.</p>
+    </div>
+    <div style="text-align: right; padding-top: 20px; margin-top: 90px;">
+      <p style="font-size: 12px; font-weight: bold; margin-bottom: 10px;">_________________________</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">(Stamp &amp; Signature)</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">For 360 Car Protect India LLP</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">Name of Signatory: [__]</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">Location: [__]</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">Date: [__]</p>
+    </div>
+
+    <p
+      style="border: 1px solid black;  font-size: 12px; padding: 20px; margin-top: 230px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-style: italic;">
+      <span style="font-weight: bold;">Note:</span> 360 Car Protect India LLP is offering the 360 Car Protect Extended
+      Warranty. 360 Car Protect India LLP has engaged the services of Raam Autobahn India Private Limited for the
+      limited purpose of marketing and selling the 360 Car Protect Extended Warranty to the Customers.
+    </p>
+  </div>
+
+
+  <div class="container" style="padding-top: 5%;">
+    <div
+      style="text-align: center; font-weight: bold; font-size: 14px; margin-bottom: 10px; text-decoration: underline;">
+      360 CAR PROTECT EXTENDED WARRANTY CERTIFICATE
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 10px;">
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">Name of the Customer: <%= data.customerName %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px;">Certificate No: <%= data.policyId %>
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">Mobile No: <%= data.contactNumber %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px;">Certificate issue date: <%= date %>
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">Customer Address: <%= data.address %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px;">
+          Cooling-off Period: <%= data.coolingOffPeriod %> _____ (30 days after the 360 Car Protect Extended Warranty
+            Start Date)
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">GSTIN Number (customer): <%= data.customerGstNumber %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px;">Vehicle Manufacturer: <%= data.vehicleManufacturer %>
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">Vehicle: <%= data.vehicleModel %>
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">Fuel Type: <%= data.fuelType %>
+        </td>
+
+        <td style="border: 1px solid black; padding: 10px;">
+          <b style="text-decoration: underline;">360 Car Protect Extended Warranty</b> <br>
+          Start Date: <%= data.extWarrantyStartDate %> <br />
+            End Date: <%= data.extWarrantyEndDate %>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 10px; font-size: 10px;">
+      <tr>
+        <th style="border: 1px solid black; padding: 10px; text-align: center;" colspan="2">MW Details :
+          <!-- <span style="font-weight: 200;">fhksjdfhs</span> -->
+        </th>
+
+
+
+        <th style="border: 1px solid black; padding: 10px; text-align: center;" colspan="2">Odometer Reading: <span
+            style="font-weight: 200;">
+            <%= data.odometerReading %>
+          </span></th>
+
+        <th style="border: 1px solid black; padding: 10px; text-align: center;">Manufacturing Year: <span
+            style="font-weight: 200;">
+            <%= data.manufacturingYear %>
+          </span>
+        </th>
+      </tr>
+      <tr>
+        <th style="border: 1px solid black; padding: 10px; text-align: center;">Vehicle Purchase Date: </th>
+        <th style="border: 1px solid black; padding: 10px; text-align: center;">Vehicle First Registration Date</th>
+        <th style="border: 1px solid black; padding: 10px; text-align: center;">Vehicle Registration No.</th>
+        <th style="border: 1px solid black; padding: 10px; text-align: center;">Model/ Sub Model</th>
+        <th style="border: 1px solid black; padding: 10px; text-align: center;">Vehicle Identification No.</th>
+        <th style="border: 1px solid black; padding: 10px; text-align: center;">Ex-Showroom Price</th>
+      </tr>
+      <tr>
+        <td style="border: 1px solid black; padding: 10px; text-align: center;">
+          <%= data.vehiclePurchaseDate %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px; text-align: center;">
+          <%= data.vehicleFirstRegDate %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px; text-align: center;">
+          <%= data.vehicleRegNumber %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px; text-align: center;">
+          <%= data.vehicleModel %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px; text-align: center;">
+          <%= data.vehicleIdNumber %>
+        </td>
+        <td style="border: 1px solid black; padding: 10px; text-align: center;">
+          <%= data.exshowroomPrice %>
+        </td>
+      </tr>
+    </table>
+
+    <h3 style="text-align: center; margin-top: 60px; font-weight: bold; font-size: 10.10px; ">Price Schedule</h3>
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 10px; font-size: 10px;">
+      <tr>
+        <th style="width: 50%; border: 1px solid black; padding: 10px; text-align: left;">Product :
+        </th>
+        <td style="width: 50%; border: 1px solid black; padding: 10px;">360 Car Protect</td>
+      </tr>
+      <tr>
+        <th style="width: 50%; border: 1px solid black; padding: 10px; text-align: left;">Product Price</th>
+        <td style="width: 50%; border: 1px solid black; padding: 10px;">
+          <%= data.productPrice %>
+        </td>
+      </tr>
+      <tr>
+        <th style="width: 50%; border: 1px solid black; padding: 10px; text-align: left;">CGST (9.00%)</th>
+        <td style="width: 50%; border: 1px solid black; padding: 10px;">
+          <%= data.cgst %>
+        </td>
+      </tr>
+      <tr>
+        <th style="width: 50%; border: 1px solid black; padding: 10px; text-align: left;">SGST (9.00%)</th>
+        <td style="width: 50%; border: 1px solid black; padding: 10px;">
+          <%= data.sgst %>
+        </td>
+      </tr>
+      <tr>
+        <th style="width: 50%; border: 1px solid black; padding: 10px; text-align: left;">IGST (18.00%)</th>
+        <td style="width: 50%; border: 1px solid black; padding: 10px;">
+          <%= data.gst %>
+        </td>
+      </tr>
+      <tr>
+        <th style="width: 50%; border: 1px solid black; padding: 10px; text-align: left;">
+          Grand Total Price (Inc. Tax)(Rs.)
+        </th>
+        <td style="width: 50%; border: 1px solid black; padding: 10px;">
+          <%= data.totalPrice %>
+        </td>
+      </tr>
+      <tr>
+        <th style="width: 50%; border: 1px solid black; padding: 10px; text-align: left;">Price in words</th>
+        <td style="width: 50%; border: 1px solid black; padding: 10px;">
+          <%= data.totalPriceInWords %>
+        </td>
+      </tr>
+    </table>
+
+    <div style="text-align: right; padding-top: 20px; margin-top: 90px;">
+      <p style="font-size: 12px; font-weight: bold; margin-bottom: 10px;">_________________________</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">(Stamp &amp; Signature)</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">For 360 Car Protect India LLP</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">Name of Signatory: [__]</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">Location: [__]</p>
+      <p style="font-size: 12px; margin-bottom: 5px;">Date: [__]</p>
+    </div>
+
+  </div>
+  <div class="container">
+    <h3 style="
+      font-size: 14px; 
+      font-weight: bold; 
+      color: #4B5563; 
+      text-decoration: underline; 
+      margin-top: 15%; 
+      margin-bottom: 0.5rem; text-align: center;">
+      Important Notes:
+    </h3>
+
+    <ul style="
+      list-style-type: decimal; 
+      font-size: 10px;
+      margin-bottom: 1rem; 
+      padding-left: 1.5rem; line-height: 1.5;">
+      <li>
+        360 Car Protect Extended Warranty is offered by 360 Car
+        Protect India LLP and not by the Vehicle Manufacturer, the
+        Dealer, or the Franchise Partner from whom the Customer may
+        have purchased the Vehicle.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        By choosing to protect the Vehicle through the 360 Car Protect
+        Extended Warranty, the Customer hereby confirms that they have
+        read and understood the terms and conditions governing the 360
+        Car Protect Extended Warranty set out in this Certificate and
+        in Annexure A and agrees and undertakes to abide by the same.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        Please note that any non-compliance or deviation by the
+        Customer of any of the terms and conditions contemplated in
+        the Certificate and in Annexure A shall render the 360 Car
+        Protect Extended Warranty as null and void and 360 Car Protect
+        India LLP shall not have any obligation or liability to the
+        Customer or any other person under the 360 Car Protect
+        Extended Warranty.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        360 Car Protect Extended Warranty will be honored at all the
+        authorized service centers which are listed in Annexure B. The
+        said list may be updated from time to time by 360 Car Protect
+        India LLP on its website.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        360 Car Protect Extended Warranty is exclusively offered by
+        360 Car Protect India LLP and the Vehicle Manufacturer and/or
+        Raam Autobahn India Private Limited, their personnel,
+        shareholders and directors shall not be liable for any loss or
+        damage that may be suffered by the Customer on account of any
+        acts or omissions of 360 Car Protect India LLP. The Customer
+        shall not make any claims related to the 360 Car Protect
+        Extended Warranty against the Vehicle Manufacturer and/or Raam
+        Autobahn India Private Limited, their personnel, shareholders
+        and directors under any circumstances.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        The Customer agrees to obtain and maintain at all times a
+        valid comprehensive vehicle insurance policy for the Vehicle
+        and shall make claims under the said policy if the Vehicle
+        part is covered under the said policy before making any claim
+        under the 360 Car Protect Extended Warranty.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        If the Customer is desirous of seeking cancellation of the 360
+        Car Protect Extended Warranty, the same can only be done
+        within 15 days from the date of issuance of the Certificate.
+        The Customer shall be refunded the entire amount paid by the
+        Customer (less the GST amount and less 10% of the total amount
+        paid by the Customer for obtaining the 360 Car Protect
+        Extended Warranty.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        Any claim under the 360 Car Protect Extended Warranty can only
+        be made after the Cooling Off Period mentioned in the
+        Certificate.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+        The commencement of 360 Car Protect Extended Warranty is subject to realisation of payment by the Customer in
+        full. In case the payment is not realized for any reason whatsoever, the 360 Car Protect Extended Warranty shall
+        not come into force and be void ab-initio.
+      </li>
+      <li style="margin-top: 10px; line-height: 1.5;">
+
+        10. The Customer must check the details in the Certificate and the Annexures for accuracy immediately upon
+        receiving it. If the Customer finds any discrepancy or requires any changes in the Certificate or in the
+        Annexures thereto, the Customer must immediately contact the representative of 360 Car Protect India LLP and get
+        the same rectified within 7 days of receipt of the Certificate.
+
+      </li>
+    </ul>
+
+
+
+    <div style="margin-top: 35%; border: 1px solid black; padding-left: 1.5rem;  ">
+      <p style="font-weight: bold; text-decoration: underline; text-align: center; font-size: 11px; ">
+        Customer Declaration:</p>
+      <p style="text-align: center; font-style: italic;  font-size: 11px; padding-right: 8px;">
+        I / we hereby accept, that I / we have read and understood the terms and conditions of 360 Car Protect
+        Extended Warranty set out in this Certificate and in Annexure A.
+      </p>
+      <p style=" text-align: right; padding-right: 80px;  font-size: 11px;">Customer Signature:</p>
+      <p style="text-align: right; padding-right: 80px;  font-size: 11px;">Date:</p>
+
+    </div>
+  </div>
+
+  <div class="container" style=" font-size: 9.5px;">
+    <div
+      style="margin-top: 12%; text-align: center; border: 1px solid black; font-weight: bold; font-size: 12px;  padding: 1.5rem 0;">
+      <span style="text-decoration: underline;">Annexure A</span>
+      <p>(360 CAR PROTECT EXTENDED WARRANTY – TERMS & CONDITIONS)</p>
+    </div>
+    <p style="margin-top: 2.25rem;">Dear Customer,</p>
+    <p style="margin-top: 0.75rem;">
+      360 Car Protect Extended Warranty is governed by and is subject to the terms, conditions and limitations set out
+      in this Annexure A and in the Certificate issued to you by 360 Car Protect India LLP. 360 Car Protect Extended
+      Warranty covers the repairs/replacements of defective parts of the Vehicle (and the labour cost for the same) as
+      per the terms, conditions and limitations set out in this Annexure A and in the Certificate. 360 Car Protect India
+      LLP reserves its right to take the final decision on all matters relating to the 360 Car Protect Extended
+      Warranty.
+    </p>
+
+
+    <p style="margin-top: 12px; ">
+
+      <span className="font-bold">Eligiblity:</span>The Vehicle must be
+      registered in India (and continued to be registered as such) for
+      ‘private use’ only and should be less than 3 years old from the
+      first date of registration of the Vehicle at the time of issuance
+      of the Certificate by 360 Car Protect India LLP.
+    </p>
+
+    <p style="margin-top: 12px; ">
+
+      <span className="font-bold">Warranty Period:</span>: 360 Car
+      Protect Extended Warranty provides an additional coverage for your
+      Vehicle between the Start Date and the End Date and within the
+      time indicated in the Certificate issued by 360 Car Protect India
+      LLP. However, any claim under the 360 Car Protect Extended
+      Warranty can only be made after the Cooling Off Period mentioned
+      in the Certificate. 360 Car Protect Extended Warranty can be used
+      only for the Vehicle mentioned in the Certificate.
+    </p>
+
+    <p style="margin-top: 12px; font-size:10px ;">
+
+      <span style="font-weight: bold;">
+        What is Covered under the 360 Car Protect Extended Warranty:
+      </span>
+      See <span style="font-weight: bold;">Schedule A</span> Below.
+    </p>
+
+    <p style="margin-top: 12px; font-size: 10px">
+
+      <span style="font-weight: bold;">
+        What is not Covered under the 360 Car Protect Extended Warranty:
+      </span>
+      See <span style="font-weight: bold;">Schedule B</span> Below.
+    </p>
+
+    <p style="margin-top: 12px; ">
+
+      <span style="font-weight: bold; font-size: 9.5px;">
+        How to use the 360 Car Protect Extended Warranty:
+      </span>
+      It is mandatory for the Customer to make sure that the Vehicle is
+      taken to an authorized service center of 360 Car Protect India LLP
+      three (3) months before the expiry of the Vehicle’s standard
+      warranty given by the Vehicle Manufacturer for a general check-up
+      which shall be undertaken at the cost of 360 Car Protect India
+      LLP. Failure to comply with this requirement shall render the 360
+      Car Protect Extended Warranty as null and void.
+    </p>
+
+    <p className="pt-6">
+      If any part in the Vehicle is found to be defective and requires
+      to be repaired/replaced as determined by the authorized service
+      center of the Vehicle Manufacturer, the Customer shall get the
+      said part repaired/replaced by the Vehicle Manufacturer at the
+      authorized service center of the Vehicle Manufacturer if the same
+      is within the standard warranty period offered by the Vehicle
+      Manufacturer. However, if any part in the Vehicle is found to be
+      defective and requires to be repaired/replaced under the 360 Car
+      Protect Extended Warranty and the claim is made by the Customer
+      within the warranty period mentioned in the Certificate issued by
+      360 Car Protect India LLP (subject to the Cooling Off Period),
+      then the Customer shall follow the steps set out below:
+    </p>
+    <p className="pt-6">
+      After the warranty period commences, if any part in the Vehicle is found to be defective and requires to be
+      repaired/replaced under the 360 Car Protect Extended Warranty and the claim is made by the Customer within the
+      warranty period mentioned in the Certificate issued by 360 Car Protect India LLP (subject to the Cooling Off
+      Period), then the Customer shall follow the steps set out below:
+    </p>
+    <ul style="
+    list-style-type: decimal; 
+    margin-top: 1.5rem; 
+    padding-left: 20px; 
+  ">
+      <li>
+        Call the Customer Care Number <span style="font-weight: bold;">+91 7331100809</span> and provide the details of
+        your 360 Car Protect Extended Warranty
+        and the defective part of the Vehicle which is to be repaired/replaced.
+      </li>
+      <li style="margin-top: 8px;">
+
+        Take the Vehicle to the nearest authorized service center of 360
+        Car Protect India LLP as indicated by our Customer Care
+        representative at the Customer’s cost. Please show the original
+        Certificate to our representative at the service center who will
+        determine whether the Vehicle part is defective and whether it
+        is to be repaired / replaced and whether the same is covered by
+        the 360 Car Protect Extended Warranty.
+      </li>
+      <li style="margin-top: 8px;">
+        Once the claim of the Customer is accepted by our representative
+        at the service center, the defective part will be repaired or
+        replaced by the authorized service center of 360 Car Protect
+        India LLP at its own cost. The decision of our authorized
+        service center, whether to repair or to replace the defective
+        part or to reject the claim if the same is not covered by the
+        360 Car Protect Extended Warranty, shall be final and binding on
+        the Customer.
+      </li>
+      <li style="margin-top: 8px;">
+        While the Vehicle is in the authorized service center of 360 Car
+        Protect India LLP, the Customer and the Vehicle will also be
+        governed by the terms and conditions imposed by the authorized
+        service center
+      </li>
+    </ul>
+    <p className="mt-[8%]">
+      <span style="font-weight: bold;">
+        Compliance with Warranty provided by the Vehicle Manufacturer &
+        Owner’s Manual provided by the Vehicle Manufacturer:
+      </span>
+      Customer must ensure that (a) the Customer complies with the terms
+      and conditions of the warranty provided by the Vehicle
+      Manufacturer; and (b) the Vehicle is, at all times, used and
+      maintained as per the conditions stipulated in the Owner’s Manual
+      provided by the Vehicle Manufacturer.
+    </p>
+    <p style="margin-top: 12px; ">
+
+      <span style="font-weight: bold;">Regular Servicing:</span>
+      The Customer shall undertake all servicing and repairing of the
+      Vehicle on a regular and periodic basis as advised by the Vehicle
+      Manufacturer and as set out in the Owner’s Manual at the
+      authorized service centers of the Vehicle Manufacturer only.
+    </p>
+    <p style="margin-top: 12px; padding-bottom: 15%;">
+      The Customer shall not service or undertake or replace any Vehicle part (genuine or not) at an unauthorized
+      service center of the Vehicle Manufacturer or by an unauthorized mechanic/technician other than the authorized
+      service center of 360 Car Protect India LLP.
+    </p>
+    <p style="padding-top: 5%;">
+
+      Failure to comply with this requirement shall render the 360 Car Protect Extended Warranty null and void as
+      regards the Vehicle part sought to be repaired or replaced under this 360 Car Protect Extended Warranty if the
+      unauthorized service or repair or replacement of the Vehicle part deals with or affects (directly or indirectly)
+      the Vehicle part sought to be repaired or replaced under the 360 Car Protect Extended Warranty.
+    </p>
+    <p style="padding-top: 20px; ">
+
+      It may be noted that on account of a non-genuine part being used
+      in the Vehicle, or servicing or repairing of a Vehicle part or
+      component of the Vehicle in which the Vehicle part may be fitted,
+      another Vehicle part may be adversely affected. In such cases
+      also, the 360 Car Protect Extended Warranty shall be rendered as
+      null and void.
+    </p>
+
+    <p style="margin-top: 12px; ">
+
+      <span style="font-weight: bold;">
+        Genuine Parts and Quality Service:
+      </span>
+      : 360 Car Protect Extended Warranty ensures that your Vehicle is
+      in good condition by using only genuine Vehicle parts and
+      rendering quality service through experienced mechanics and
+      technicians.
+    </p>
+
+    <p style="margin-top: 12px; ">
+
+      <span style="font-weight: bold; font-size: 10px ;">
+        360 Car Protect Extended Warranty is Transferable:
+      </span>
+      If you sell your Vehicle during the warranty period mentioned in
+      the Certificate, you can transfer the 360 Car Protect Extended
+      Warranty to the subsequent owner of your Vehicle, provided the
+      transfer of the Vehicle is duly completed with the relevant Road
+      Transport Authority, as per applicable laws and rules. Such new
+      owner of the Vehicle can avail the benefits under this 360 Car
+      Protect Extended Warranty, subject to compliance with the terms
+      and conditions set out in this Annexure A. The new owner should
+      inform 360 Car Protect India LLP through the Customer Care number
+      about the change in ownership within 30 days from the date of
+      transfer of ownership of the Vehicle to enable a smooth customer
+      experience at our authorized service centers.
+    </p>
+    <p style="margin-top: 12px; ">
+
+      <span style="font-weight: bold;">Maximum Liability</span>The maximum
+      liability of 360 Car Protect India LLP under the 360 Car Protect
+      Extended Warranty shall be the lower of (a) the value of the
+      defective parts to be repaired or replaced and the labour cost for
+      the same; (b) the Depreciated Value of the Vehicle as per the
+      table below. Other than repairing or replacing the defective parts
+      in the Vehicle, 360 Car Protect India LLP shall not have any
+      obligation or responsibility to replace the Vehicle and/or make
+      payment for any consequential loss or damages to you or any third
+      party. 360 Car Protect India LLP shall not be liable for any
+      damage or loss caused to any property, article or individual
+      (including disability or death) arising out of electric fault,
+      short circuit, fire, negligent use of the Vehicle or accidental
+      handling or mishandling of the Vehicle and/or non-compliance of
+      the terms and conditions set out in this Annexure A.
+    </p>
+
+    <p style="margin-top: 12px; ">
+
+      If the total cost for repairing and/or replacing the defective
+      part is greater than the Depreciated Value of the Vehicle, then it
+      shall be the discretion of 360 Car Protect India LLP to decide
+      whether to repair / replace the defective part or to provide the
+      Depreciated Value of the Vehicle to the Customer.
+    </p>
+
+    <p style="margin-top: 12px; ">
+      <span style="font-weight: bold;">
+        Governing Law/ Jurisdiction / Dispute Resolution:
+      </span>
+      The 360 Car Protect Extended Warranty shall be governed by
+      applicable Indian laws. Courts at Hyderabad shall have exclusive
+      jurisdiction in respect of all matters related to or arising out
+      of the 360 Car Protect Extended Warranty
+    </p>
+    <div>
+      <table
+        style="width: 100%; border-collapse: collapse; border: 1px solid black; margin: 15px auto 0; text-align: center;  font-size: 11px;">
+        <thead>
+          <tr>
+            <th colspan="2" style="border: 1px solid black; padding: 0.5rem; font-weight: bold; font-size: 10px;">
+              TABLE FOR DEPRECIATED VALUE OF VEHICLE
+            </th>
+          </tr>
+          <tr>
+            <th style="border: 1px solid black; padding: 0.5rem;">
+              Year
+            </th>
+            <th style="border: 1px solid black; padding: 0.5rem;">
+              Percentage of the ex-showroom value of Vehicle at the time
+              of purchase (as indicated in the Certificate)
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="border: 1px solid black; padding: 0.5rem;">
+              4<sup>th</sup> Year
+            </td>
+            <td style="border: 1px solid black; padding: 0.5rem;">
+              60%
+            </td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; padding: 0.5rem;">
+              5<sup>th</sup> Year
+            </td>
+            <td style="border: 1px solid black; padding: 0.5rem;">
+              50%
+            </td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black; padding: 0.5rem;">
+              6<sup>th</sup> Year
+            </td>
+            <td style="border: 1px solid black; padding: 0.5rem;">
+              40%
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+  <div class="container " style="margin-top: -4%; font-size: 10px;">
+    <h3 class="text-align" style="text-decoration: underline; font-size: 12px;">Schedule A</h3>
+    <h4 class="text-align">(What is not Covered under the 360 Car Protect Extended Warranty)</h4>
+
+    <ul class="list-outside" style="padding-bottom: 29%;">
+      <li>
+        The 360 Car Protect Extended Warranty encompasses all mechanical and electrical parts, except those explicitly
+        excluded under Schedule B, i.e., "What Is Not Covered."
+      </li>
+      <li>Labour cost for checking the defective part.</li>
+      <li>Labour cost for repairing and/or replacing the part.</li>
+      <li>Cost of replacement of part if the same is being replaced.</li>
+      <li>
+        Only genuine parts supplied and fitted by the Vehicle Manufacturer are covered under the 360 Car Protect
+        Extended
+        Warranty.
+      </li>
+    </ul>
+
+    <h3 class="text-align" style="text-decoration: underline; padding-top: 5%; font-size: 12px;">Schedule B</h3>
+    <h4 class="text-align">(What is Covered under the 360 Car Protect Extended Warranty)</h4>
+
+    <ul class="list-outside">
+      <li>
+        Any damages if the vehicle is not handled or driven in accordance with the instructions in the Owner’s Manual
+        supplied with the vehicle and if the defined regular service / maintenance work is not performed.
+      </li>
+      <li>
+        Any alterations to the vehicle's original technical specifications or components, such as the installation of
+        additional electrical components, engine modifications, or any other modifications that may impact vehicle
+        performance or safety.
+      </li>
+      <li>Damage to the fuel system due to water, adulteration, or foreign objects.</li>
+      <li>
+        Damages arising from misuse, improper operation, storage, transportation, modifications, maintenance, or repairs
+        not in accordance with Vehicle manufacturer's specifications.
+      </li>
+      <li>
+        Damages incurred due to accidents, general damage from external forces, fire, liquid, collision, theft,
+        secondary
+        damages resulting from these events, or consequential damages stemming from accidents.
+      </li>
+      <li>The use of non-genuine or counterfeit parts.</li>
+      <li>
+        The use of lubricants or accessories not approved by the Vehicle manufacturer.
+      </li>
+      <li>
+        Exceeding permissible capacities, such as axle loads, overloading, passenger counts, speed, and RPM limitations.
+      </li>
+      <li>
+        Driving the vehicle under severe conditions, including un-pliable or water-logged roads, races, or rallies.
+      </li>
+      <li>
+        Damages resulting from natural disasters, including but not limited to earthquakes, storms, floods, fires, and
+        accidents.
+      </li>
+      <li>Commercial use of the vehicle or use for purposes other than its intended design.</li>
+      <li>
+        Use of adulterated or improper service products, such as fuel, oils, brake fluids, coolants, interior cleaning
+        materials, and similar items.
+      </li>
+      <li>
+        Retrofitted or installed equipment not recommended by Vehicle manufacturer, such as radios, car telephones,
+        CD/DVD players, or other electronic gadgets.
+      </li>
+      <li>
+        Cyber risks, including the loss, destruction, erasure, corruption, or alteration of electronic data.
+      </li>
+      <li>
+        Sensory complaints related to noise, vibration, smell, temperature of sidewalls, or footwells that may arise due
+        to
+        factors such as vehicle upkeep, road conditions, usage patterns, or environmental conditions, provided they do
+        not
+        affect the vehicle's quality, function, or performance.
+      </li>
+      <li>
+        Consumable parts, including but not limited to belts, drive chains, air cleaning elements, air conditioner dust
+        filters, fuel filters, oil filters, clutch components, brake parts, wiper blades, bulbs, carbon brushes, and
+        fuses.
+      </li>
+      <li>
+        Costs associated with oil, grease, and other fluids, such as engine oil, automatic transmission fluid, brake
+        fluid,
+        coolant, etc., with the exception of expenses arising from routine repair work.
+      </li>
+      <li>
+        Wear-and-tear-related parts, such as tires, engine mountings, transmission mountings, exhaust muffler mountings,
+        other rubber mountings, suspension-related parts, suspension bushings, suspension ball joints, tie rod ends
+        (excluding air struts and shock absorbers), etc.
+      </li>
+      <li>Regular checking or washing of Vehicle.</li>
+      <li>Pick up and drop of the vehicle.</li>
+      <li>
+        Other parts not covered include pulleys, dampers, bearings, belts, tensioners, spark plugs, ignition coils,
+        silencers, mufflers, exhaust pipes, and more.
+      </li>
+      <li>Wheel alignment and wheel balancing.</li>
+      <li>Damage to any part caused by accident or rash and negligent usage.</li>
+      <li>Regular servicing or repairing of the Vehicle.</li>
+      <li>
+        Routine maintenance services, including engine tune-ups, cleaning and polishing, headlight and taillight
+        maintenance, headlight aiming, filter replacements, key fob battery replacements, light bulb replacements, spark
+        plug replacements, drive belt replacements, clutch repairs, silencer maintenance, catalytic converter
+        maintenance,
+        and fuse and relay replacements.
+      </li>
+      <li>Concerns related to body and paint.</li>
+      <li>Components made of rubber and plastic, including oil seals.</li>
+      <li>Corrosion-related parts such as exhaust mufflers, wheel rims, etc.</li>
+      <li>Battery replacement or recharging.</li>
+      <li>
+        Under no circumstances will free repairs be provided under the 360 Car Protect Extended Warranty if it is
+        discovered that the vehicle identification number, such as the chassis/engine number or odometer reading, has
+        been
+        tampered with or does not align with the master data available at Authorized service centers (Mentioned in
+        Annexure
+        B) or Vehicle manufacturer.
+      </li>
+      <li>
+        If certain parts which are not available in market due to non-production of those parts by the vehicle
+        manufacturer
+        in India then 360 Car Protect India is not liable to replace that particular part.
+      </li>
+      <li>If there is a delay in availability of the part by the Vehicle Manufacturer then the Customer has to wait for
+        the said period until the part is delivered by the Vehicle Manufacturer to the authorized service center (listed
+        in Annexure B). During this waiting period, no standby car shall be provided by 360 Car Protect India to the
+        Customer.</li>
+    </ul>
+    <div style="margin-top: 0.5rem; border: 1px solid black; padding-left: 1.5rem;  ">
+      <p style="font-weight: bold; text-decoration: underline; text-align: center; font-size: 11px; margin-top: -1px; ">
+        Customer Declaration:</p>
+      <p style="text-align: center; font-style: italic;  font-size: 10px; padding-right: 8px;">
+        I / we hereby accept, that I / we have read and understood the terms and conditions of 360 Car Protect
+        Extended Warranty .
+      </p>
+      <p style=" text-align: right; padding-right: 80px;  font-size: 10px; margin-top: -2%;">Customer Signature:</p>
+      <p style="text-align: right; padding-right: 80px;  font-size: 10px; margin-top: -2%;">Date:</p>
+
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <div class="container " style="margin-top: 5%;">
+    <h5 style=" font-style: italic; font-size: 8px;">Note: 360 Car Protect Extended Warranty will be
+      honored at all authorized service
+      centers which are listed
+      below. The said list may be updated from time to time by 360 Car Protect India LLP and 360 Car Protect India
+      LLP may intimate the Customer of the same by email</h5>
+    <h3 class="text-align  font-size: 12px; font-bold">
+      ANNEXURE B
+    </h3>
+    <h3 class="text-align">
+      (List of Authorized Service Centers)
+    </h3>
+
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 1.5rem; font-size: 9px;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid black; padding: 0.25rem; padding-bottom: 1rem; text-align: center;">
+            City
+          </th>
+          <th style="border: 1px solid black; padding: 0.25rem; padding-bottom: 1rem; text-align: center;">
+            Address
+          </th>
+          <th style="border: 1px solid black; padding: 0.25rem; text-align: center;">
+            Contact Number
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="width: 100%;">
+          <td style="border: 1px solid black; padding: 1.5rem; text-align: center; width: 16.66%;">
+            Pune
+          </td>
+          <td style="border: 1px solid black; padding: 1.5rem; width: 50%;">
+            No. 1331/1, Panchvati Warehouse Nagar, Wagholi, Pune - 412207
+          </td>
+          <td style="border: 1px solid black; padding: 1.5rem; text-align: center; width: 16.66%;">
+            090750 30303
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 1.5rem; font-size: 9px;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid black; padding: 0.25rem; padding-bottom: 1rem; text-align: center;">
+            City
+          </th>
+          <th style="border: 1px solid black; padding: 0.25rem; padding-bottom: 1rem; text-align: center;">
+            Address
+          </th>
+          <th style="border: 1px solid black; padding: 0.25rem; text-align: center;">
+            Contact Number
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="width: 100%;">
+          <td style="border: 1px solid black; padding: 1.5rem; text-align: center; width: 16.66%;">
+            KOLHAPUR
+          </td>
+          <td style="border: 1px solid black; padding: 1.5rem; width: 50%;">
+            Gat No. 489B, 2, Sambhaji Nagar Rd, opp. Hind Gear, near India Tiles, Shivaji Peth A Ward, Deokar Panand, 
+            Nagaon, Kolhapur, Maharashtra <br> 416122
+            
+          </td>
+          <td style="border: 1px solid black; padding: 1.5rem; text-align: center; width: 16.66%;">
+            089560 24929
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+    <table style="font-size: 9px; width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 1.5rem;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">City</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Address</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Contact Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="width: 100%;">
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">Aurangabad
+          </td>
+          <td style="border: 1px solid black; padding: 1rem; width: 50%;">MIDC, Gut.No.143, Ahmednagar -
+            Aurangabad Rd, Waluj, Aurangabad, Maharashtra 431136</td>
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">088052 06555
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table style="font-size: 9px; width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 1.5rem;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">City</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Address</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Contact Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="width: 100%;">
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">2Nashik</td>
+          <td style="border: 1px solid black; padding: 1rem; width: 50%;">Garware Point, A-22, near Garware
+            Point, MIDC Ambad, Nashik, Maharashtra 422010</td>
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">084466 01555
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table
+      style=" font-size: 9px; width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 2.25rem;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">City</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Address</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Contact Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="width: 100%;">
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">Hyderabad
+          </td>
+          <td style="border: 1px solid black; padding: 1rem; width: 50%;">B 29 & 30, Sanath Nagar Main Rd,
+            Bhagat Singh Nagar, Sanath Nagar IE, Sanath Nagar, Hyderabad, Telangana 500018</td>
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">040300 03636
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table style="font-size: 9px; width: 100%; border-collapse: collapse; border: 1px solid black; margin-top: 1.5rem;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">City</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Address</th>
+          <th style="border: 1px solid black; padding: 1rem; text-align: center;">Contact Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="width: 100%;">
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">Visakhapatnam
+          </td>
+          <td style="border: 1px solid black; padding: 1rem; width: 50%;">Block-A, UTPL Campus IDA, Mindi,
+            Visakhapatnam, Andhra Pradesh 530012</td>
+          <td style="border: 1px solid black; padding: 1rem; text-align: center; width: 16.66%;">091542 21699
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <div style="margin-top: 1.5rem; border: 1px solid black; padding-left: 1.5rem;  ">
+      <p style="font-weight: bold; text-decoration: underline; text-align: center; font-size: 11px; margin-top: -1px; ">
+        Customer Declaration:</p>
+      <p style="text-align: center; font-style: italic;  font-size: 10px; padding-right: 8px;">
+        I / we hereby accept, that I / we have read and understood the terms and conditions of 360 Car Protect
+        Extended Warranty .
+      </p>
+      <p style=" text-align: right; padding-right: 80px;  font-size: 11px; margin-top: -1%;">Customer Signature:</p>
+      <p style="text-align: right; padding-right: 80px;  font-size: 11px; margin-top: -1%;">Date:</p>
+
+    </div>
+
+  </div>
+  </span>
+  </div>
+  </div>
+
+
+  </div>
+</body>
+
+</html>
+
+</div>
+</body>
+
+</html>
