@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Invoice</title>
+</head>
+
+<body style="font-family: 'Times New Roman', serif; font-size: 12px;">
+    <div style="padding: 1.5rem;  margin: 0.75rem; font-size: 13px; margin-left: 5rem; margin-right: 5rem;">
+        <div
+            style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; font-size: 14px;">
+            <div style="display: flex; align-items: center; width: 100%; justify-content: center;">
+                <p
+                    style="font-size: 16px; text-align: center; font-weight: bold; text-decoration: underline; margin: 0;">
+                    RG Buyback Assurance Program
+                </p>
+            </div>
+        </div>
+
+
+        {/* Invoice Header */}
+        <div style="margin-top: 2.25rem; font-weight: 500;">
+
+            <p style="padding-top: 1rem;">
+                Customer Name: {data?.customerDetails?.customerName || "NA"}
+            </p>
+            <p style="padding-top: 1rem;">Model: {data?.vehicleDetails?.vehicleModel}</p>
+            <p style="padding-top: 1rem;">VIN No. : {data?.vehicleDetails?.vinNumber}</p>
+            <p style="padding-top: 1rem;">
+                Agreement Start Date :{" "}
+                {formatDate(data?.vehicleDetails?.agreementStartDate)}
+            </p>
+            <p style="padding-top: 1rem;">
+                Agreement Valid Date:{" "}
+                {formatDate(data?.vehicleDetails?.agreementValidDate)} <br />
+                (OR) <br />
+                1,00,000kms-Running of the vehicle, whichever of the two occurs
+                Earlierr.
+            </p>
+            <p style="padding-top: 1rem;">
+                Total Payment: Rs {data?.vehicleDetails?.totalPayment}
+            </p>
+        </div>
+
+        <p style="font-style: italic; margin-top: 1.5rem;">
+            By enrolling in the RG Buyback Assurance Program or availing its
+            benefits, you acknowledge that you have read, understood, and agree to
+            be bound by the following Terms and Conditions. If you do not agree,
+            please revert on the email within 7 days from the date of policy
+            generation.
+        </p>
+
+        <div style="margin-top: 1.5rem; margin-bottom: 5rem;">
+            <h1 style="font-weight: bold; font-size: 16px; text-decoration: underline;">
+                Terms and Conditions for RG Buyback Assurance Program
+            </h1>
+            <p style="padding-top: 1.5rem;">
+                The following are the terms and conditions for the RG Buyback
+                Assurance Program (hereinafter referred to as “Buyback
+                Program”). The Buyback Program is operated by Market Value
+                determined by the Raam 4 Wheelers LLP (hereinafter referred to
+                as “Raam”).
+            </p>
+            <br />
+            <p>
+                The Customers agree to be bound by the following terms and
+                conditions to exercise the Buyback Program.
+            </p>
+            <br />
+            <ol>
+                <li>
+                    <strong>1. Description of the Buyback Program:</strong>
+                    <p>
+                        Upon purchase of the Buyback Program from Raam, the customer
+                        obtains an assured Rs.1,20,000 higher value than the market
+                        value (“Buyback Value”) determined by Raam or its authorised
+                        valuation partner at the time of buyback, subject to the
+                        terms and conditions set forth below.
+                    </p>
+                    <ul>
+                        <li>
+                            In case of an upgrade to a new model or exchange with the
+                            same model & variant, the customer obtains an assured
+                            exchange bonus of Rs.50,000.
+                        </li>
+                        <li>
+                            The customers obtain the aforementioned value on selling
+                            or exchanging certain specified MG cars (hereinafter
+                            referred to as “MG Car”) to Raam, on which this Buyback
+                            Program is applicable.
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div style="padding-top: 10rem;">
+
+            <h2>Program Applicability</h2>
+            <p>
+                The program applies exclusively to MG cars that meet the
+                following criteria as of the date of sale or exchange with Raam:
+                (i)The car is less than or equal to 8 years old. (ii)The car has
+                been driven less than 1,00,000 kms, Whichever condition is met
+                earlier will determine eligibility.
+            </p>
+
+            <h2 style="font-weight: bold; padding-top: 1.5rem;">
+                2. Specific Terms and Conditions
+            </h2>
+            <ul style="list-style-type: disc; padding-left: 20px;">
+
+
+                <li style="padding-top: 0.75rem;">
+                    This program is applicable exclusively to the MG Car mentioned
+                    in the Buyback Assurance Program offered by RAAM.
+                </li>
+                <li style="padding-top: 0.75rem;">
+                    The Buyback Program is valid only for the registered first
+                    owner of the MG Car and not for any subsequent buyers/owners.
+                </li>
+                <li style="padding-top: 0.75rem;">
+                    The Customer can avail of this Buyback Program on the
+                    mentioned MG Car only after 180 days from the date of purchase
+                    of the Buyback Program from Raam.
+                </li>
+                <li style="padding-top: 0.75rem;">
+                    This Buyback Program is non-transferable.
+                </li>
+                <li style="padding-top: 0.75rem;">
+                    The Customer shall not be entitled to avail of the Buyback
+                    Program if their MG Windsor Car is: (i) Above 8 years old.
+                    (ii) Driven more than 1,00,000 kms, Whichever condition is met
+                    earlier will disqualify the vehicle.
+                </li>
+                <li style="padding-top: 0.75rem;">
+                    This Buyback Program cannot be combined with any other
+                    exchange offer at the time of redemption. If MG’s exchange
+                    bonus is active, the higher value between the two offers will
+                    be applicable.
+                </li>
+                <li style="padding-top: 0.75rem;">
+                    In case the Customer fails to provide the original box,
+                    original and spare key, charger, and other accessories for the
+                    MG Car under the conditions specified above, the Buyback Value
+                    shall be reduced accordingly.
+                </li>
+            </ul>
+
+            <h2 style="font-weight: bold; padding-top: 1.5rem;">
+                3. Eligibility of the Car
+            </h2>
+            <ul style="list-style-type: disc; padding-left: 20px; padding-top: 1.5rem;">
+
+
+                <li>
+                    The MG car must satisfy Raam in the following conditions:
+                </li>
+                <ul>
+                    <li style="padding-top: 0.75rem;">
+                        a.) The MG Car is in a roadworthy condition and free from
+                        significant damage.
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        b.) All scheduled maintenance and services must have been
+                        performed at authorized MG service centers only.
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        c.) The vehicle should not have been modified or altered
+                        from its original specifications without approval from RAAM.
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        d.) The vehicle must have valid and existing insurance,
+                        licenses, and registration at the time of buyback.
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        e.) The MG Car must not have been used for commercial
+                        purposes (e.g., rentals, taxis, etc.).
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        f.) The car must not be involved in any fraud or
+                        misrepresentation committed by the Customer.
+                    </li>
+                </ul>
+                <li style="padding-top: 1.5rem;">
+                    Any deviations or damages observed by the Raam in the MG Car may affect the Buyback value.
+                </li>
+            </ul>
+            <p style="padding-top: 5rem;">
+                If the original MG Car satisfies all the quality checks stated
+                above, only then will the customer be eligible to avail Buyback
+                Program. If any or all of the quality checks stated above are
+                not satisfied, the transaction may be cancelled or there may be
+                reduction in the Buyback Value. The quality check shall be to
+                the satisfaction of the field executive and his/ her decision
+                shall be final in this regard.
+            </p>
+
+            <div>
+                <h2 style="font-weight: bold; padding-top: 1.5rem;">
+                    4. Determination of Buyback Value
+                </h2>
+                <p style="padding-top: 0.75rem; padding-bottom: 0.75rem;">
+                    In addition to the factors stated above, the market value of the MG Car will be calculated based on
+                    industry-standard parameters, including but not limited to: Vehicle condition, Mileage, Model year,
+                    Service history, Age of the car, Accessories,
+                </p>
+
+                <h2 style="font-weight: bold; padding-top: 1.5rem;">
+                    5. Modes of Availing the Buyback Program
+                </h2>
+                <p style="padding-top: 0.75rem; padding-bottom: 0.75rem;">
+                    The Customer may avail of the Buyback Program through the following options:
+                </p>
+                <ul>
+                    <li style="margin-left: 2.25rem;">
+
+
+                        a. The Customer can utilize the Buyback Value towards the
+                        purchase of a new car sold by Raam. The price of the new
+                        car, at all times, must be equal to or greater than the
+                        Buyback Value.
+                    </li>
+                    <li style="margin-left: 2.25rem;">
+                        b. The Customer may be entitled to receive the Buyback Value
+                        as a monetary amount if no vehicle is purchased from Raam.
+                    </li>
+                </ul>
+
+                <h2 style="font-weight: bold; padding-top: 2rem;">
+                    6. Representations and Warranties by the Customer
+                </h2>
+                <ul style="list-style-type: disc; padding-left: 1.25rem;">
+                    <li style="padding-top: 0.75rem;">
+
+
+                        The Customer should cooperate in the ownership transfer/RC
+                        transfer to the new owner to whom Raam or its vendors will
+                        sell the car. An amount of Rs.10,000 will be held by Raam
+                        until the RC transfer is completed.
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        The Customer shall not have any claim/ownership over the
+                        original MG Car and its accessories after the sale of the MG
+                        Car to Raam is complete. The sale will be deemed complete
+                        upon the following conditions: If the Customer opts to
+                        receive the Buyback Value as money, the sale is complete
+                        upon making payment of the Buyback Value (excluding the
+                        amount held for RC transfer) by Raam to the Customer. If the
+                        Customer opts to purchase a new car from Raam, the Buyback
+                        Value shall be deducted from the price of the new car, and
+                        the sale is complete upon the Customer receiving the gate
+                        pass for the new car.
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <ul style="list-style-type: disc; padding-left: 1.25rem; padding-top: 8rem;">
+                    <li style="padding-top: 1rem;">
+
+
+                        The Customer agrees that upon completion of the transaction,
+                        ownership rights to the MG Car are transferred to Raam.
+                    </li>
+                    <li>
+                        The Customer represents and warrants that there are no
+                        leases, mortgages, contractual commitments, or any
+                        third-party interests attached to the MG Car at the time of
+                        availing of the Buyback Program.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Customer is responsible for backing up and/or deleting
+                        data (in cases of smart MG cars), and for clearing any
+                        goods, personal belongings, or documents (not related to the
+                        car) in the MG Car. Raam will not be liable for any personal
+                        belongings or data left by the Customer.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Customer agrees that Buyback eligibility and Buyback
+                        Value are subject to Raam’s inspection. The Customer
+                        understands that the original quotation for the MG Car may
+                        be revised if inspection results differ from the Customer's
+                        description.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Customer acknowledges and agrees that the Buyback
+                        transaction is final and cannot be canceled by the Customer
+                        unless the quoted Buyback value has been declined at the
+                        initial stage.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        At the time of purchasing the Buyback Program, the Customer
+                        agrees that they have read and accepted these detailed terms
+                        and conditions for the Buyback to be exercised.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Buyback Program can be exercised upon the purchase of a
+                        new car, to be delivered at Raam’s store directly, subject
+                        to the availability of the model of the car.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Customer represents and warrants to release and hold
+                        harmless Raam, its affiliates, and employees from and
+                        against any claims, damages, or liabilities, including
+                        third-party claims, property damage, or any direct,
+                        indirect, consequential, incidental, or other damages, which
+                        Raam may suffer as a result of this Buyback Program or the
+                        acceptance or use of the MG Car by Raam.
+                    </li>
+                </ul>
+
+                <h2 className="font-bold pt-6">7. Specifications</h2>
+                <ul>
+                    <li style="padding-top: 1rem;">
+                        The Buyback Program is valid only in India.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Buyback Program is open exclusively to end customers and
+                        not resellers.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Buyback Guarantee can be exercised only upon the sale of
+                        the MG Car to Raam or the purchase of a new car in exchange
+                        for the original MG Car from Raam.
+                    </li>
+                    <li style="padding-top: 1rem;">
+                        The Buyback Program is specific to the customer who has
+                        purchased the program from Raam and will be valid only for
+                        the sale of the MG Car or exchange.
+                    </li>
+                </ul>
+            </div>
+
+            <div style="padding-top: 5rem;">
+                <li style="padding-top: 0.75rem;">
+                    with new car by the same owner as that of the customer who
+                    bought the Buyback Program.
+                </li>
+                <ul style="list-style-type: disc; padding-left: 1.25rem; padding-top: 0.75rem;"></ul>
+                <li>
+                    All taxes or liabilities payable to any regulatory authority
+                    shall be borne by the customer and/or billed to the account of
+                    the customer.
+                </li>
+
+                <h2 style="padding-top: 1.5rem; font-weight: bold;">8. Termination</h2>
+                <p>
+                    The Buyback Program shall automatically terminate upon the
+                    occurrence of the earliest of the following events:
+                </p>
+                <ul class="pt-3" style="list-style-type: upper-roman;">
+                    <li style="padding-top: 0.75rem;">
+                        The successful sale or exchange of the MG Windsor car to
+                        Raam or any third party.
+                    </li>
+                    <li style="padding-top: 0.75rem;">The car exceeding 8 years of age.</li>
+                    <li style="padding-top: 0.75rem;">
+                        The car being driven more than 100,000 kms.
+                    </li>
+                </ul>
+
+                <h2 style="font-weight: bold; padding-top: 1.5rem;">9. Cancellation and Refund</h2>
+                <p style="padding-top: 0.75rem">
+
+                    The Buyback Program can be canceled by the Customer only upon
+                    the failure of RAAM to offer the customer's desired value of
+                    Buyback on their MG car. Upon such cancellation, the customer
+                    will be refunded the amount paid at the time of purchase of
+                    the Buyback Program from Raam, excluding the GST amount paid.
+                    However, the following conditions must be fulfilled to be
+                    eligible for a refund:
+                </p>
+                <ul class="list-disc list-inside">
+
+                    <li style="padding-top: 0.75rem;">
+                        <strong>First Right of Refusal:</strong> The first right to
+                        purchase the MG car at the customer’s desired price must be
+                        given to RAAM. This means getting the MG car evaluated by
+                        Raam is mandatory. If RAAM denies the customer’s desired
+                        value via an official email, the customer is free to sell
+                        the car elsewhere.
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        <strong>Proof of Resale Transaction:</strong> The customer
+                        must provide proof of the transaction for the resale of the
+                        MG car within 15 days from the date of refusal.
+                    </li>
+                    <li style="padding-top: 0.75rem;">
+                        <strong>RC Transfer Proof:</strong> Proof of RC
+                        (Registration Certificate) transfer to the new owner must be
+                        provided by the customer to RAAM within 3 months from the
+                        date of refusal.
+                    </li>
+                </ul>
+                <p style="padding-top: 1.5rem;">
+                    Once these proofs are submitted, the Buyback package amount will be refunded to the customer’s
+                    account within 30 days.
+                </p>
+
+                <div style="padding-top: 6rem;">
+                    <h2 style="font-weight: bold; padding-top: 2.25rem;">10. Dispute Resolution:</h2>
+
+                    <p>
+                        Any and all disputes, claims or demands (“Disputes”)
+                        relating to or arising out of this Buyback Program shall be
+                        resolved in the following manner: (i) Firstly, by mutual
+                        negotiations by the Parties. (ii) If the Parties are unable
+                        to amicably settle the Disputes through mutual negotiations
+                        within a period of 30 days from the date of notice being
+                        issued by a Party disclosing the nature of the Dispute and
+                        its claim/demand, then the Dispute shall be settled through
+                        arbitration under the Arbitration and Conciliation Act, 1996
+                        by a sole arbitrator to be jointly appointed by the Parties.
+                        The seat and venue of arbitration shall be at Hyderabad.
+                    </p>
+                    <p>
+                        The Agreement between parties is governed by applicable laws
+                        in India. The competent courts at Hyderabad shall have
+                        exclusive jurisdiction to deal with the matter set out in
+                        this Agreement.
+                    </p>
+
+                    <h2 style="font-weight: bold; padding-top: 2.25rem;">11. Indemnity:</h2>
+
+                    <p>
+                        Each Party (the “Indemnifier”) shall indemnify and keep
+                        indemnified the other Party (the “Indemnified”) from and
+                        against any and all losses, claims, damages, expenses and
+                        costs that the Indemnified may incur or suffer on account of
+                        any breach of the representations, warranties, covenants and
+                        undertakings set out in this Agreement by the Indemnifier.
+                    </p>
+                    <p>
+                        Raam hereby excludes and disclaims all liabilities, whether
+                        direct or indirect, that may arise due to the Buyback
+                        Program, including but not limited to postponement or
+                        cancellation of the RG Car Exchange Plan.
+                    </p>
+
+                    <h2 style="font-weight: bold; padding-top: 2.25rem;">12. Modification:</h2>
+                    <p>
+                        RAAM 4Wheelers LLP reserves the right to modify or terminate
+                        the Buyback Assurance Program at its discretion. However,
+                        any changes will not affect customers who have already
+                        enrolled in the Buyback Program.
+                    </p>
+                    <p style="font-weight: bold; font-size: 16px; padding-top: 5rem;">
+
+                        RAAM 4 WHEELERS LLP
+                    </p>
+                </div>
+            </div>
+        </div>
+        </>
+        )}
+    </div>
+    </div>
+</body>
+
+</html>

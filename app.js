@@ -11,7 +11,12 @@ const documentRoutes = require('./routes/DocumentRoute.js');
 const policyRoutes = require('./routes/policyRoute.js'); 
 const teamRoutes = require('./routes/TeamsRoute.js'); 
 const userRoutes = require('./routes/userRoute.js'); 
-const vehicleRoutes = require('./routes/vehicleDataRoute.js'); 
+const vehicleRoutes = require('./routes/vehicleDataRoute.js');
+const AMCRoutes = require('./routes/AMCRoutes.js');
+const BuyBackRoutes = require('./routes/BuyBackRoute.js');
+
+
+
 
 
 const connectDb = require('./db/mongoConnection');
@@ -74,6 +79,10 @@ async function startServer() {
     app.use('/api/v1/', policyRoutes);
     app.use('/api/v1/', userRoutes);
     app.use('/api/v1/', teamRoutes);
+    app.use('/api/v1/', AMCRoutes);
+    app.use('/api/v1/', BuyBackRoutes);
+
+
 
     app.use("/running-status", (req, res) => {
       res.status(200).send("API is connected");

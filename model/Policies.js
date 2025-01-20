@@ -97,7 +97,6 @@ const policySchema = mongoose.Schema(
     },
     approvedAt: {
       type: Date,
-      default: new Date().toISOString(),
       required: false,
     },
     rejectedAt: {

@@ -2,33 +2,54 @@ const { invoiceApproved, invoiceRejected } = require("../helper/emailFunction");
 const Invoice = require("../model/InvoiceModel");
 const InvoiceCounter = require("../model/InvoiceCounterModel");
 
+
 exports.addInvoice = async (req, res) => {
-  const {role, email, ...payload } = req.body;
+  const { invoiceType, ...payload } = req.body;
+  const vinNumber = req.body.vehicleDetails.vinNumber;
 
   try {
-    const existingEmail = await Invoice.findOne({ email });
-    if (existingEmail) {
-      return res.status(400).json({ message: "Email already exists" });
+    const existingVinNumber = await Invoice.findOne({
+      "vehicleDetails.vinNumber": vinNumber,
+    });
+    if (existingVinNumber) {
+      return res.status(400).json({ message: "VIN number already exists" });
     }
-   let invoiceStatus
-    if(role === "1"){
-       invoiceStatus = "approved"
+
+    let prefix;
+    let serviceType;
+    let counterField;
+
+    const invoiceTypeData = invoiceType.toLowerCase();
+
+    if (invoiceTypeData === "amc") {
+      prefix = "AMC";
+      serviceType = "AMCs";
+      counterField = "amcCounter";
+    } else if (invoiceTypeData === "buyback") {
+      prefix = "BYBK";
+      serviceType = "BuyBacks";
+      counterField = "buyBackCounter";
+    } else {
+      return res.status(400).json({ message: "Invalid invoice type" });
     }
-    // Generate a unique invoiceId using Counter collection
+
     const counter = await InvoiceCounter.findOneAndUpdate(
-      { name: "invoiceId" },
-      { $inc: { count: 1 } },
-      { new: true, upsert: true }
+      {}, 
+      { $inc: { [`${counterField}.count`]: 1 } },
+      { new: true, upsert: true } 
     );
 
-    const prefix = "WS-360";
-    const paddedCount = String(counter.count).padStart(3, "0");
+    if (!counter) {
+      return res.status(500).json({ message: "Counter update failed" });
+    }
+
+    const paddedCount = String(counter[counterField].count).padStart(3, "0");
     const invoiceId = `${prefix}-${paddedCount}`;
 
     const newInvoice = new Invoice({
-      email,
       invoiceId,
-      invoiceStatus,
+      serviceType,
+      invoiceType,
       ...payload,
     });
 
@@ -38,53 +59,76 @@ exports.addInvoice = async (req, res) => {
       .status(201)
       .json({ message: "Invoice added successfully", data: newInvoice });
   } catch (error) {
-    console.error(error);
+    console.error("Error adding invoice:", error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
 
+
 exports.editInvoice = async (req, res) => {
   const { id } = req.query;
-  const { email, ...payload } = req.body;
+  const { ...payload } = req.body;
 
   try {
+    if (!id) {
+      console.error("Invoice ID is missing in the query.");
+      return res.status(400).json({ message: "Invoice ID is required" });
+    }
+
+    console.log("Invoice ID:", id);
+
     const existingInvoice = await Invoice.findById(id);
     if (!existingInvoice) {
-      res.status(404).json({ message: "Invoice not found" });
-      return;
+      console.error("Invoice not found for ID:", id);
+      return res.status(404).json({ message: "Invoice not found" });
     }
-    // Check if the new email is already in use by another invoice
-    if (email && email !== existingInvoice.email) {
-      const emailExists = await Invoice.findOne({ email });
-      if (emailExists) {
-        res.status(400).json({ message: "Email is already in use" });
-        return;
+
+    console.log("Existing Invoice:", existingInvoice);
+
+    const vinNumber = payload?.vehicleDetails?.vinNumber;
+    if (vinNumber && vinNumber !== existingInvoice.vehicleDetails?.vinNumber) {
+      const vinNumberExists = await Invoice.findOne({
+        "vehicleDetails.vinNumber": vinNumber,
+      });
+      console.log("VIN Number Check:", vinNumberExists);
+
+      if (vinNumberExists) {
+        return res
+          .status(400)
+          .json({ message: "VIN number is already in use" });
       }
     }
 
-    existingInvoice.email = email || existingInvoice.email;
+    // Update the existing invoice with the new payload
     Object.assign(existingInvoice, payload);
 
-    await existingInvoice.save();
+    try {
+      await existingInvoice.save();
+    } catch (saveError) {
+      console.error("Error saving invoice:", saveError);
+      return res.status(500).json({
+        message: "Error saving invoice",
+        error: saveError.message,
+      });
+    }
 
-    res
-      .status(200)
-      .json({ message: "Invoice updated successfully", data: existingInvoice });
+    res.status(200).json({
+      message: "Invoice updated successfully",
+      data: existingInvoice,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    console.error("Error in editInvoice:", error);
+    res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
   }
 };
 
 exports.getAllInvoice = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
 
-  const query = {
-    $or: [{ invoicestatus: "yetToApproved" }, { isCancelReq: "reqCancel" }],
-  };
-
   try {
-  const pageNumber = parseInt(page, 10);
+    const pageNumber = parseInt(page, 10);
     const pageSize = parseInt(limit, 10);
     const startIndex = (pageNumber - 1) * pageSize;
     const endIndex = pageNumber * pageSize;
@@ -120,7 +164,13 @@ exports.getAllInvoice = async (req, res) => {
   }
 };
 exports.getInvoicesByStatus = async (req, res) => {
-  const { page = 1, limit = 10, invoiceStatus, searchTerm, createdBy } = req.query;
+  const {
+    page = 1,
+    limit = 10,
+    invoiceType,
+    searchTerm,
+    createdBy,
+  } = req.query;
 
   try {
     const pageNumber = Math.max(1, parseInt(page, 10));
@@ -130,7 +180,7 @@ exports.getInvoicesByStatus = async (req, res) => {
 
     // Build filter object
     const filter = {
-      ...(invoiceStatus && { invoiceStatus }),
+      ...(invoiceType && { invoiceType }),
       ...(searchTerm && { invoiceId: { $regex: searchTerm, $options: "i" } }),
       ...(createdBy && { createdBy }),
     };
@@ -168,7 +218,6 @@ exports.getInvoicesByStatus = async (req, res) => {
   }
 };
 
-
 exports.invoiceApproval = async (req, res) => {
   const { invoiceId, approvalStatus, message } = req.query;
 
@@ -177,7 +226,6 @@ exports.invoiceApproval = async (req, res) => {
     if (!invoiceId || !approvalStatus) {
       return res.status(400).json({ message: "Missing required parameters" });
     }
-
 
     // Find and update the invoice
     const updateData = { invoicestatus: approvalStatus };
@@ -188,9 +236,9 @@ exports.invoiceApproval = async (req, res) => {
     const invoiceData = await Invoice.findOneAndUpdate(
       { _id: invoiceId }, // Query to find the invoice
       { $set: updateData }, // Update data
-      { new: true } // Return the updated document
+      { new: true } // Return the updated documen
     );
-    
+
     if (!invoiceData) {
       return res.status(404).json({ message: "Invoice not found" });
     }
@@ -216,7 +264,6 @@ exports.invoiceApproval = async (req, res) => {
   }
 };
 
-
 exports.invoiceById = async (req, res) => {
   const { invoiceId } = req.query;
 
@@ -236,8 +283,6 @@ exports.invoiceById = async (req, res) => {
   }
 };
 
-
-
 exports.invoiceResubmit = async (req, res) => {
   const { invoiceId } = req.query;
 
@@ -247,9 +292,9 @@ exports.invoiceResubmit = async (req, res) => {
     if (!invoice) {
       return res.status(404).json({ message: "Invoice not found" });
     }
-    invoice.invoicestatus = "yetToApproved"
+    invoice.invoicestatus = "yetToApproved";
     await invoice.save();
-      
+
     return res
       .status(200)
       .json({ message: "Invoice fetched successfully", invoice });
@@ -258,5 +303,3 @@ exports.invoiceResubmit = async (req, res) => {
     console.log(error);
   }
 };
-
-

@@ -20,21 +20,22 @@ exports.policyFormData = async (req, res) => {
     const policyData = req.body;
     const { vehicleEngineNumber, vehicleRegNumber, email } = policyData;
 
-    const duplicateVehicleEngineNumber = await Policy.findOne({ vehicleEngineNumber });
+    const duplicateVehicleEngineNumber = await Policy.findOne({
+      vehicleEngineNumber,
+    });
     if (duplicateVehicleEngineNumber) {
       return res.status(400).json({
         message: "Vehicle registration number already exists",
       });
     }
-    
-    
+
     const duplicateRegNumber = await Policy.findOne({ vehicleRegNumber });
     if (duplicateRegNumber) {
       return res.status(400).json({
         message: "Vehicle registration number already exists",
       });
     }
-    
+
     const duplicateEmail = await Policy.findOne({ email });
     if (duplicateEmail) {
       return res.status(400).json({
@@ -64,7 +65,6 @@ exports.policyFormData = async (req, res) => {
   }
 };
 
-
 exports.editPolicy = async (req, res) => {
   try {
     const { id } = req.params;
@@ -77,7 +77,9 @@ exports.editPolicy = async (req, res) => {
         _id: { $ne: id }, // Exclude the current policy being updated
       });
       if (duplicateEngineNumber) {
-        return res.status(400).json({ message: "Vehicle engine number already exists" });
+        return res
+          .status(400)
+          .json({ message: "Vehicle engine number already exists" });
       }
     }
 
@@ -87,7 +89,9 @@ exports.editPolicy = async (req, res) => {
         _id: { $ne: id }, // Exclude the current policy being updated
       });
       if (duplicateRegNumber) {
-        return res.status(400).json({ message: "Vehicle registration number already exists" });
+        return res
+          .status(400)
+          .json({ message: "Vehicle registration number already exists" });
       }
     }
 
@@ -111,14 +115,14 @@ exports.editPolicy = async (req, res) => {
       return res.status(404).json({ message: "Policy not found" });
     }
 
-    res.status(200).json({ message: "Policy updated successfully", data: updatedPolicy });
+    res
+      .status(200)
+      .json({ message: "Policy updated successfully", data: updatedPolicy });
   } catch (err) {
     console.error("Error updating policy data:", err);
     res.status(500).json({ message: "Something went wrong", error: err });
   }
 };
-
-
 
 exports.deletePolicy = async (req, res) => {
   try {
@@ -154,9 +158,9 @@ exports.getAllPolicy = async (req, res) => {
 
     if (search) {
       query.$or = [
-        { policyId: { $regex: search, $options: 'i' } }, // Case-insensitive search
-        { vehicleEngineNumber: { $regex: search, $options: 'i' } },
-        { vehicleRegNumber: { $regex: search, $options: 'i' } },
+        { policyId: { $regex: search, $options: "i" } }, // Case-insensitive search
+        { vehicleEngineNumber: { $regex: search, $options: "i" } },
+        { vehicleRegNumber: { $regex: search, $options: "i" } },
       ];
     }
 
@@ -184,7 +188,6 @@ exports.getAllPolicy = async (req, res) => {
     res.status(500).json({ message: "Something went wrong", error: err });
   }
 };
-
 
 exports.getMgPolicies = async (req, res) => {
   try {
@@ -334,12 +337,11 @@ exports.updatePolicyStatus = async (req, res) => {
       policy.isCancelReq = "approvedReq";
       await policy.save();
 
-      return res.status(200).json({ 
-        message: "Cancellation request approved.", 
-        isCancelReq: policy.isCancelReq 
+      return res.status(200).json({
+        message: "Cancellation request approved.",
+        isCancelReq: policy.isCancelReq,
       });
     }
-
 
     // Handle rejection case
     if (type === "rejected") {
@@ -425,16 +427,13 @@ exports.updatePolicyStatus = async (req, res) => {
 exports.getPendingPolicy = async (req, res) => {
   try {
     const { page, limit, manufacturer } = req.query; // Default values for page and limit
-    const pageNumber = parseInt(page) || 1;  // Ensure it's a valid number
-    const pageSize = parseInt(limit) || 10;  // Ensure it's a valid number
+    const pageNumber = parseInt(page) || 1; // Ensure it's a valid number
+    const pageSize = parseInt(limit) || 10; // Ensure it's a valid number
     const startIndex = (pageNumber - 1) * pageSize;
-    
-  const query = { 
-  $or: [
-    { policyStatus: "yetToApproved" },
-    { isCancelReq: "reqCancel" }
-  ]
-};
+
+    const query = {
+      $or: [{ policyStatus: "yetToApproved" }, { isCancelReq: "reqCancel" }],
+    };
 
     if (manufacturer) {
       query.vehicleManufacturer = manufacturer;
@@ -465,7 +464,6 @@ exports.getPendingPolicy = async (req, res) => {
     res.status(500).json({ message: "Something went wrong", error: err });
   }
 };
-
 
 exports.getPolicyById = async (req, res) => {
   const { id } = req.params;
@@ -613,13 +611,10 @@ exports.downloadPolicyCsv = async (req, res) => {
   try {
     const { vehicleManufacturer } = req.query;
     console.log(vehicleManufacturer, "barnd");
-    let query = { 
-      $and: [
-        { isDisabled: { $ne: true } }, 
-        { policyStatus: 'approved' }
-      ]
+    let query = {
+      $and: [{ isDisabled: { $ne: true } }, { policyStatus: "approved" }],
     };
-    
+
     if (vehicleManufacturer) {
       query.vehicleManufacturer = vehicleManufacturer;
     }
@@ -708,7 +703,6 @@ exports.downloadPolicyCsv = async (req, res) => {
   }
 };
 
-
 exports.cancelFromAgentRequest = async (req, res) => {
   const { id } = req.params;
 
@@ -717,18 +711,25 @@ exports.cancelFromAgentRequest = async (req, res) => {
       const policy = await Policy.findById(id);
 
       if (!policy) {
-        return res.status(404).json({ message: 'Policy not found' });
+        return res.status(404).json({ message: "Policy not found" });
       }
 
-      policy.isCancelReq = "reqCancel"; 
+      policy.isCancelReq = "reqCancel";
       await policy.save();
 
-      return res.status(200).json({ message: 'Cancellation request submitted successfully', policy });
+      return res
+        .status(200)
+        .json({
+          message: "Cancellation request submitted successfully",
+          policy,
+        });
     } else {
-      return res.status(400).json({ message: 'Policy ID is required' });
+      return res.status(400).json({ message: "Policy ID is required" });
     }
   } catch (error) {
-    return res.status(500).json({ message: 'Internal server error', error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };
 
@@ -741,9 +742,9 @@ exports.policyResubmit = async (req, res) => {
     if (!policy) {
       return res.status(404).json({ message: "policy not found" });
     }
-    policy.policyStatus = "yetToApproved"
+    policy.policyStatus = "yetToApproved";
     await policy.save();
-      
+
     return res
       .status(200)
       .json({ message: "policy fetched successfully", policy });
@@ -752,7 +753,6 @@ exports.policyResubmit = async (req, res) => {
     console.log(error);
   }
 };
-
 
 exports.policyResubmit = async (req, res) => {
   const { policyId } = req.query;
@@ -765,45 +765,34 @@ exports.policyResubmit = async (req, res) => {
     }
 
     policy.policyStatus = "yetToApproved";
-    await policy.save(); 
+    await policy.save();
 
     return res.status(200).json({
       message: "Policy updated successfully",
-      policy, 
+      policy,
     });
   } catch (error) {
-    console.error(error); 
+    console.error(error);
     return res.status(500).json({ message: "Something went wrong", error });
   }
 };
-
-
-
-
-
-
-
-
-
 
 exports.getPolicies = async (req, res) => {
   const { policyStatus, search = "", page = 1, limit = 10, userId } = req.query;
 
   try {
-    // Validate userId if present
     if (userId && !mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: "Invalid userId format" });
     }
 
-    // Build query filters
     const filters = {
-      ...(userId && { userId: new mongoose.Types.ObjectId(userId) }), // Convert userId to ObjectId
-      ...(policyStatus && { policyStatus }), // Filter by policyStatus if provided
+      ...(userId && { userId: new mongoose.Types.ObjectId(userId) }),
+      ...(policyStatus && { policyStatus }),
       ...(search && {
         $or: [
-          { vehicleEngineNumber: { $regex: search, $options: "i" } }, // Search by vehicle engine number
-          { vehicleRegNumber: { $regex: search, $options: "i" } }, // Search by vehicle registration number
-          { policyId: { $regex: search, $options: "i" } }, // Search by policy ID
+          { vehicleEngineNumber: { $regex: search, $options: "i" } },
+          { vehicleRegNumber: { $regex: search, $options: "i" } },
+          { policyId: { $regex: search, $options: "i" } },
         ],
       }),
     };
@@ -812,27 +801,22 @@ exports.getPolicies = async (req, res) => {
     const skip = (page - 1) * limit;
     const limitNum = Number(limit);
 
-    // Build the aggregation pipeline
     const policiesPipeline = [
       { $match: filters }, // Match policies based on filters
-     
+
       { $sort: { createdAt: -1 } }, // Sort by creation date (newest first)
       { $skip: skip }, // Skip documents for pagination
       { $limit: limitNum }, // Limit the number of documents per page
     ];
 
-    // Execute the aggregation pipeline
     const policies = await Policy.aggregate(policiesPipeline);
 
-    // Count total documents matching the filters
     const totalPolicies = await Policy.countDocuments(filters);
 
-    // Handle case where no policies are found
     if (policies.length === 0) {
       return res.status(404).json({ message: "No policies found" });
     }
 
-    // Return the fetched policies and pagination info
     return res.status(200).json({
       message: "Policies fetched successfully",
       policies,

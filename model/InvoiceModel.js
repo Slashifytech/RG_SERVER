@@ -1,178 +1,71 @@
 const mongoose = require("mongoose");
+const { customerPersonalDetais } = require("./AmcModel");
 
-const customerBillingSchema = mongoose.Schema({
-  description: {
+const vehicleDetailSchema = mongoose.Schema({
+  hypothecated: {
     type: String,
+    required: false,
   },
-  hsnCode: {
+  branchName: {
     type: String,
+    required: false,
   },
-  quantity: {
+  model: {
     type: String,
+    required: false,
   },
-  rate: {
+  vinNumber: {
     type: String,
+    required: false,
   },
-  total: {
+  gstAmount: {
     type: String,
-  },
-  discount: {
-    type: String,
-  },
-  taxValue: {
-    type: String,
-  },
-  cgstpercentage: {
-    type: String,
+    required: false,
   },
   cgst: {
     type: String,
-  },
-  sgstpercentage: {
-    type: String,
+    required: false,
   },
   sgst: {
     type: String,
-  },
-  igst: {
-    type: String,
-  },
-  igstpercentage: {
-    type: String,
-  },
-  ugst: {
-    type: String,
-  },
-  ugstpercentage: {
-    type: String,
-  },
-  cesspercentage: {
-    type: String,
-  },
-  cess: {
-    type: String,
-  },
-  totalinvoiceamount: {
-    type: String,
-  },
-  totalpriceinvalue: {
-    type: String,
-  },
-
-});
-const billingDetailSchema = mongoose.Schema({
-  address: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
-  state: {
-    type: String,
-  },
-  country: {
-    type: String,
-  },
-  zipCode: {
-    type: String,
-  },
-  stateCode: {
-    type: String,
-  },
-  pan: {
-    type: String,
-  },
-  contact: {
-    type: String,
-  },
-  gstInNumber: {
-    type: String,
-  },
-  gstRegType: {
-    type: String,
-  },
-});
-
-const vehicleDetailSchema = mongoose.Schema({
-  vehnumber: {
-    type: String,
-  },
-  vinnumber: {
-    type: String,
-  },
-  enginenumber: {
-    type: String,
-  },
-  vehiclemodel: {
-    type: String,
-  },
-  totalpriceinfigure: {
-    type: String,
-  },
-  totalpriceinvalue: {
-    type: String,
-  },
-  reversechargeapplication: {
-    type: String,
-  },
-  warrantystartdate: {
-    type: String,
-  },
-  warrantyenddate: {
-    type: String,
-  },
-});
-const invoiceSchema = mongoose.Schema({
-  invoiceType: {
-    type: String,
-  },
-  email: {
-    type: String,
-  },
-  billingDetail: billingDetailSchema,
-  deliveryDetails: billingDetailSchema,
-  supplyDetails: billingDetailSchema,
-  customerBillingDetails: customerBillingSchema,
-  vehicleDetails: vehicleDetailSchema,
-  invoicecopydocument: {
-    type: String,
-  },
-  pancard: {
-    type: String,
-  },
-  gstcertificate: {
-    type: String,
-  },
-  paymentproof: {
-    type: String,
-  },
-  invoicestatus:{
-    type: String,
-    enum: ["yetToApproved", "approved", "rejected"],
-    default: "yetToApproved",
-  },
-  createdBy:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  approvedAt: {
-    type: Date,
-    default: new Date().toISOString(),
     required: false,
   },
-  rejectedAt: {
-    type: Date, 
-    required: false
+  totalAmount: {
+    type: String,
+    required: false,
   },
-  rejectionReason:{type: String, required: false, },
-  invoiceId: { type: String, required: true, unique: true },
+});
+const invoiceSchema = mongoose.Schema(
+  {
+    invoiceType: {
+      type: String,
+    },
+    serviceId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      refPath: "serviceType",
+    },
+    serviceType: {
+      type: String,
+      required: true,
+      enum: ["BuyBacks", "AMCs"],
+    },
 
+    billingDetail: customerPersonalDetais,
+    shippingDetails: customerPersonalDetais,
+    vehicleDetails: vehicleDetailSchema,
 
-},
-{ timestamps: true }
-
+ 
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+   
+    invoiceId: { type: String, required: true, unique: true },
+  },
+  { timestamps: true }
 );
 
-const Invoice = mongoose.model("invoice", invoiceSchema)
+const Invoice = mongoose.model("invoice", invoiceSchema);
 module.exports = Invoice;

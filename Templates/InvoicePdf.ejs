@@ -1,212 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tax Invoice</title>
 </head>
+
 <body style="font-family: 'Times New Roman', serif; font-size: 12px;">
+  <div style="border: 1px solid #000; padding: 30px; margin: 20px;">
+    <!-- Header Section -->
+    <div
+      style="display: flex; justify-content: center; gap: 50px; align-items: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px;">
+      <div style="text-align: center;">
+        <h2 style="margin: 0; font-size: 18px; font-weight: bold;">RAAM4WHEELERS LLP</h2>
+        <p style="text-align: center; font-size: 12px; line-height: 1.5; margin: 3px 0;">
 
-  <div style=" border: 1px solid black; padding: 36px;">
-    <div style="display: flex; flex-direction: row; align-items: start; gap: 20%; font-size: 11px;">
-      <img src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FInvoice%20logo%20360.png?alt=media&token=65bc5a9d-a94d-4f72-8dc7-aeeea0a7434f" alt="logo" style="width: 11%;">
-  <div style="text-align: center; margin-bottom: 20px;">
-    <h2 style="margin: 0;">360 Car Protect India LLP</h2>
-    <h3 style="margin: 0;">3-4-138, A/Flat No. 501, Royal Elegance, Barkatpura, Hyderabad, Telangana</h3>
-    <h3 style="margin: 0;">TS-500027</h3>
-    <h3 style="margin: 0;">State Code: 36, GSTIN: 36AADFZ5034G1Z5</h3>
-    <h3 style="margin: 0;">PAN: AADFZ5034G</h3>
-  </div></div>
 
-  <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 10px;">
-    <tr>
-   
-      <td style=" width: 60%; border: 1px solid black; padding: 8px;">
-        <h2 style="font-size:14px ;">Tax Invoice </h2>
-       
-      </td>
-      
-      <th style=" border-collapse: collapse; width: 100%; text-align: left; ">
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr>
-            <th style="width: 50%; border:1px solid black ; padding: 5px; text-align: left;">Invoice Type:</th>
-            <td style="width: 50%; border: 1px solid black; padding: 5px;">360 Car Protect</td>
-          </tr>
-          <tr>
-            <th style="width: 50%; border:1px solid black ; padding: 5px; text-align: left;">Invoice Number</th>
-            <td style="width: 50%; border: 1px solid black; padding: 5px;"> <%= data.invoiceId %></td>
-          </tr>  <tr>
-            <th style="width: 50%; border:1px solid black ; padding: 5px; text-align: left;">Invoice Date</th>
-            <td style="width: 50%; border: 1px solid black; padding: 5px;"><%= date %></td>
-          </tr>
-        </table>
-      </th>
-       
-    </tr>
-    
-  </table>
-  <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 10px;">
-    <tr>
-      <td style="width: 33%; border: 1px solid black; padding: 8px;">
-        <b>Bill To:</b><br>
-        <%= data.billingDetail.address %>
-       <br>
-       <%= data.billingDetail.city %><br>
-       <%= data.billingDetail.state %><br>
-        State Code: <%= data.billingDetail.stateCode %><br>
-        GST Registration Type: <%= data.billingDetail.gstRegType %><br>
-        GSTIN: <%= data.billingDetail.gstInNumber %><br>
-        PAN: <%= data.billingDetail.pan %><br>
-        Contact No: <%= data.billingDetail.contact %>
-      </td>
-      <td style="width: 33%; border: 1px solid black; padding: 8px;">
-        <b>Place of Supply:</b><br>
-        <%= data.supplyDetails.address %>
-       <br>
-       <%= data.supplyDetails.city %><br>
-       <%= data.supplyDetails.state %><br>
-        State Code: <%= data.supplyDetails.stateCode %><br>
-        GST Registration Type: <%= data.supplyDetails.gstRegType %><br>
-        GSTIN: <%= data.supplyDetails.gstInNumber %><br>
-        PAN: <%= data.supplyDetails.pan %><br>
-        Contact No: <%= data.supplyDetails.contact %>
-      </td>
-      <td style="width: 33%; border: 1px solid black; padding: 8px;">
-        <b>Place of Delivery:</b><br>
-        <%= data.deliveryDetails.address %>
-       <br>
-       <%= data.deliveryDetails.city %><br>
-       <%= data.deliveryDetails.state %><br>
-        State Code: <%= data.deliveryDetails.stateCode %><br>
-        GST Registration Type: <%= data.deliveryDetails.gstRegType %><br>
-        GSTIN: <%= data.deliveryDetails.gstInNumber %><br>
-        PAN: <%= data.deliveryDetails.pan %><br>
-        Contact No: <%= data.deliveryDetails.contact %>
-      </td>
-    </tr>
+          8-2-120/86/10,10A,11B,11C and 11D,
+          <br />
+          Opp: Hotel Park Hyatt,
+          <br />
+          Road Number 2, Banjara Hills Hyderabad, PIN-500033
+          <br />
+          Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
+          <br />
+          Website: https://www.mghyderabad.co.in
+          <br />
+          GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
+        </p>
+      </div>
+      <div class="flex flex-col items-center">
+        <img src="path/to/mgBlack.png" alt="MG Logo" style="height: 80px;" />
+        <p class="font-medium">Morris Garages</p>
 
 
 
-<table style="border-collapse: collapse;  font-size: 9px; ">
-    <tr>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">S.No</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2; word-wrap: break-word;">Description of Goods/Services</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;  word-wrap: break-word;">HSN/S AC Code</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Qty.</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Rate</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Total</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;">Discount</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;  word-wrap: break-word;">Taxable Value</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">CGST</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">SGST</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">IGST</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">UTGST</th>
-        <th style="border: 1px solid black; padding: 8px; background-color: #f2f2f2;" colspan="2">CESS</th>
+        {/* Invoice Details Section */}
+        <div style="border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px;">
+          <h3 style="margin: 0; font-size: 16px;">Vehicle - Tax Invoice</h3>
+          <div style="display: flex; justify-content: space-between; font-size: 12px;">
 
 
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">1</td>
-        <td style="border: 1px solid black; padding: 8px;  word-wrap: break-word;"><%= data.customerBillingDetails.description %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.hsnCode %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.quantity %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.rate %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.total %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.discount %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.taxValue %></td>
-        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
-        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
-        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
-        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
-        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
-        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
-        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
-        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
-        <td style="border: 1px solid black; padding: 8px;">Rate %</td>
-        <td style="border: 1px solid black; padding: 8px;">Amount (INR)</td>
+            <p>Invoice No: {data?.invoiceId}</p>
+            <p>Invoice Date: {formatDate(data?.createdAt)}</p>
+          </div>
+        </div>
 
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;" colspan="8"></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cgstpercentage %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cgst %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.sgstpercentage %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.sgst %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.igstpercentage %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.igst %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.ugstpercentage %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.ugst %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cesspercentage %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.customerBillingDetails.cess %></td>
+        {/* Billed, Shipped, and Delivery Section */}
+        <div
+          style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 10px; border-bottom: 1px solid #000; padding-bottom: 10px;">
+          <!-- Billed To -->
+          <div style="width: 30%;">
+            <h4 style="margin: 0; font-size: 14px;">Billed To:</h4>
+            <p style="margin: 5px 0; line-height: 1.5;">
 
 
-        <tr>
-            <td style="border: 1px solid black; padding: 8px;" colspan="16"></td>
-            <th style="border: 1px solid black; padding: 8px; width: 12%;">Total Invoice Amount (INR)</th>
-         
-            <td style="border: 1px solid black; padding: 8px;  word-wrap: break-word;">₹<%= data.customerBillingDetails.totalinvoiceamount %></td>
-        </tr>
-    </tr>
-  </table>
-</table>
+              Name: {data?.billingDetail?.customerName || "Not Available"}
+              <br />
+              Address: {data?.billingDetail?.address || "Not Available"}
+              <br />
+              Pin: {data?.billingDetail?.zipCode || "Not Available"}
+              <br />
+              Mobile: {data?.billingDetail?.contact || "Not Available"}
+              <br />
+              PAN No: {data?.billingDetail?.pan || "Not Available"}
+              <br />
+              State Code: {data?.billingDetail?.stateCode || "Not Available"}
+              <br />
+              GSTIN: {data?.billingDetail?.customerGst || "Not Available"}
+            </p>
+          </div>
 
-<table style="border-collapse: collapse; width: 100%;  margin-top: 20px; font-size: 10px;">
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">Veh No:</td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.vehnumber %></td>
-        <td style="border: none; padding: 8px;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">VIN NO:</td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.vinnumber %></td>
-        <td style="border: none; padding: 8px;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">Engine No:</td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.enginenumber %></td>
-        <td style="border: none; padding: 8px;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">Model:</td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.vehiclemodel %></td>
-        <td style="border: none; padding: 8px;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">Total Invoice Price Value (in figure):</td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.totalpriceinfigure %></td>
-        <td style="border: none; padding: 8px;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">Whether Reverse Charge Applicable (Y/N):</td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.reversechargeapplication %></td>
-        <td style="border: none; padding: 8px;"></td>
-    </tr>
-</table>
+          {/* Shipped To */}
+          <div style="width: 30%;">
+            <h4 style="margin: 0; font-size: 14px;">Shipped To:</h4>
+            <p style="margin: 5px 0; line-height: 1.5;">
 
-<p style=" font-size: 10px;">Declaration/Terms and Conditions:</p>
-<p style=" font-size: 10px;">Above package can be availed only at all branches of Silver Star (Hyderabad, Vizag, Pune, Kolhapur, Nashik, Aurangabad)</p>
 
-<table style="border-collapse: collapse; width: 100%;  margin-top: 20px; font-size: 10px;">
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;">Warranty Validity:</td>
-        <td style="border: 1px solid black; padding: 8px;">Start Date</td>
-        <td style="border: 1px solid black; padding: 8px;">End Date</td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black; padding: 8px;"></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.warrantystartdate %></td>
-        <td style="border: 1px solid black; padding: 8px;"><%= data.vehicleDetails.warrantyenddate %></td>
-    </tr>
-</table>
+              Name: {data?.shippingDetails?.customerName || "Not Available"}
+              <br />
+              Address: {data?.shippingDetails?.address || "Not Available" || "Not Available"}
+              <br />
+              Pin: {data?.shippingDetails?.zipCode || "Not Available" || "Not Available"}
+              <br />
+              Mobile: {data?.shippingDetails?.contact || "Not Available" || "Not Available"}
+              <br />
+              PAN No: {data?.shippingDetails?.pan || "Not Available" || "Not Available"}
+              <br />
+              State Code: {data?.shippingDetails?.stateCode || "Not Available" || "Not Available"}
+              <br />
+              GSTIN: {data?.shippingDetails?.customerGst || "Not Available" || "Not Available"}
+            </p>
+          </div>
 
-<p style="font-size: 10px;"></p>">Certified that the particulars given above are true and correct</p>
-<p style="font-size: 10px;">All Disputes Subject to Jurisdiction of Hyderabad</p>
+          {/* Address of Delivery */}
+          <div style="width: 30%;">
+            <h4 style="margin: 0; font-size: 14px;">
+              Address Of Delivery:
+            </h4>
+            <p style="margin: 5px 0; line-height: 1.5;">
+              <!-- Assuming `data` is available in your context -->
+              <!-- Replace the following line with appropriate server-side rendering or JavaScript template syntax -->
+              <!-- {data?.addressOfDelivery || "Not Available"} -->
+              Not Available
+            </p>
+          </div>
 
-<p style="text-align: right;  font-size: 10px;">For 360 Car Protect India LLP</p>
-<p style="text-align: right;  font-size: 10px;">Authorized Signatory</p>
+          <!-- Footer Section -->
+          <div style="font-size: 12px; margin-top: 10px; line-height: 1.5;">
+            <p style="margin: 0;">
+              <span class="flex flex-row items-center justify-between">
+                <span class="flex flex-col">
 
- 
 
-</div>
+                  <span>Hypothecated To: {data?.vehicleDetails?.hypothecated || "Not Available"} </span>
+                  <span>Branch Name: {data?.vehicleDetails?.branchName || "Not Available"}</span>
+                </span>
+
+              </span>
+            </p>
+          </div>
+
+          {/* Invoice Details Section */}
+
+          {/* Invoice Header */}
+
+          {/* Table Section */}
+          <hr className="border border-black mt-2" />
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px;">
+            <thead>
+              <tr class="border border-b border-black" style="padding: 5px;">
+                <th style="padding: 5px;">S.No</th>
+                <th style="padding: 5px;">Description</th>
+                <!-- <th style="padding: 5px;">HSN</th> -->
+                <th style="padding: 5px;">Qty.</th>
+                <th style="padding: 5px;">Details</th>
+                <th style="padding: 5px;">Rate (₹)</th>
+                <th style="padding: 5px;">Amount (₹)</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 5px;">1</td>
+                <td style="padding: 5px;">
+                  <span>{data?.vehicleDetails?.model || "Not Available"}</span> <br />
+                </td>
+                <td style="padding: 5px;">1</td>
+                <td style="padding: 5px;">Basic Price</td>
+                <td style="padding: 5px;">{data?.vehicleDetails?.gstAmount || "Not Available"}</td>
+                <td style="padding: 5px;">{data?.vehicleDetails?.gstAmount || "Not Available"}</td>
+
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 20px; font-size: 14px; line-height: 1.6;">
+            <p style="margin-left: 93px; font-weight: lighter; font-size: 12px;">
+              {" "}
+              VIN : {data?.vehicleDetails?.vinNumber || "Not Available"} <br />
+              {/* MOTOR NO : U1RB060152 <br /> */}
+              {/* EXTERIOR COLOUR : Turquoise Green <br /> */}
+              {/* INTERIOR COLOUR : Black <br /> */}
+              {/* KEY NO : A1RA200142 <br /> */}
+              {/* ENGINE TYPE : {data?.vehicleDetails?.fuelType} <br /> */}
+              {/* TRANSMISSION TYPE: Automatic <br /> */}
+              {/* SEATING CAPACITY : 05 <br /> */}
+            </p>
+
+            <div>
+              <hr class="border border-black ml-[60%]" />
+
+              <p class="flex flex-row justify-end">
+              <table style="
+      width: 40%;
+      border-collapse: collapse;
+      margin-top: 9px;
+      font-size: 12px;
+    ">
+                <tbody>
+                  <tr>
+                    <td style="padding: 3px; font-weight: bold;">
+                      Basic Price after discount
+                    </td>
+                    <td style="padding: 3px;">
+                      <!-- Replace with actual value: data?.vehicleDetails?.gstAmount -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 3px; font-weight: bold;">
+                      CGST@ 9%
+                    </td>
+                    <td style="padding: 3px;">
+                      <!-- Replace with actual value: data?.vehicleDetails?.cgst -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 3px; font-weight: bold;">
+                      SGST@ 9%
+                    </td>
+                    <td style="padding: 3px;">
+                      <!-- Replace with actual value: data?.vehicleDetails?.sgst -->
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td style="
+              border: 1px solid #000;
+              padding: 8px;
+              font-weight: bold;
+            ">
+                      Total
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px;">
+                      {data?.vehicleDetails?.totalAmount}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </p>
+            </div>
+
+            <p style="margin-top: 20px;"></p>
+            Amount In Words:{" "}
+            <b>
+              Rupees Fifteen Lakh Sixty Five Thousand Two Hundred Ninety Eight
+              Only
+            </b>
+            </p>
+            <p>
+              Whether tax is payable on reverse charge basis - <b>No</b>
+            </p>
+            <p style="text-align: right; margin-top: 20px;">
+              For <b>RAAM4WHEELERS LLP</b>
+            </p>
+          </div>
+        </div>
 </body>
+
 </html>

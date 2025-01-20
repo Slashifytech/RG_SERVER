@@ -3,7 +3,12 @@ const userSchema = require("../model/User");
 const dotenv = require("dotenv");
 const fs = require("fs");
 // const { encryptText, decryptText } = require("../Utility/utilityFunc");
-const { sendAgentCredEmail } = require("../helper/emailFunction");
+const {
+  sendAgentCredEmail,
+  sendAgentUpdatedEmail,
+  sendTeamUpdatedEmail,
+  sendTeamCredEmail,
+} = require("../helper/emailFunction");
 const json2csv = require("json2csv").parse;
 dotenv.config();
 
@@ -101,6 +106,7 @@ exports.addAgent = async (req, res) => {
       confirmPassword,
       contactNumber,
       agentId,
+      roleType,
       agentName,
     } = agentData;
 
@@ -138,24 +144,27 @@ exports.addAgent = async (req, res) => {
       );
 
       if (updatedAgent) {
-        await sendAgentCredEmail(email, password, agentName, null, null);
+        const emailFunction =
+          roleType === "1" ? sendTeamUpdatedEmail : sendAgentUpdatedEmail;
+        await emailFunction(email, password, agentName);
         return res.status(200).json({ message: "Agent updated successfully" });
       } else {
         return res.status(404).json({ message: "Agent not found" });
       }
-    } 
+    }
 
-      const newAgent = new userSchema({
-        ...agentData,
-        password: password,
-        confirmPassword: confirmPassword,
-      });
+    const newAgent = new userSchema({
+      ...agentData,
+      password: password,
+      confirmPassword: confirmPassword,
+    });
 
-      await newAgent.save();
-      // await sendAgentCredEmail(email, password, agentName);
+    await newAgent.save();
+    const emailFunction =
+      roleType === "1" ? sendAgentCredEmail : sendTeamCredEmail;
+    await emailFunction(email, password, agentName);
 
-      return res.status(201).json({ message: "Agent added successfully" });
- 
+    return res.status(201).json({ message: "Agent added successfully" });
   } catch (err) {
     console.log("Error saving agent data:", err);
     res
@@ -240,7 +249,6 @@ exports.getUserDataByBrand = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong", error });
   }
 };
-
 
 exports.downloadCsv = async (req, res) => {
   try {
