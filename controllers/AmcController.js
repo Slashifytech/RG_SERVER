@@ -93,7 +93,7 @@ exports.updateAMCStatus = async (req, res) => {
   try {
     const { id, type } = req.body;
     const { reason } = req.query;
-    const validTypes = ["pending", "approved", "rejected", "approvedReq"];
+    const validTypes = ["pending", "approved", "rejected", "approvedReq", "reqCancel"];
 
     // Validate policy type
     if (!validTypes.includes(type)) {
@@ -122,6 +122,16 @@ exports.updateAMCStatus = async (req, res) => {
 
       return res.status(200).json({
         message: "Cancellation request approved.",
+        isCancelReq: AMCdata.isCancelReq,
+        status: 200,
+      });
+    }
+    if(type === "reqCancel"){
+      AMCdata.isCancelReq = "reqCancel"
+      await AMCdata.save();
+
+      return res.status(200).json({
+        message: "Requested for cancellation",
         isCancelReq: AMCdata.isCancelReq,
         status: 200,
       });
@@ -191,14 +201,13 @@ exports.disableAmc = async (req, res) => {
     const { amcId } = req.params;
 
     const AMCdata = await AMCs.findById(amcId);
-    const agent = await User.findById(AMCdata.userId);
     if (!AMCdata) {
       return res.status(404).json({ message: "AMC not found" });
     }
 
     if (!AMCdata.approvedAt) {
       return res.status(403).json({
-        message: "AMCdata must be approved before it can be disabled",
+        message: "AMC data must be approved before it can be cancel",
       });
     }
 
@@ -210,7 +219,7 @@ exports.disableAmc = async (req, res) => {
 
     if (diffInDays > 15) {
       return res.status(403).json({
-        message: "AMCdata cannot be disabled after 15 days of creation",
+        message: "AMC data cannot be disabled after 15 days of creation",
       });
     }
 
@@ -219,14 +228,7 @@ exports.disableAmc = async (req, res) => {
     oneMonthFromApproval.setMonth(approvedDate.getMonth() + 1);
     AMCdata.disabledAt = oneMonthFromApproval;
 
-    await policy.save();
-    await agentCancelledPolicy(
-      agent.email,
-      AMCdata.customerName,
-      agent.agentName,
-
-      AMCdata.vehicleModel
-    );
+    await AMCdata.save();
 
     res
       .status(200)

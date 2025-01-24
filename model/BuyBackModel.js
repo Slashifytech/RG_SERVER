@@ -34,6 +34,12 @@ const vehicleDetailsSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  gmEmail: {
+    type: String,
+  },
+  rmEmail:{
+    type: String,
+  }
 });
 
 const BuyBackSchema = mongoose.Schema({

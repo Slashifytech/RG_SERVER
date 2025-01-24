@@ -7,7 +7,6 @@ const cron = require('node-cron');
 const Policy = require('./model/Policies')
 const invoiceRoutes = require('./routes/invoicesRoute.js'); 
 const adminRoutes = require('./routes/adminRoute.js'); 
-const documentRoutes = require('./routes/DocumentRoute.js'); 
 const policyRoutes = require('./routes/policyRoute.js'); 
 const teamRoutes = require('./routes/TeamsRoute.js'); 
 const userRoutes = require('./routes/userRoute.js'); 
@@ -74,7 +73,6 @@ async function startServer() {
     const server = http.createServer(app);
     app.use('/api/v1/', invoiceRoutes);
     app.use('/api/v1/', adminRoutes);
-    app.use('/api/v1/', documentRoutes);
     app.use('/api/v1/', vehicleRoutes);
     app.use('/api/v1/', policyRoutes);
     app.use('/api/v1/', userRoutes);

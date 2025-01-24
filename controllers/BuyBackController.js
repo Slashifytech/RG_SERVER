@@ -84,12 +84,10 @@ exports.editBuyBack = async (req, res) => {
       return res.status(404).json({ message: "BuyBacks not found" });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "BuyBacks updated successfully",
-        data: updateVinNumber,
-      });
+    res.status(200).json({
+      message: "BuyBacks updated successfully",
+      data: updateVinNumber,
+    });
   } catch (err) {
     console.error("Error updating BuyBacks data:", err);
     res.status(500).json({ message: "Something went wrong", error: err });
@@ -176,13 +174,11 @@ exports.updateBuyBackStatus = async (req, res) => {
 
     await buyBackdata.save();
 
-    return res
-      .status(200)
-      .json({
-        message: "Buy Back Data Status Changed Successfully.",
-        buyBackdata,
-        status: 200,
-      });
+    return res.status(200).json({
+      message: "Buy Back Data Status Changed Successfully.",
+      buyBackdata,
+      status: 200,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -194,7 +190,6 @@ exports.disableBuyBack = async (req, res) => {
     const { buyBackId } = req.query;
 
     const buyBackdata = await BuyBacks.findById(buyBackId);
-    const agent = await User.findById(buyBackdata.userId);
     if (!buyBackdata) {
       return res.status(404).json({ message: "buyback not found" });
     }
@@ -222,14 +217,7 @@ exports.disableBuyBack = async (req, res) => {
     oneMonthFromApproval.setMonth(approvedDate.getMonth() + 1);
     buyBackdata.disabledAt = oneMonthFromApproval;
 
-    await policy.save();
-    await agentCancelledPolicy(
-      agent.email,
-      buyBackdata.customerName,
-      agent.agentName,
-
-      buyBackdata.vehicleModel
-    );
+    await buyBackData.save();
 
     res
       .status(200)

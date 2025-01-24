@@ -5,20 +5,19 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { formatIsoDate } = require('../Utility/utilityFunc');
 
-const renderEmailTemplate = async (data) => {
+const renderEmailTemplate = async (data, pathData) => {
   try {
-    const templatePath = path.join(__dirname, '../Templates/PolicyPdf.ejs');
+    const templatePath = path.join(__dirname, `${pathData}`);
 
-    // Check if the template exists
     if (!fs.existsSync(templatePath)) {
       throw new Error('Template file does not exist.');
     }
 
-    // Read and render the template
     const template = fs.readFileSync(templatePath, 'utf-8');
+    
     return ejs.render(template, {
       data: data,
-      date: formatIsoDate(data.createdAt)
+      date: formatIsoDate(data?.createdAt)
       
     });
   } catch (error) {
@@ -28,26 +27,7 @@ const renderEmailTemplate = async (data) => {
 };
 
 
-const renderEmailInvoiceTemplate = async (data) => {
-  try {
-    const templatePath = path.join(__dirname, '../Templates/InvoicePdf.ejs');
 
-    // Check if the template exists
-    if (!fs.existsSync(templatePath)) {
-      throw new Error('Template file does not exist.');
-    }
-
-    // Read and render the template
-    const template = fs.readFileSync(templatePath, 'utf-8');
-    return ejs.render(template, {
-      data: data,
-      date: formatIsoDate(data.createdAt)
-    });
-  } catch (error) {
-    console.error('Error rendering email template:', error);
-    throw error;
-  }
-};
 const generatePdf = async (html, pdfType) => {
   let browser;
   try {
@@ -55,7 +35,7 @@ const generatePdf = async (html, pdfType) => {
     browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'], // Add sandbox flags for restricted environments
-      timeout: 60000, // Increase timeout to 60 seconds
+      timeout: 90000, // Increase timeout to 60 seconds
     });
     //  browser = await puppeteer.launch({  //production code for aws ec2 
     //   executablePath: '/usr/bin/chromium-browser', // Path to system-installed Chromium
@@ -69,21 +49,25 @@ const generatePdf = async (html, pdfType) => {
     // Set the HTML content with a timeout safeguard
     await page.setContent(html, { waitUntil: 'networkidle0' });
      let pdfBuffer;
-    // Generate the PDF with desired options
     if(pdfType === "pdfInvoice"){
       pdfBuffer = await page.pdf({
         format: 'A3',
         printBackground: true, // Include background styles
       });
     }
-    if(pdfType === "pdfPolicy"){
+    if(pdfType === "pdfbuyBack"){
        pdfBuffer = await page.pdf({
         format: 'A4',
-        printBackground: true, // Include background styles
+        printBackground: true, 
       });
     }
     
-
+    if(pdfType === "pdfAmc"){
+      pdfBuffer = await page.pdf({
+       format: 'A4',
+       printBackground: true, 
+     });
+   }
     return pdfBuffer;
   } catch (error) {
     console.error('Error generating PDF:', error);
@@ -97,6 +81,5 @@ const generatePdf = async (html, pdfType) => {
 
 module.exports = {
   renderEmailTemplate,
-  renderEmailInvoiceTemplate,
   generatePdf,
 };

@@ -4,7 +4,7 @@ const { sendEmail } = require("../Utility/emailUtil");
 dotenv.config();
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-
+const COMMON_EMAIL = process.env.COMMON_EMAIL;
 const sendUserEmail = async ({
   to,
   subject,
@@ -13,8 +13,11 @@ const sendUserEmail = async ({
   pdfInvoiceBuffer,
   policyFilename,
   invoiceFilename,
+  rmEmail,
+  gmEmail,
+  policyType
 }) => {
-  if (to && subject && htmlContent) {
+  // if (to && subject && htmlContent) {
     await sendEmail({
       to,
       subject,
@@ -23,10 +26,13 @@ const sendUserEmail = async ({
       pdfInvoiceBuffer,
       policyFilename,
       invoiceFilename,
+      rmEmail,
+      gmEmail,
+      policyType
     });
-  } else {
-    throw new Error("Missing required parameters to send email");
-  }
+  // } else {
+  //   throw new Error("Missing required parameters to send email");
+  // }
 };
 
 const getEmailTemplate = (
@@ -333,16 +339,22 @@ exports.AgentPolicyRejectedEmail = async (userEmail, name, reason, policyType, v
   });
 };
 exports.sendDocEmail = async (
-  userEmail,
+
   policyType,
   vinNumber,
   invoiceId,
-  customerName
+  customerName,
+  pdfPolicyBuffer,
+  pdfInvoiceBuffer,
+  policyFilename,
+  invoiceFilename,
+  rmEmail,
+  gmEmail
 ) => {
   const subject = "Customer Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
     "commonTemp",
-    userEmail, // email
+    COMMON_EMAIL, // email
     null, // password
     customerName, // customerName 
     null, // agentName
@@ -353,13 +365,17 @@ exports.sendDocEmail = async (
   );
 
   await sendUserEmail({
-    to: userEmail,
+    to: COMMON_EMAIL, 
     subject,
     htmlContent,
     pdfPolicyBuffer,
     pdfInvoiceBuffer,
     policyFilename,
     invoiceFilename,
+    rmEmail,
+    gmEmail,
+    policyType
+
   });
 };
 
@@ -367,7 +383,11 @@ exports.sendCustomerDocEmail = async (
   userEmail,
   policyType,
   vinNumber,
-  invoiceId
+  invoiceId,
+  pdfPolicyBuffer,
+  pdfInvoiceBuffer,
+  policyFilename,
+  invoiceFilename,
 ) => {
   const subject = "Your Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
@@ -391,5 +411,6 @@ exports.sendCustomerDocEmail = async (
     policyFilename,
     invoiceFilename,
   });
+  
 };
 

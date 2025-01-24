@@ -10,235 +10,241 @@
 <body style="font-family: 'Times New Roman', serif; font-size: 12px;">
   <div style="border: 1px solid #000; padding: 30px; margin: 20px;">
     <!-- Header Section -->
-    <div
-      style="display: flex; justify-content: center; gap: 50px; align-items: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px;">
-      <div style="text-align: center;">
-        <h2 style="margin: 0; font-size: 18px; font-weight: bold;">RAAM4WHEELERS LLP</h2>
-        <p style="text-align: center; font-size: 12px; line-height: 1.5; margin: 3px 0;">
 
-
-          8-2-120/86/10,10A,11B,11C and 11D,
-          <br />
-          Opp: Hotel Park Hyatt,
-          <br />
-          Road Number 2, Banjara Hills Hyderabad, PIN-500033
-          <br />
-          Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
-          <br />
-          Website: https://www.mghyderabad.co.in
-          <br />
-          GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
-        </p>
+    <div style="  padding-bottom: 10px; margin-bottom: 10px;">
+      <div style="display: flex; justify-content: center ; align-items: center; gap: 50px;">
+        <div style="text-align: center;">
+          <h2 style="margin: 0; font-size: 18px; font-weight: bold;">RAAM4WHEELERS LLP</h2>
+          <p style="text-align: center; font-size: 12px; line-height: 1.5; margin: 3px 0;">
+            8-2-120/86/10,10A,11B,11C and 11D,
+            <br />
+            Opp: Hotel Park Hyatt,
+            <br />
+            Road Number 2, Banjara Hills Hyderabad, PIN-500033
+            <br />
+            Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
+            <br />
+            Website: https://www.mghyderabad.co.in
+            <br />
+            GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
+          </p>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <img src="path/to/mgBlack.png" alt="MG Logo" style="height: 80px;" />
+          <h3>Morris Garages</h3>
+        </div>
       </div>
-      <div class="flex flex-col items-center">
-        <img src="path/to/mgBlack.png" alt="MG Logo" style="height: 80px;" />
-        <p class="font-medium">Morris Garages</p>
+
+      <hr / style="margin: 20px 9% 20px 9%;">
+
+      <!-- {/* Invoice Details Section */} -->
+      <div style="border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 16px;">Vehicle - Tax Invoice</h3>
+        <div style="display: flex; justify-content: space-between; font-size: 12px;">
 
 
+          <p>Invoice No: <%= data.invoiceId %>
 
-        {/* Invoice Details Section */}
-        <div style="border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px;">
-          <h3 style="margin: 0; font-size: 16px;">Vehicle - Tax Invoice</h3>
-          <div style="display: flex; justify-content: space-between; font-size: 12px;">
+          </p>
+          <p>Invoice Date: <%= date %>
+          </p>
+        </div>
+      </div>
+
+      <!-- {/* Billed, Shipped, and Delivery Section */} -->
+      <div
+        style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 10px; border-bottom: 1px solid #000; padding-bottom: 10px;">
+        <!-- Billed To -->
+        <div style="width: 30%;">
+          <h4 style="margin: 0; font-size: 14px;">Billed To:</h4>
+          <p style="margin: 5px 0; line-height: 1.5;">
 
 
-            <p>Invoice No: {data?.invoiceId}</p>
-            <p>Invoice Date: {formatDate(data?.createdAt)}</p>
-          </div>
+            Name: <%= data.billingDetail.customerName %>
+              <br />
+              Address: <%= data.billingDetail.address %>
+                <br />
+                Pin: <%= data.billingDetail.zipCode %>
+                  <br />
+                  Mobile: <%= data.billingDetail.contact %>
+                    <br />
+                    PAN No: <%= data.billingDetail.pan %>
+                      <br />
+                      State Code: <%= data.billingDetail.stateCode %>
+                        <br />
+                        GSTIN: <%= data.billingDetail.customerGst %>
+          </p>
         </div>
 
-        {/* Billed, Shipped, and Delivery Section */}
-        <div
-          style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 10px; border-bottom: 1px solid #000; padding-bottom: 10px;">
-          <!-- Billed To -->
-          <div style="width: 30%;">
-            <h4 style="margin: 0; font-size: 14px;">Billed To:</h4>
-            <p style="margin: 5px 0; line-height: 1.5;">
+        <!-- {/* Shipped To */} -->
+        <div style="width: 30%;">
+          <h4 style="margin: 0; font-size: 14px;">Shipped To:</h4>
+          <p style="margin: 5px 0; line-height: 1.5;">
 
 
-              Name: {data?.billingDetail?.customerName || "Not Available"}
+            Name: <%= data.shippingDetails.customerName %>
               <br />
-              Address: {data?.billingDetail?.address || "Not Available"}
-              <br />
-              Pin: {data?.billingDetail?.zipCode || "Not Available"}
-              <br />
-              Mobile: {data?.billingDetail?.contact || "Not Available"}
-              <br />
-              PAN No: {data?.billingDetail?.pan || "Not Available"}
-              <br />
-              State Code: {data?.billingDetail?.stateCode || "Not Available"}
-              <br />
-              GSTIN: {data?.billingDetail?.customerGst || "Not Available"}
-            </p>
-          </div>
+              Address: <%= data.shippingDetails.address %>
+                <br />
+                Pin: <%= data.shippingDetails.zipCode %>
+                  <br />
+                  Mobile: <%= data.shippingDetails.contact %>
+                    <br />
+                    PAN No: <%= data.shippingDetails.pan %>
+                      <br />
+                      State Code: <%= data.shippingDetails.stateCode %>
+                        <br />
+                        GSTIN: <%= data.shippingDetails.customerGst %>
+          </p>
+        </div>
 
-          {/* Shipped To */}
-          <div style="width: 30%;">
-            <h4 style="margin: 0; font-size: 14px;">Shipped To:</h4>
-            <p style="margin: 5px 0; line-height: 1.5;">
+        <!-- {/* Address of Delivery */} -->
+        <div style="width: 30%;">
+          <h4 style="margin: 0; font-size: 14px;">
+            Address Of Delivery:
+          </h4>
+          <p style="margin: 5px 0; line-height: 1.5;">
+            <!-- Assuming `data` is available in your context -->
+            <!-- Replace the following line with appropriate server-side rendering or JavaScript template syntax -->
+            <!-- {data?.addressOfDelivery || "Not Available"} -->
+            Not Available
+          </p>
+        </div>
+      </div>
 
-
-              Name: {data?.shippingDetails?.customerName || "Not Available"}
-              <br />
-              Address: {data?.shippingDetails?.address || "Not Available" || "Not Available"}
-              <br />
-              Pin: {data?.shippingDetails?.zipCode || "Not Available" || "Not Available"}
-              <br />
-              Mobile: {data?.shippingDetails?.contact || "Not Available" || "Not Available"}
-              <br />
-              PAN No: {data?.shippingDetails?.pan || "Not Available" || "Not Available"}
-              <br />
-              State Code: {data?.shippingDetails?.stateCode || "Not Available" || "Not Available"}
-              <br />
-              GSTIN: {data?.shippingDetails?.customerGst || "Not Available" || "Not Available"}
-            </p>
-          </div>
-
-          {/* Address of Delivery */}
-          <div style="width: 30%;">
-            <h4 style="margin: 0; font-size: 14px;">
-              Address Of Delivery:
-            </h4>
-            <p style="margin: 5px 0; line-height: 1.5;">
-              <!-- Assuming `data` is available in your context -->
-              <!-- Replace the following line with appropriate server-side rendering or JavaScript template syntax -->
-              <!-- {data?.addressOfDelivery || "Not Available"} -->
-              Not Available
-            </p>
-          </div>
-
-          <!-- Footer Section -->
-          <div style="font-size: 12px; margin-top: 10px; line-height: 1.5;">
-            <p style="margin: 0;">
-              <span class="flex flex-row items-center justify-between">
-                <span class="flex flex-col">
+      <!-- Footer Section -->
+      <div style="font-size: 12px; margin-top: 10px; line-height: 1.5;">
+        <p style="margin: 0;">
+          <span style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+            <span style="display: flex; flex-direction: column;">
 
 
-                  <span>Hypothecated To: {data?.vehicleDetails?.hypothecated || "Not Available"} </span>
-                  <span>Branch Name: {data?.vehicleDetails?.branchName || "Not Available"}</span>
-                </span>
+              <span>Hypothecated To: <%= data.vehicleDetails.hypothecated %> </span>
+              <span>Branch Name: <%= data.vehicleDetails.branchName %></span>
+            </span>
 
-              </span>
-            </p>
-          </div>
+          </span>
+        </p>
+      </div>
 
-          {/* Invoice Details Section */}
+      <!-- {/* Invoice Details Section */} -->
 
-          {/* Invoice Header */}
+      <!-- {/* Invoice Header */} -->
 
-          {/* Table Section */}
-          <hr className="border border-black mt-2" />
-          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px;">
-            <thead>
-              <tr class="border border-b border-black" style="padding: 5px;">
-                <th style="padding: 5px;">S.No</th>
-                <th style="padding: 5px;">Description</th>
-                <!-- <th style="padding: 5px;">HSN</th> -->
-                <th style="padding: 5px;">Qty.</th>
-                <th style="padding: 5px;">Details</th>
-                <th style="padding: 5px;">Rate (₹)</th>
-                <th style="padding: 5px;">Amount (₹)</th>
+      <!-- {/* Table Section */} -->
+      <hr className="border border-black mt-2" />
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px;">
+        <thead>
+          <tr class="border border-b border-black" style="padding: 5px;">
+            <th style="padding: 5px;">S.No</th>
+            <th style="padding: 5px;">Description</th>
+            <!-- <th style="padding: 5px;">HSN</th> -->
+            <th style="padding: 5px;">Qty.</th>
+            <th style="padding: 5px;">Details</th>
+            <th style="padding: 5px;">Rate (₹)</th>
+            <th style="padding: 5px;">Amount (₹)</th>
 
 
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="padding: 5px;">1</td>
-                <td style="padding: 5px;">
-                  <span>{data?.vehicleDetails?.model || "Not Available"}</span> <br />
-                </td>
-                <td style="padding: 5px;">1</td>
-                <td style="padding: 5px;">Basic Price</td>
-                <td style="padding: 5px;">{data?.vehicleDetails?.gstAmount || "Not Available"}</td>
-                <td style="padding: 5px;">{data?.vehicleDetails?.gstAmount || "Not Available"}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 5px;">1</td>
+            <td style="padding: 5px;">
+              <span>
+                <%= data.vehicleDetails.model %>
+              </span> <br />
+            </td>
+            <td style="padding: 5px;">1</td>
+            <td style="padding: 5px;">Basic Price</td>
+            <td style="padding: 5px;">
+              <%= data.vehicleDetails.gstAmount %>
+            </td>
+            <td style="padding: 5px;">
+              <%= data.vehicleDetails.gstAmount %>
+            </td>
 
-              </tr>
-            </tbody>
-          </table>
+          </tr>
+        </tbody>
+      </table>
 
-          <div style="margin-top: 20px; font-size: 14px; line-height: 1.6;">
-            <p style="margin-left: 93px; font-weight: lighter; font-size: 12px;">
-              {" "}
-              VIN : {data?.vehicleDetails?.vinNumber || "Not Available"} <br />
-              {/* MOTOR NO : U1RB060152 <br /> */}
-              {/* EXTERIOR COLOUR : Turquoise Green <br /> */}
-              {/* INTERIOR COLOUR : Black <br /> */}
-              {/* KEY NO : A1RA200142 <br /> */}
-              {/* ENGINE TYPE : {data?.vehicleDetails?.fuelType} <br /> */}
-              {/* TRANSMISSION TYPE: Automatic <br /> */}
-              {/* SEATING CAPACITY : 05 <br /> */}
-            </p>
+      <div style="margin-top: 20px; font-size: 14px; line-height: 1.6;">
+        <p style="margin-left: 93px; font-weight: lighter; font-size: 12px;">
+          
+          VIN : <%= data.vehicleDetails.vinNumber %>
 
-            <div>
-              <hr class="border border-black ml-[60%]" />
+            <br />
 
-              <p class="flex flex-row justify-end">
-              <table style="
+        </p>
+
+        <div>
+          <hr class="border border-black ml-[60%]" />
+
+          <p class="flex flex-row justify-end">
+          <table style="
       width: 40%;
       border-collapse: collapse;
       margin-top: 9px;
       font-size: 12px;
     ">
-                <tbody>
-                  <tr>
-                    <td style="padding: 3px; font-weight: bold;">
-                      Basic Price after discount
-                    </td>
-                    <td style="padding: 3px;">
-                      <!-- Replace with actual value: data?.vehicleDetails?.gstAmount -->
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 3px; font-weight: bold;">
-                      CGST@ 9%
-                    </td>
-                    <td style="padding: 3px;">
-                      <!-- Replace with actual value: data?.vehicleDetails?.cgst -->
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 3px; font-weight: bold;">
-                      SGST@ 9%
-                    </td>
-                    <td style="padding: 3px;">
-                      <!-- Replace with actual value: data?.vehicleDetails?.sgst -->
-                    </td>
-                  </tr>
+            <tbody>
+              <tr>
+                <td style="padding: 3px; font-weight: bold;">
+                  Basic Price after discount
+                </td>
+                <td style="padding: 3px;">
+                  <%= data.vehicleDetails.gstAmount %>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 3px; font-weight: bold;">
+                  CGST@ 9%
+                </td>
+                <td style="padding: 3px;">
+                  <%= data.vehicleDetails.cgst %>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 3px; font-weight: bold;">
+                  SGST@ 9%
+                </td>
+                <td style="padding: 3px;">
+                  <%= data.vehicleDetails.sgst %>
+                </td>
+              </tr>
 
 
-                  <tr>
-                    <td style="
+              <tr>
+                <td style="
               border: 1px solid #000;
               padding: 8px;
               font-weight: bold;
             ">
-                      Total
-                    </td>
-                    <td style="border: 1px solid #000; padding: 8px;">
-                      {data?.vehicleDetails?.totalAmount}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </p>
-            </div>
-
-            <p style="margin-top: 20px;"></p>
-            Amount In Words:{" "}
-            <b>
-              Rupees Fifteen Lakh Sixty Five Thousand Two Hundred Ninety Eight
-              Only
-            </b>
-            </p>
-            <p>
-              Whether tax is payable on reverse charge basis - <b>No</b>
-            </p>
-            <p style="text-align: right; margin-top: 20px;">
-              For <b>RAAM4WHEELERS LLP</b>
-            </p>
-          </div>
+                  Total
+                </td>
+                <td style="border: 1px solid #000; padding: 8px;">
+                  <%= data.vehicleDetails.totalAmount %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </p>
         </div>
+
+        <p style="margin-top: 20px;"></p>
+        <!-- Amount In Words:{" "} -->
+        <!-- <b>
+          Rupees Fifteen Lakh Sixty Five Thousand Two Hundred Ninety Eight
+          Only
+        </b> -->
+        </p>
+        <p>
+          Whether tax is payable on reverse charge basis - <b>No</b>
+        </p>
+        <p style="text-align: right; margin-top: 20px;">
+          For <b>RAAM4WHEELERS LLP</b>
+        </p>
+      </div>
 </body>
 
 </html>

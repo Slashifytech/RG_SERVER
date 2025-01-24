@@ -71,6 +71,12 @@ const amcVehicleDetailSchema = mongoose.Schema({
   total: {
     type: String,
   },
+  gmEmail: {
+    type: String,
+  },
+  rmEmail:{
+    type: String,
+  }
 });
 
 const AMCschema = mongoose.Schema({

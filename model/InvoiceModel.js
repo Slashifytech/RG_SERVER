@@ -34,6 +34,12 @@ const vehicleDetailSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  gmEmail: {
+    type: String,
+  },
+  rmEmail:{
+    type: String,
+  }
 });
 const invoiceSchema = mongoose.Schema(
   {

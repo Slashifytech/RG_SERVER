@@ -20,27 +20,28 @@
         </div>
 
 
-        {/* Invoice Header */}
         <div style="margin-top: 2.25rem; font-weight: 500;">
 
             <p style="padding-top: 1rem;">
-                Customer Name: {data?.customerDetails?.customerName || "NA"}
+                Customer Name: <%= data.customerDetails.customerName %>
             </p>
-            <p style="padding-top: 1rem;">Model: {data?.vehicleDetails?.vehicleModel}</p>
-            <p style="padding-top: 1rem;">VIN No. : {data?.vehicleDetails?.vinNumber}</p>
-            <p style="padding-top: 1rem;">
-                Agreement Start Date :{" "}
-                {formatDate(data?.vehicleDetails?.agreementStartDate)}
+            <p style="padding-top: 1rem;">Model: <%= data.vehicleDetails.vehicleModel %>
+            </p>
+            <p style="padding-top: 1rem;">VIN No. : <%= data.vehicleDetails.vinNumber %>
             </p>
             <p style="padding-top: 1rem;">
-                Agreement Valid Date:{" "}
-                {formatDate(data?.vehicleDetails?.agreementValidDate)} <br />
-                (OR) <br />
-                1,00,000kms-Running of the vehicle, whichever of the two occurs
-                Earlierr.
+                Agreement Start Date :
+                <%= data.customerDetails.agreementStartDate %>
             </p>
             <p style="padding-top: 1rem;">
-                Total Payment: Rs {data?.vehicleDetails?.totalPayment}
+                Agreement Valid Date:
+                <%= data.customerDetails.agreementValidDate %> <br />
+                    (OR) <br />
+                    1,00,000kms-Running of the vehicle, whichever of the two occurs
+                    Earlierr.
+            </p>
+            <p style="padding-top: 1rem;">
+                Total Payment: Rs <%= data.vehicleDetails.totalPayment %>
             </p>
         </div>
 
@@ -454,8 +455,7 @@
                 </div>
             </div>
         </div>
-        </>
-        )}
+
     </div>
     </div>
 </body>

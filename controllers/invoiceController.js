@@ -1,11 +1,21 @@
-const { invoiceApproved, invoiceRejected } = require("../helper/emailFunction");
+const {
+  invoiceApproved,
+  invoiceRejected,
+  sendDocEmail,
+  sendCustomerDocEmail,
+} = require("../helper/emailFunction");
 const Invoice = require("../model/InvoiceModel");
 const InvoiceCounter = require("../model/InvoiceCounterModel");
-
+const { generatePdf, renderEmailTemplate } = require("../helper/pdfDownlaod");
+const { AMCs } = require("../model/AmcModel");
+const BuyBacks = require("../model/BuyBackModel");
 
 exports.addInvoice = async (req, res) => {
   const { invoiceType, ...payload } = req.body;
   const vinNumber = req.body.vehicleDetails.vinNumber;
+  const rmEmail = req.body.vehicleDetails.rmEmail;
+  const gmEmail = req.body.vehicleDetails.gmEmail;
+
 
   try {
     const existingVinNumber = await Invoice.findOne({
@@ -34,9 +44,9 @@ exports.addInvoice = async (req, res) => {
     }
 
     const counter = await InvoiceCounter.findOneAndUpdate(
-      {}, 
+      {},
       { $inc: { [`${counterField}.count`]: 1 } },
-      { new: true, upsert: true } 
+      { new: true, upsert: true }
     );
 
     if (!counter) {
@@ -54,7 +64,88 @@ exports.addInvoice = async (req, res) => {
     });
 
     await newInvoice.save();
+    let amcData;
+    let buyBackData;
+    let amcFileName;
+    let buyBackFileName;
+    let pdfBuybackBuffer;
+    let pdfAmcBuffer;
+    
+    if (invoiceTypeData === "amc") {
+      amcData = await AMCs.findOne({ "vehicleDetails.vinNumber": vinNumber });
+      const amcHTML = await renderEmailTemplate(
+        amcData,
+        "../Templates/AmcTemplate.ejs"
+      );
+      pdfAmcBuffer = await generatePdf(amcHTML, "pdfAmc");
+      amcFileName = `${amcData.vehicleDetails.vinNumber}_${amcData.customerDetails.customerName || "AMC"}.pdf`;
+    } else if (invoiceTypeData === "buyback") {
+      buyBackData = await BuyBacks.findOne({
+        "vehicleDetails.vinNumber": vinNumber,
+      });
+      const buyBackHTML = await renderEmailTemplate(
+        buyBackData,
+        "../Templates/BuyBackTemplate.ejs"
+      );
+      pdfBuybackBuffer = await generatePdf(buyBackHTML, "pdfbuyBack");
+      buyBackFileName = `${buyBackData?.vehicleDetails?.vinNumber}_${
+        buyBackData?.customerDetails?.customerName || "Buyback"
+      }.pdf`;
+    }
+    const invoiceData = await Invoice.findOne({
+      "vehicleDetails.vinNumber": vinNumber,
+    });
+    const invoiceHTML = await renderEmailTemplate(
+      invoiceData,
+      "../Templates/InvoicePdf.ejs"
+    );
+    const pdfInvoiceBuffer = await generatePdf(invoiceHTML, "pdfInvoice");
 
+    const invoiceFilename = `${invoiceData.invoiceId}_${
+      invoiceData.customerName || "Invoice"
+    }.pdf`;
+    const policyType =
+      invoiceTypeData === "amc"
+        ? "AMC"
+        : invoiceTypeData === "buyback"
+        ? "Buyback"
+        : null;
+    const pdfPolicyBuffer =
+      invoiceTypeData === "amc"
+        ? pdfAmcBuffer
+        : invoiceTypeData === "buyback"
+        ? pdfBuybackBuffer
+        : null;
+    const policyFileName =
+      invoiceTypeData === "amc"
+        ? amcFileName
+        : invoiceTypeData === "buyback"
+        ? buyBackFileName
+        : null;
+
+       console.log()
+    await sendDocEmail(
+      policyType,
+      invoiceData.vehicleDetails.vinNumber,
+      invoiceData.invoiceId,
+      invoiceData.billingDetail.customerName,
+      pdfPolicyBuffer,
+      pdfInvoiceBuffer,
+      policyFileName,
+      invoiceFilename,
+      rmEmail,
+      gmEmail
+    );
+    await sendCustomerDocEmail(
+      invoiceData.billingDetail.email,
+      policyType,
+      invoiceData.vehicleDetails.vinNumber,
+      invoiceData.invoiceId,
+      pdfPolicyBuffer,
+      pdfInvoiceBuffer,
+      policyFileName,
+      invoiceFilename
+    );
     res
       .status(201)
       .json({ message: "Invoice added successfully", data: newInvoice });
@@ -63,7 +154,6 @@ exports.addInvoice = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
-
 
 exports.editInvoice = async (req, res) => {
   const { id } = req.query;
@@ -75,7 +165,7 @@ exports.editInvoice = async (req, res) => {
       return res.status(400).json({ message: "Invoice ID is required" });
     }
 
-    console.log("Invoice ID:", id);
+    // console.log("Invoice ID:", id);
 
     const existingInvoice = await Invoice.findById(id);
     if (!existingInvoice) {
@@ -83,7 +173,7 @@ exports.editInvoice = async (req, res) => {
       return res.status(404).json({ message: "Invoice not found" });
     }
 
-    console.log("Existing Invoice:", existingInvoice);
+    // console.log("Existing Invoice:", existingInvoice);
 
     const vinNumber = payload?.vehicleDetails?.vinNumber;
     if (vinNumber && vinNumber !== existingInvoice.vehicleDetails?.vinNumber) {
