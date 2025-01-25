@@ -29,16 +29,7 @@ jobs:
         touch .env
         echo "${{ secrets.RG_PRODUCTION }}" | base64 --decode > .env
 
-    - name: Verify .env File
-      run: |
-        echo "Contents of .env:"
-        cat .env | sed 's/=.*/=***masked***/'
-
-    - name: Install PM2
-      run: npm install -g pm2
-
     - name: Start Application
-      run: pm2 restart app.js
+      run: pm2 restart app
 
-    - name: Check PM2 Logs
-      run: pm2 logs
+    
