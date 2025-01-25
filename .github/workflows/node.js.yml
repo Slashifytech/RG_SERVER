@@ -26,13 +26,10 @@ jobs:
 
     - name: Set up Environment Variables
     - run: |
-        touch .env
-        printf "%s" "${{ secrets.RG_PRODUCTION }}" > .env
+          touch .env
+          echo "${{ secrets.RG_PRODUCTION }}" > .env
 
-    - name: Verify .env File
-    - run: |
-        echo "Contents of .env:"
-        cat .env | sed 's/=.*/=***masked***/'
+    
 
     - name: Install PM2
       run: npm install -g pm2
