@@ -16,8 +16,7 @@ exports.addInvoice = async (req, res) => {
   const vinNumber = req.body.vehicleDetails.vinNumber;
   const rmEmail = req.body.vehicleDetails.rmEmail;
   const gmEmail = req.body.vehicleDetails.gmEmail;
-  
-    
+
   try {
     const existingVinNumber = await Invoice.findOne({
       "vehicleDetails.vinNumber": vinNumber,
@@ -71,7 +70,7 @@ exports.addInvoice = async (req, res) => {
     let buyBackFileName;
     let pdfBuybackBuffer;
     let pdfAmcBuffer;
-    
+
     if (invoiceTypeData === "amc") {
       amcData = await AMCs.findOne({ "vehicleDetails.vinNumber": vinNumber });
       const amcHTML = await renderEmailTemplate(
@@ -79,7 +78,9 @@ exports.addInvoice = async (req, res) => {
         "../Templates/AmcTemplate.ejs"
       );
       pdfAmcBuffer = await generatePdf(amcHTML, "pdfAmc");
-      amcFileName = `${amcData.vehicleDetails.vinNumber}_${amcData.customerDetails.customerName || "AMC"}.pdf`;
+      amcFileName = `${amcData.vehicleDetails.vinNumber}_${
+        amcData.customerDetails.customerName || "AMC"
+      }.pdf`;
     } else if (invoiceTypeData === "buyback") {
       buyBackData = await BuyBacks.findOne({
         "vehicleDetails.vinNumber": vinNumber,
@@ -96,7 +97,7 @@ exports.addInvoice = async (req, res) => {
     const invoiceData = await Invoice.findOne({
       "vehicleDetails.vinNumber": vinNumber,
     });
-    const agentData  = await User.findOne({_id:createBy})
+    const agentData = await User.findOne({ _id: createBy });
     const invoiceHTML = await renderEmailTemplate(
       invoiceData,
       "../Templates/InvoicePdf.ejs"
@@ -137,9 +138,6 @@ exports.addInvoice = async (req, res) => {
       rmEmail,
       gmEmail,
       agentData.email
-
-      
-
     );
     await sendCustomerDocEmail(
       invoiceData.billingDetail.email,
@@ -162,8 +160,8 @@ exports.addInvoice = async (req, res) => {
 
 exports.editInvoice = async (req, res) => {
   const { id } = req.query;
-  const { ...payload } = req.body;
-
+  const { payload } = req.body;
+ const { rmEmail, gmEmail, vinNumber } = req.body.vehicleDetails || {};
   try {
     if (!id) {
       console.error("Invoice ID is missing in the query.");
@@ -177,28 +175,108 @@ exports.editInvoice = async (req, res) => {
       console.error("Invoice not found for ID:", id);
       return res.status(404).json({ message: "Invoice not found" });
     }
-
-    // console.log("Existing Invoice:", existingInvoice);
-
-    const vinNumber = payload?.vehicleDetails?.vinNumber;
-    if (vinNumber && vinNumber !== existingInvoice.vehicleDetails?.vinNumber) {
-      const vinNumberExists = await Invoice.findOne({
-        "vehicleDetails.vinNumber": vinNumber,
-      });
-      console.log("VIN Number Check:", vinNumberExists);
-
-      if (vinNumberExists) {
-        return res
-          .status(400)
-          .json({ message: "VIN number is already in use" });
-      }
+    
+    const invoiceTypeData = existingInvoice.invoiceType.toLowerCase();
+   
+   // Check for VIN number duplication
+   if (vinNumber && vinNumber !== existingInvoice.vehicleDetails?.vinNumber) {
+    const vinNumberExists = await Invoice.findOne({
+      "vehicleDetails.vinNumber": vinNumber,
+    });
+    if (vinNumberExists) {
+      return res.status(400).json({ message: "VIN number is already in use" });
     }
-
-    // Update the existing invoice with the new payload
-    Object.assign(existingInvoice, payload);
+  }
+  Object.assign(existingInvoice, payload);
 
     try {
       await existingInvoice.save();
+
+      let amcData;
+      let buyBackData;
+      let amcFileName;
+      let buyBackFileName;
+      let pdfBuybackBuffer;
+      let pdfAmcBuffer;
+
+      if (invoiceTypeData === "amc") {
+        amcData = await AMCs.findOne({ "vehicleDetails.vinNumber": vinNumber });
+        const amcHTML = await renderEmailTemplate(
+          amcData,
+          "../Templates/AmcTemplate.ejs"
+        );
+        pdfAmcBuffer = await generatePdf(amcHTML, "pdfAmc");
+        amcFileName = `${amcData.vehicleDetails.vinNumber}_${
+          amcData.customerDetails.customerName || "AMC"
+        }.pdf`;
+      } else if (invoiceTypeData === "buyback") {
+        buyBackData = await BuyBacks.findOne({
+          "vehicleDetails.vinNumber": vinNumber,
+        });
+        const buyBackHTML = await renderEmailTemplate(
+          buyBackData,
+          "../Templates/BuyBackTemplate.ejs"
+        );
+        pdfBuybackBuffer = await generatePdf(buyBackHTML, "pdfbuyBack");
+        buyBackFileName = `${buyBackData?.vehicleDetails?.vinNumber}_${
+          buyBackData?.customerDetails?.customerName || "Buyback"
+        }.pdf`;
+      }
+      const invoiceData = await Invoice.findOne({
+        "vehicleDetails.vinNumber": vinNumber,
+      });
+      const agentData = await User.findOne({ _id: existingInvoice.createdBy });
+      const invoiceHTML = await renderEmailTemplate(
+        invoiceData,
+        "../Templates/InvoicePdf.ejs"
+      );
+      const pdfInvoiceBuffer = await generatePdf(invoiceHTML, "pdfInvoice");
+
+      const invoiceFilename = `${invoiceData.invoiceId}_${
+        invoiceData.customerName || "Invoice"
+      }.pdf`;
+      const policyType =
+        invoiceTypeData === "amc"
+          ? "AMC"
+          : invoiceTypeData === "buyback"
+          ? "Buyback"
+          : null;
+      const pdfPolicyBuffer =
+        invoiceTypeData === "amc"
+          ? pdfAmcBuffer
+          : invoiceTypeData === "buyback"
+          ? pdfBuybackBuffer
+          : null;
+      const policyFileName =
+        invoiceTypeData === "amc"
+          ? amcFileName
+          : invoiceTypeData === "buyback"
+          ? buyBackFileName
+          : null;
+
+      await sendDocEmail(
+        policyType,
+        invoiceData.vehicleDetails.vinNumber,
+        invoiceData.invoiceId,
+        invoiceData.billingDetail.customerName,
+        pdfPolicyBuffer,
+        pdfInvoiceBuffer,
+        policyFileName,
+        invoiceFilename,
+        rmEmail,
+        gmEmail,
+        agentData.email
+      );
+      await sendCustomerDocEmail(
+        invoiceData.billingDetail.email,
+        policyType,
+        invoiceData.vehicleDetails.vinNumber,
+        invoiceData.invoiceId,
+        pdfPolicyBuffer,
+        pdfInvoiceBuffer,
+        policyFileName,
+        invoiceFilename
+      );
     } catch (saveError) {
       console.error("Error saving invoice:", saveError);
       return res.status(500).json({
