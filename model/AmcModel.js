@@ -39,14 +39,13 @@ const amcVehicleDetailSchema = mongoose.Schema({
   model: {
     type: String,
   },
-  fuelType:{
+  fuelType: {
     type: String,
   },
   vinNumber: {
     type: String,
-    
   },
-  
+
   agreementPeriod: {
     type: String,
   },
@@ -74,45 +73,53 @@ const amcVehicleDetailSchema = mongoose.Schema({
   gmEmail: {
     type: String,
   },
-  rmEmail:{
+  rmEmail: {
     type: String,
-  }
+  },
 });
 
-const AMCschema = mongoose.Schema({
-customerDetails:customerPersonalDetais,
-vehicleDetails: amcVehicleDetailSchema,
- amcStatus:{
-    type: String,
-    enum: ["pending", "approved", "rejected"],
-    default: "pending",
-  },
-  createdBy:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  isCancelReq: {
-    type: String,
-    enum: ["noReq", "reqCancel", "approvedReq"],
-    default: "noReq",
-  },
-  approvedAt: {
-    type: Date,
-    required: false,
-  },
-  
-  rejectedAt: {
-    type: Date, 
-    required: false
-  },
-},
-{ timestamps: true }
-)
+const AMCschema = mongoose.Schema(
+  {
+    customerDetails: customerPersonalDetais,
+    vehicleDetails: amcVehicleDetailSchema,
+    amcStatus: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    isCancelReq: {
+      type: String,
+      enum: ["noReq", "reqCancel", "approvedReq"],
+      default: "noReq",
+    },
+    approvedAt: {
+      type: Date,
+      required: false,
+    },
 
+    rejectedAt: {
+      type: Date,
+      required: false,
+    },
+    disabledAt: {
+      type: Date,
+      required: false,
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
 
-const AMCs = mongoose.model("AMCs", AMCschema)
+const AMCs = mongoose.model("AMCs", AMCschema);
 module.exports = {
-    AMCs,
-    customerPersonalDetais,
-  };    
+  AMCs,
+  customerPersonalDetais,
+};

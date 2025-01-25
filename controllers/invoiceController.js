@@ -9,14 +9,15 @@ const InvoiceCounter = require("../model/InvoiceCounterModel");
 const { generatePdf, renderEmailTemplate } = require("../helper/pdfDownlaod");
 const { AMCs } = require("../model/AmcModel");
 const BuyBacks = require("../model/BuyBackModel");
+const User = require("../model/User");
 
 exports.addInvoice = async (req, res) => {
   const { invoiceType, ...payload } = req.body;
   const vinNumber = req.body.vehicleDetails.vinNumber;
   const rmEmail = req.body.vehicleDetails.rmEmail;
   const gmEmail = req.body.vehicleDetails.gmEmail;
-
-
+  
+    
   try {
     const existingVinNumber = await Invoice.findOne({
       "vehicleDetails.vinNumber": vinNumber,
@@ -95,6 +96,7 @@ exports.addInvoice = async (req, res) => {
     const invoiceData = await Invoice.findOne({
       "vehicleDetails.vinNumber": vinNumber,
     });
+    const agentData  = await User.findOne({_id:createBy})
     const invoiceHTML = await renderEmailTemplate(
       invoiceData,
       "../Templates/InvoicePdf.ejs"
@@ -123,7 +125,6 @@ exports.addInvoice = async (req, res) => {
         ? buyBackFileName
         : null;
 
-       console.log()
     await sendDocEmail(
       policyType,
       invoiceData.vehicleDetails.vinNumber,
@@ -134,7 +135,11 @@ exports.addInvoice = async (req, res) => {
       policyFileName,
       invoiceFilename,
       rmEmail,
-      gmEmail
+      gmEmail,
+      agentData.email
+
+      
+
     );
     await sendCustomerDocEmail(
       invoiceData.billingDetail.email,

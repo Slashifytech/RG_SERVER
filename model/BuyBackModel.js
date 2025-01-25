@@ -37,41 +37,50 @@ const vehicleDetailsSchema = mongoose.Schema({
   gmEmail: {
     type: String,
   },
-  rmEmail:{
+  rmEmail: {
     type: String,
-  }
+  },
 });
 
-const BuyBackSchema = mongoose.Schema({
-  customerDetails: customerPersonalDetais,
-  vehicleDetails: vehicleDetailsSchema,
-  buyBackStatus: {
-    type: String,
-    enum: ["pending", "approved", "rejected"],
-    default: "pending",
+const BuyBackSchema = mongoose.Schema(
+  {
+    customerDetails: customerPersonalDetais,
+    vehicleDetails: vehicleDetailsSchema,
+    buyBackStatus: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    isCancelReq: {
+      type: String,
+      enum: ["noReq", "reqCancel", "approvedReq"],
+      default: "noReq",
+    },
+    approvedAt: {
+      type: Date,
+      required: false,
+    },
+    rejectedAt: {
+      type: Date,
+      required: false,
+    },
+    disabledAt: {
+      type: Date,
+      required: false,
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  isCancelReq: {
-    type: String,
-    enum: ["noReq", "reqCancel", "approvedReq"],
-    default: "noReq",
-  },
-  approvedAt: {
-    type: Date,
-    required: false,
-  },
-  rejectedAt: {
-    type: Date,
-    required: false,
-  },
-}, 
-{ timestamps: true }
+  { timestamps: true }
 );
 
-const BuyBacks = mongoose.model("BuyBacks", BuyBackSchema)
+const BuyBacks = mongoose.model("BuyBacks", BuyBackSchema);
 
-module.exports = BuyBacks
+module.exports = BuyBacks;

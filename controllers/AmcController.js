@@ -198,7 +198,7 @@ exports.updateAMCStatus = async (req, res) => {
 
 exports.disableAmc = async (req, res) => {
   try {
-    const { amcId } = req.params;
+    const { amcId } = req.query;
 
     const AMCdata = await AMCs.findById(amcId);
     if (!AMCdata) {
@@ -285,10 +285,20 @@ exports.getAllAmcList = async (req, res) => {
     if (id) {
       orConditions.push({ createdBy: id });
     }
-    if (status) {
-      orConditions.push({
-        $or: [{ amcStatus: status }, { isCancelReq: status }],
-      });
+
+    // Handle status
+    if (status !== undefined) {
+      const isBooleanStatus = status === "true" || status === "false";
+      if (isBooleanStatus) {
+        orConditions.push({ isDisabled: status === "true" });
+      } else if (typeof status === "string") {
+        orConditions.push({
+          $or: [
+            { amcStatus: status },
+            { isCancelReq: status },
+          ],
+        });
+      }
     }
 
     if (orConditions.length > 0) {
@@ -299,7 +309,10 @@ exports.getAllAmcList = async (req, res) => {
       query["vehicleDetails.vinNumber"] = { $regex: search, $options: "i" };
     }
 
-    const skip = (page - 1) * limit;
+    // Pagination
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
+    // Fetch data
     const data = await AMCs.find(query).skip(skip).limit(parseInt(limit));
     const totalCount = await AMCs.countDocuments(query);
 
@@ -324,6 +337,7 @@ exports.getAllAmcList = async (req, res) => {
     });
   }
 };
+
 
 exports.AMCResubmit = async (req, res) => {
   const { amcId } = req.query;

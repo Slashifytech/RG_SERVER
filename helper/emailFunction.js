@@ -15,7 +15,8 @@ const sendUserEmail = async ({
   invoiceFilename,
   rmEmail,
   gmEmail,
-  policyType
+  policyType,
+  agentEmail
 }) => {
   // if (to && subject && htmlContent) {
     await sendEmail({
@@ -28,7 +29,8 @@ const sendUserEmail = async ({
       invoiceFilename,
       rmEmail,
       gmEmail,
-      policyType
+      policyType,
+      agentEmail
     });
   // } else {
   //   throw new Error("Missing required parameters to send email");
@@ -349,7 +351,8 @@ exports.sendDocEmail = async (
   policyFilename,
   invoiceFilename,
   rmEmail,
-  gmEmail
+  gmEmail,
+  agentEmail
 ) => {
   const subject = "Customer Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
@@ -374,7 +377,8 @@ exports.sendDocEmail = async (
     invoiceFilename,
     rmEmail,
     gmEmail,
-    policyType
+    policyType,
+    agentEmail
 
   });
 };

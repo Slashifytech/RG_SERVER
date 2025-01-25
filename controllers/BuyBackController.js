@@ -217,7 +217,7 @@ exports.disableBuyBack = async (req, res) => {
     oneMonthFromApproval.setMonth(approvedDate.getMonth() + 1);
     buyBackdata.disabledAt = oneMonthFromApproval;
 
-    await buyBackData.save();
+    await buyBackdata.save();
 
     res
       .status(200)
@@ -267,7 +267,6 @@ exports.getAllBuyBackLists = async (req, res) => {
   const { page = 1, limit = 10, search = "", id, status } = req.query;
 
   try {
-    // Construct query
     const query = {};
     const orConditions = [];
 
@@ -275,11 +274,17 @@ exports.getAllBuyBackLists = async (req, res) => {
       orConditions.push({ createdBy: id });
     }
 
-    if (status) {
-      orConditions.push({
-        $or: [{ buyBackStatus: status }, { isCancelReq: status }],
-      });
+    if (status !== undefined) {
+      const isBooleanStatus = status === "true" || status === "false";
+      if (isBooleanStatus) {
+        orConditions.push({ isDisabled: status === "true" });
+      } else if (typeof status === "string") {
+        orConditions.push({
+          $or: [{ buyBackStatus: status }, { isCancelReq: status }],
+        });
+      }
     }
+
     if (orConditions.length > 0) {
       query.$or = orConditions;
     }
@@ -288,7 +293,10 @@ exports.getAllBuyBackLists = async (req, res) => {
       query["vehicleDetails.vinNumber"] = { $regex: search, $options: "i" };
     }
 
-    const skip = (page - 1) * limit;
+    // console.log("Constructed Query:", JSON.stringify(query, null, 2));
+
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
     const data = await BuyBacks.find(query).skip(skip).limit(parseInt(limit));
     const totalCount = await BuyBacks.countDocuments(query);
 
@@ -306,7 +314,7 @@ exports.getAllBuyBackLists = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching buyback data:", error);
+    console.error("Error fetching buyback data:", error.message);
     return res.status(500).json({
       message: "Something went wrong",
       error: error.message,

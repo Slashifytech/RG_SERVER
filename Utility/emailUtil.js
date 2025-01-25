@@ -5,7 +5,7 @@ dotenv.config();
 
 const BREVO_API = process.env.BREVO_API_KEY;
 const EMAIL_FROM = process.env.DOMAIN_EMAIL;
-const senderName = process.env.SENDER_IDENTITY;
+// const senderName = process.env.SENDER_IDENTITY;
 
 const AMC_EMAIL = process.env.AMC_EMAIL;
 const BUYBACK_EMAIL = process.env.BUYBACK_EMAIL;
@@ -24,7 +24,8 @@ const sendEmail = async ({
   invoiceFilename,
   rmEmail,
   gmEmail,
-  policyType
+  policyType,
+  agentEmail,
 }) => {
   // if (!pdfPolicyBuffer || !pdfInvoiceBuffer) {
   //   console.error("PDF buffers are required. Received:", {
@@ -44,16 +45,17 @@ const sendEmail = async ({
     sendSmtpEmail.htmlContent = htmlContent;
     sendSmtpEmail.sender = {
       email:
-      policyType === "AMC" && AMC_EMAIL
-      ? AMC_EMAIL
-      : policyType === "Buyback" && BUYBACK_EMAIL
-      ? BUYBACK_EMAIL
-      : EMAIL_FROM
-    }
+        policyType === "AMC" && AMC_EMAIL
+          ? AMC_EMAIL
+          : policyType === "Buyback" && BUYBACK_EMAIL
+          ? BUYBACK_EMAIL
+          : EMAIL_FROM,
+    };
     const recipients = [
       { email: to },
       ...(gmEmail ? [{ email: gmEmail }] : []),
       ...(rmEmail ? [{ email: rmEmail }] : []),
+      ...(agentEmail ? [{ email: agentEmail }] : []),
     ];
 
     sendSmtpEmail.to = recipients;
