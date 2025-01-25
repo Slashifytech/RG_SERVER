@@ -25,12 +25,12 @@ jobs:
       run: npm ci
 
     - name: Set up Environment Variables
-      run: |
+    - run: |
         touch .env
         printf "%s" "${{ secrets.RG_PRODUCTION }}" > .env
 
     - name: Verify .env File
-      run: |
+    - run: |
         echo "Contents of .env:"
         cat .env | sed 's/=.*/=***masked***/'
 
