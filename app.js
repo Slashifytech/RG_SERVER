@@ -83,7 +83,7 @@ async function startServer() {
 
 
     app.use("/running-status", (req, res) => {
-      res.status(200).send("API is connected");
+      res.status(200).send("API is connected")
     });
   
     server.listen(port, () => {
