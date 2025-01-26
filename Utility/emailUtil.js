@@ -11,7 +11,7 @@ const AMC_EMAIL = process.env.AMC_EMAIL;
 const BUYBACK_EMAIL = process.env.BUYBACK_EMAIL;
 
 let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-let apiKey = apiInstance.authentications["apiKey"];
+let apiKey = apiInstance.authentications["apiKey"]
 apiKey.apiKey = BREVO_API;
 
 const sendEmail = async ({
