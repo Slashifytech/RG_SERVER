@@ -107,12 +107,13 @@ exports.updateBuyBackStatus = async (req, res) => {
 
     // Find the policy by ID
     const buyBackdata = await BuyBacks.findById(id);
+  console.log(buyBackdata)
+
     if (!buyBackdata) {
       return res.status(404).json({ message: "Buyback not found." });
     }
-
-    const agent = await User.findById(buyBackdata.userId);
-
+    const agent = await User.findById(buyBackdata.createdBy);
+     console.log(agent)
     if (type === "approvedReq" && buyBackdata.isCancelReq === "reqCancel") {
       buyBackdata.isCancelReq = "approvedReq";
       await buyBackdata.save();
@@ -148,7 +149,7 @@ exports.updateBuyBackStatus = async (req, res) => {
         agent.agentName,
         reason,
         "Buyback",
-        AMCdata.vinNumber
+        buyBackdata.vinNumber
       );
 
       return res
@@ -326,8 +327,7 @@ exports.buyBackResubmit = async (req, res) => {
   const { buyBackId } = req.query;
 
   try {
-    const buyBackdata = await BuyBacks.findOne({ _id: buyBackId });
-
+    const buyBackdata = await BuyBacks.findById(buyBackId);
     if (!buyBackdata) {
       return res.status(404).json({ message: "Buy Back not found" });
     }
