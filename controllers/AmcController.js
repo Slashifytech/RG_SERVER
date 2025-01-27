@@ -93,7 +93,13 @@ exports.updateAMCStatus = async (req, res) => {
   try {
     const { id, type } = req.body;
     const { reason } = req.query;
-    const validTypes = ["pending", "approved", "rejected", "approvedReq", "reqCancel"];
+    const validTypes = [
+      "pending",
+      "approved",
+      "rejected",
+      "approvedReq",
+      "reqCancel",
+    ];
 
     // Validate policy type
     if (!validTypes.includes(type)) {
@@ -126,8 +132,8 @@ exports.updateAMCStatus = async (req, res) => {
         status: 200,
       });
     }
-    if(type === "reqCancel"){
-      AMCdata.isCancelReq = "reqCancel"
+    if (type === "reqCancel") {
+      AMCdata.isCancelReq = "reqCancel";
       await AMCdata.save();
 
       return res.status(200).json({
@@ -162,7 +168,7 @@ exports.updateAMCStatus = async (req, res) => {
         agent.agentName,
         reason,
         "AMC(Annual Maintenance Contract)",
-        AMCdata.vinNumber
+        AMCdata.vehicleDetails.vinNumber
       );
 
       return res.status(200).json({ message: "AMC rejected", AMCdata });
@@ -293,10 +299,7 @@ exports.getAllAmcList = async (req, res) => {
         orConditions.push({ isDisabled: status === "true" });
       } else if (typeof status === "string") {
         orConditions.push({
-          $or: [
-            { amcStatus: status },
-            { isCancelReq: status },
-          ],
+          $or: [{ amcStatus: status }, { isCancelReq: status }],
         });
       }
     }
@@ -338,12 +341,11 @@ exports.getAllAmcList = async (req, res) => {
   }
 };
 
-
 exports.AMCResubmit = async (req, res) => {
   const { amcId } = req.query;
 
   try {
-    const AMCData = await AMCs.findOne(amcId);
+    const AMCData = await AMCs.findOne({ _id: amcId });
 
     if (!AMCData) {
       return res.status(404).json({ message: "AMC not found" });

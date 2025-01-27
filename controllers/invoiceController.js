@@ -138,9 +138,12 @@ exports.addInvoice = async (req, res) => {
       invoiceFilename,
       rmEmail,
       gmEmail,
-      agentData.email
+      agentData.email,
+      agentData.agentName
+
     );
     await sendCustomerDocEmail(
+      invoiceData.billingDetail.customerName,
       invoiceData.billingDetail.email,
       policyType,
       invoiceData.vehicleDetails.vinNumber,
@@ -148,7 +151,8 @@ exports.addInvoice = async (req, res) => {
       pdfPolicyBuffer,
       pdfInvoiceBuffer,
       policyFileName,
-      invoiceFilename
+      invoiceFilename,
+
     );
     res
       .status(201)
@@ -161,7 +165,7 @@ exports.addInvoice = async (req, res) => {
 
 exports.editInvoice = async (req, res) => {
   const { id } = req.query;
-  const { payload } = req.body;
+  const { ...payload } = req.body;
   const { rmEmail, gmEmail, vinNumber } = req.body.vehicleDetails || {};
   try {
     if (!id) {
@@ -268,9 +272,11 @@ exports.editInvoice = async (req, res) => {
         invoiceFilename,
         rmEmail,
         gmEmail,
-        agentData.email
+        agentData.email,
+        agentData.agentName
       );
       await sendCustomerDocEmail(
+        invoiceData.billingDetail.customerName,
         invoiceData.billingDetail.email,
         policyType,
         invoiceData.vehicleDetails.vinNumber,

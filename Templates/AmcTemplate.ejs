@@ -12,35 +12,27 @@
     style="padding: 1.5rem; font-family: 'YourFontName'; margin: 0.75rem; font-size: 13px; margin-left: 5rem; margin-right: 5rem;">
 
     <div style="font-size: 14px;">
-      <div
-      style="
+      <div style="
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         width: 100%; margin-bottom: 9px;
-      "
-    >
-      <h2
-        style="margin: 0; text-align: center;"
-      >
-        RG AMC AGREEMENT
-      </h2>
-      <p
-        style="margin: 0; text-align: center; max-width: 800px; padding-top: 9px; font-size: 15px;"
-      >
-        This RG Annual Maintenance Contract Agreement
-        <b>(“Agreement”)</b> is between the dealer, <b>Raam 4 Wheelers LLP
-        (Raam)</b> and the <b>Customer/owner of the below mentioned MG Car.</b>
+      ">
+        <h2 style="margin: 0; text-align: center;">
+          RG AMC AGREEMENT
+        </h2>
+        <p style="margin: 0; text-align: center; max-width: 800px; padding-top: 9px; font-size: 15px;">
+          This RG Annual Maintenance Contract Agreement
+          <b>(“Agreement”)</b> is between the dealer, <b>Raam 4 Wheelers LLP
+            (Raam)</b> and the <b>Customer/owner of the below mentioned MG Car.</b>
         </p>
-      <p
-        style="margin: 0; padding-top: 9px; text-align: center; max-width: 800px; font-size: 15px; "
-      >
-        The Dealer and the Customer hereinafter individually called "the
-        Party" and collectively called the "Parties”.
-      </p>
-    </div>
-    
+        <p style="margin: 0; padding-top: 9px; text-align: center; max-width: 800px; font-size: 15px; ">
+          The Dealer and the Customer hereinafter individually called "the
+          Party" and collectively called the "Parties”.
+        </p>
+      </div>
+
       <!-- Invoice Header -->
       <table style="
         border-collapse: collapse;
@@ -72,15 +64,15 @@
               border: 1px solid #000;
               padding: 10px;
             ">
-              <!-- Replace with dynamic data -->
-              NA
+
+              <%= data.vehicleDetails.model %>
+
             </td>
             <td style="
               border: 1px solid #000;
               padding: 10px;
             ">
-              <!-- Replace with dynamic data -->
-              NA
+              <%= data.vehicleDetails.vinNumber %>
             </td>
           </tr>
         </tbody>
@@ -93,7 +85,9 @@
           The service package has been named as “RG Annual Maintenance
           Contract”;
         </p>
-
+        <p>
+          Agreement Fuel Type: <%= data.vehicleDetails.fuelType %>
+        </p>
         <p>
           Agreement Period: <%= data.vehicleDetails.agreementPeriod %>
         </p>

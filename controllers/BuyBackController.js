@@ -327,7 +327,7 @@ exports.buyBackResubmit = async (req, res) => {
   const { buyBackId } = req.query;
 
   try {
-    const buyBackdata = await BuyBacks.findById(buyBackId);
+    const buyBackdata = await BuyBacks.findById({_id: buyBackId});
     if (!buyBackdata) {
       return res.status(404).json({ message: "Buy Back not found" });
     }

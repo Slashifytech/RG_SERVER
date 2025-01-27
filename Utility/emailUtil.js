@@ -11,7 +11,7 @@ const AMC_EMAIL = process.env.AMC_EMAIL;
 const BUYBACK_EMAIL = process.env.BUYBACK_EMAIL;
 
 let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-let apiKey = apiInstance.authentications["apiKey"]
+let apiKey = apiInstance.authentications["apiKey"];
 apiKey.apiKey = BREVO_API;
 
 const sendEmail = async ({
@@ -27,16 +27,6 @@ const sendEmail = async ({
   policyType,
   agentEmail,
 }) => {
-  // if (!pdfPolicyBuffer || !pdfInvoiceBuffer) {
-  //   console.error("PDF buffers are required. Received:", {
-  //     pdfPolicyBuffer,
-  //     pdfInvoiceBuffer,
-  //   });
-  //   throw new Error("PDF buffers cannot be undefined");
-  // }
-  // const policyBuffer = Buffer.from(pdfPolicyBuffer, "utf-8");
-  // const invoiceBuffer = Buffer.from(pdfInvoiceBuffer, "utf-8");
-
   try {
     // console.log(to);
 
@@ -53,9 +43,7 @@ const sendEmail = async ({
     };
     const recipients = [
       { email: to },
-      ...(gmEmail ? [{ email: gmEmail }] : []),
-      ...(rmEmail ? [{ email: rmEmail }] : []),
-      ...(agentEmail ? [{ email: agentEmail }] : []),
+  
     ];
 
     sendSmtpEmail.to = recipients;
