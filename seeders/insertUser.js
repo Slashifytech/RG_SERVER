@@ -6,7 +6,7 @@ const { encryptText } = require('../Utility/utilityFunc');
 
 (async () => {
   try {
-    await connectDb();
+    await connectDb()
 
     const adminData = {
       agentId: "admin@01",
