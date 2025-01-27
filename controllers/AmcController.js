@@ -102,7 +102,7 @@ exports.updateAMCStatus = async (req, res) => {
 
     const InvoiceCheck = await Invoice.findOne({ serviceId: id });
 
-    if (InvoiceCheck) {
+    if (InvoiceCheck && !type) {
       return res
         .status(400)
         .json({ message: "Invoice already exist for this AMC" });
@@ -343,7 +343,7 @@ exports.AMCResubmit = async (req, res) => {
   const { amcId } = req.query;
 
   try {
-    const AMCData = await AMCs.findOne({ _id: amcId });
+    const AMCData = await AMCs.findOne(amcId);
 
     if (!AMCData) {
       return res.status(404).json({ message: "AMC not found" });

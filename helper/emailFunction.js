@@ -319,7 +319,7 @@ exports.AgentPolicyRejectedEmail = async (userEmail, name, reason, policyType, v
   const htmlContent = getEmailTemplate(
     "AgentPolicyRejected",
     userEmail, // email
-    password, // password
+    null, // password
     null, // customerName 
     name, // agentName
     reason, // reason

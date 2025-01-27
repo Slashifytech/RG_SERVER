@@ -16,4 +16,4 @@ async function insertTeamData() {
   }
 }
 
-insertTeamData();
+// insertTeamData();

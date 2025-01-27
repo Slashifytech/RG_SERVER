@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const userSchema = require("../model/User");
+const User = require("../model/User");
 const dotenv = require("dotenv");
 const fs = require("fs");
 // const { encryptText, decryptText } = require("../Utility/utilityFunc");
@@ -9,6 +9,7 @@ const {
   sendTeamUpdatedEmail,
   sendTeamCredEmail,
 } = require("../helper/emailFunction");
+const { encryptText, decryptText } = require("../Utility/utilityFunc");
 const json2csv = require("json2csv").parse;
 dotenv.config();
 
@@ -20,11 +21,14 @@ exports.signinController = async (req, res) => {
   }
 
   try {
-    const existingUser = await userSchema.findOne({ email });
+    const existingUser = await User.findOne({email});
     if (!existingUser) {
       return res.status(400).json({ message: "User not found" });
     }
-
+    const decryptedPassword = decryptText(existingUser.password);
+    if (password !== decryptedPassword) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
     const token = jwt.sign(
       {
         email: existingUser.email,
@@ -49,7 +53,7 @@ exports.getUsersData = async (req, res) => {
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const { password, confirmPassword, ...userData } = user.toObject();
+    const { password, ...userData } = user.toObject();
 
     res.status(200).json(userData);
   } catch (err) {
@@ -62,11 +66,11 @@ exports.getUserById = async (req, res) => {
   const { userId } = req.params;
   console.log(`Fetching data for userId: ${userId}`);
   try {
-    const user = await userSchema.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const { password, confirmPassword, ...userData } = user.toObject();
+    const { password, ...userData } = user.toObject();
     res.status(200).json(userData);
   } catch (err) {
     console.error("Error fetching user data:", err);
@@ -78,16 +82,14 @@ exports.getUserDataById = async (req, res) => {
   const { userId } = req.params;
   console.log(`Fetching data for userId: ${userId}`);
   try {
-    const user = await userSchema.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const { password, confirmPassword, ...userData } = user.toObject();
+    const { password, ...userData } = user.toObject();
     const response = {
       ...userData,
-      password: user.password,
-      confirmPassword: user.confirmPassword,
     };
     res.status(200).json(response);
   } catch (err) {
@@ -100,29 +102,22 @@ exports.addAgent = async (req, res) => {
   try {
     const agentData = req.body;
     const { id } = req.query;
-    const {
-      email,
-      password,
-      confirmPassword,
-      contactNumber,
-      agentId,
-      roleType,
-      agentName,
-    } = agentData;
+    const { email, password, contactNumber, agentId, roleType, agentName } =
+      agentData;
 
     if (id) {
-      const existingAgent = await userSchema.findById(id);
+      const existingAgent = await User.findById(id);
 
       if (!existingAgent) {
         return res.status(404).json({ message: "Agent not found for update" });
       }
 
-      const existingContactAgent = await userSchema.findOne({
+      const existingContactAgent = await User.findOne({
         contact: contactNumber,
         _id: { $ne: id },
       });
 
-      const existingEmailAgent = await userSchema.findOne({
+      const existingEmailAgent = await User.findOne({
         email: email,
         _id: { $ne: id },
       });
@@ -133,12 +128,11 @@ exports.addAgent = async (req, res) => {
           .json({ message: "Email or contact number already exists" });
       }
 
-      const updatedAgent = await userSchema.findByIdAndUpdate(
+      const updatedAgent = await User.findByIdAndUpdate(
         id,
         {
           ...agentData,
-          ...(password && { password: password }),
-          ...(confirmPassword && { confirmPassword: confirmPassword }),
+          ...(password && { password: encryptText(password) }),
         },
         { new: true }
       );
@@ -153,10 +147,9 @@ exports.addAgent = async (req, res) => {
       }
     }
 
-    const newAgent = new userSchema({
+    const newAgent = new User({
       ...agentData,
-      password: password,
-      confirmPassword: confirmPassword,
+      password: encryptText(password),
     });
 
     await newAgent.save();
@@ -177,7 +170,7 @@ exports.deleteAgent = async (req, res) => {
   try {
     const { id } = req.params;
     console.log(id);
-    const deletedAgent = await userSchema.findByIdAndDelete(id);
+    const deletedAgent = await User.findByIdAndDelete(id);
 
     if (!deletedAgent) {
       return res.status(404).json({ message: "Agent not found" });
@@ -192,7 +185,7 @@ exports.deleteAgent = async (req, res) => {
 
 exports.getAllAgents = async (req, res) => {
   try {
-    const agents = await userSchema.find();
+    const agents = await User.find();
 
     if (agents.length === 0) {
       return res.status(404).json({ message: "No agents found" });
@@ -209,7 +202,7 @@ exports.getAllAgents = async (req, res) => {
 exports.getMGagent = async (req, res) => {
   try {
     const query = { roleType: "2", brandName: "MG" };
-    const mgAgents = await userSchema.find(query);
+    const mgAgents = await User.find(query);
     if (mgAgents.length === 0) {
       return res.status(404).json({ message: "No MG agents found" });
     }
@@ -224,7 +217,7 @@ exports.getMBagent = async (req, res) => {
   try {
     const query = { roleType: "2", brandName: "MB" };
 
-    const mbAgents = await userSchema.find(query);
+    const mbAgents = await User.find(query);
     if (mbAgents.length === 0) {
       return res.status(404).json({ message: "No MG agents found" });
     }
@@ -240,7 +233,7 @@ exports.getUserDataByBrand = async (req, res) => {
 
   try {
     const query = { roleType: "1", brandName };
-    const teamMembers = await userSchema.find(query);
+    const teamMembers = await User.find(query);
 
     // Send the response
     return res.status(200).json({ success: true, data: teamMembers });
@@ -283,5 +276,76 @@ exports.downloadCsv = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
+  }
+};
+
+exports.emailUpdate = async (req, res) => {
+  const { id, email, password } = req.body;
+
+  try {
+    if (!id || !email || !password) {
+      return res.status(400).send({ message: "ID and email are required" });
+    }
+
+    const userData = await User.findById(id);
+
+    if (!userData) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    const decryptedPassword = decryptText(userData.password);
+    if (password !== decryptedPassword) {
+      return res.status(401).send({ message: "Invalid password" });
+    }
+
+    userData.email = email;
+    await userData.save();
+
+    return res.status(200).send({
+      message: "Email updated successfully",
+      statusCode: 200,
+      user: {
+        id: userData._id,
+        email: userData.email,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating email:", error);
+    return res.status(500).send({
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
+exports.passwordUpdate = async (req, res) => {
+  const { id, password } = req.body;
+
+  try {
+    if (!id || !password) {
+      return res.status(400).send({ message: "ID and password are required" });
+    }
+
+    const userData = await User.findById(id);
+
+    if (!userData) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    userData.password = encryptText(password);
+    await userData.save();
+
+    return res.status(200).send({
+      message: "password updated successfully",
+      user: {
+        id: userData._id,
+        password: userData.password,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    return res.status(500).send({
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 };

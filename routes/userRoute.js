@@ -6,10 +6,14 @@ const {
   getUsersData,
   getUserById,
   getUserDataById,
+  passwordUpdate,
+  emailUpdate,
 } = require("../controllers/UserController");
 const { authCheck } = require("../middleware/Auth");
 
 router.post("/auth", signinController);
+router.patch("/password-update", passwordUpdate);
+router.patch("/email-update", emailUpdate);
 router.put("/cancel-request/:id", cancelFromAgentRequest);
 
 router.get("/getUserData", authCheck, getUsersData);

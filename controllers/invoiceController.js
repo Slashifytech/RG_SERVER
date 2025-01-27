@@ -12,7 +12,7 @@ const BuyBacks = require("../model/BuyBackModel");
 const User = require("../model/User");
 
 exports.addInvoice = async (req, res) => {
-  const { invoiceType, ...payload } = req.body;
+  const { invoiceType, createdBy, ...payload } = req.body;
   const vinNumber = req.body.vehicleDetails.vinNumber;
   const rmEmail = req.body.vehicleDetails.rmEmail;
   const gmEmail = req.body.vehicleDetails.gmEmail;
@@ -60,6 +60,7 @@ exports.addInvoice = async (req, res) => {
       invoiceId,
       serviceType,
       invoiceType,
+      createdBy,
       ...payload,
     });
 
@@ -97,7 +98,7 @@ exports.addInvoice = async (req, res) => {
     const invoiceData = await Invoice.findOne({
       "vehicleDetails.vinNumber": vinNumber,
     });
-    const agentData = await User.findOne({ _id: createBy });
+    const agentData = await User.findOne({ _id: createdBy });
     const invoiceHTML = await renderEmailTemplate(
       invoiceData,
       "../Templates/InvoicePdf.ejs"
@@ -161,7 +162,7 @@ exports.addInvoice = async (req, res) => {
 exports.editInvoice = async (req, res) => {
   const { id } = req.query;
   const { payload } = req.body;
- const { rmEmail, gmEmail, vinNumber } = req.body.vehicleDetails || {};
+  const { rmEmail, gmEmail, vinNumber } = req.body.vehicleDetails || {};
   try {
     if (!id) {
       console.error("Invoice ID is missing in the query.");
@@ -175,19 +176,21 @@ exports.editInvoice = async (req, res) => {
       console.error("Invoice not found for ID:", id);
       return res.status(404).json({ message: "Invoice not found" });
     }
-    
+
     const invoiceTypeData = existingInvoice.invoiceType.toLowerCase();
-   
-   // Check for VIN number duplication
-   if (vinNumber && vinNumber !== existingInvoice.vehicleDetails?.vinNumber) {
-    const vinNumberExists = await Invoice.findOne({
-      "vehicleDetails.vinNumber": vinNumber,
-    });
-    if (vinNumberExists) {
-      return res.status(400).json({ message: "VIN number is already in use" });
+
+    // Check for VIN number duplication
+    if (vinNumber && vinNumber !== existingInvoice.vehicleDetails?.vinNumber) {
+      const vinNumberExists = await Invoice.findOne({
+        "vehicleDetails.vinNumber": vinNumber,
+      });
+      if (vinNumberExists) {
+        return res
+          .status(400)
+          .json({ message: "VIN number is already in use" });
+      }
     }
-  }
-  Object.assign(existingInvoice, payload);
+    Object.assign(existingInvoice, payload);
 
     try {
       await existingInvoice.save();
