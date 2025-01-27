@@ -26,11 +26,19 @@ exports.BuyBackFormData = async (req, res) => {
       });
     }
 
+
+
+    const currentYear = new Date().getFullYear();
+    const last5DigitsOfVin = vinNumber.slice(-5);
+    const customId = `Raam-BB-${currentYear}-${last5DigitsOfVin}`;
+
     const newBuyBack = new BuyBacks({
       ...BuyBack,
+      customId, 
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+
 
     await newBuyBack.save();
 

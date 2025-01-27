@@ -22,8 +22,13 @@ exports.AmcFormData = async (req, res) => {
       });
     }
 
+    const currentYear = new Date().getFullYear();
+    const last5DigitsOfVin = vinNumber.slice(-5);
+    const customId = `Raam-AMC-${currentYear}-${last5DigitsOfVin}`;
+
     const newAmc = new AMCs({
       ...amcData,
+      customId, 
       createdAt: new Date(),
       updatedAt: new Date(),
     });
