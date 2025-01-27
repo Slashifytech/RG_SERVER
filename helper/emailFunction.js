@@ -382,7 +382,7 @@ exports.sendCustomerDocEmail = async (
   pdfPolicyBuffer,
   pdfInvoiceBuffer,
   policyFilename,
-  invoiceFilename
+  invoiceFilename,
 ) => {
   const subject = "Your Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
@@ -405,5 +405,9 @@ exports.sendCustomerDocEmail = async (
     pdfInvoiceBuffer,
     policyFilename,
     invoiceFilename,
+    option:null,
+    option: null,
+    policyType
+
   });
 };
