@@ -317,7 +317,7 @@ exports.getAllBuyBackLists = async (req, res) => {
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
-    const data = await BuyBacks.find(query).skip(skip).limit(parseInt(limit));
+    const data = await BuyBacks.find(query).sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit));
     const totalCount = await BuyBacks.countDocuments(query);
 
     if (!data || data.length === 0) {

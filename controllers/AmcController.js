@@ -323,7 +323,7 @@ exports.getAllAmcList = async (req, res) => {
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
     // Fetch data
-    const data = await AMCs.find(query).skip(skip).limit(parseInt(limit));
+    const data = await AMCs.find(query).sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit));
     const totalCount = await AMCs.countDocuments(query);
 
     if (!data || data.length === 0) {
