@@ -126,7 +126,11 @@ exports.addInvoice = async (req, res) => {
         : invoiceTypeData === "buyback"
         ? buyBackFileName
         : null;
-
+const policyId =   invoiceTypeData === "amc"
+? amcData.customId
+: invoiceTypeData === "buyback"
+? buyBackData.customId
+: null;
     await sendDocEmail(
       policyType,
       invoiceData.vehicleDetails.vinNumber,
@@ -139,7 +143,9 @@ exports.addInvoice = async (req, res) => {
       rmEmail,
       gmEmail,
       agentData.email,
-      agentData.agentName
+      agentData.agentName,
+      policyId
+      
 
     );
     await sendCustomerDocEmail(
@@ -152,7 +158,7 @@ exports.addInvoice = async (req, res) => {
       pdfInvoiceBuffer,
       policyFileName,
       invoiceFilename,
-
+      policyId
     );
     res
       .status(201)
@@ -260,7 +266,11 @@ exports.editInvoice = async (req, res) => {
           : invoiceTypeData === "buyback"
           ? buyBackFileName
           : null;
-
+          const policyId =   invoiceTypeData === "amc"
+          ? amcData.customId
+          : invoiceTypeData === "buyback"
+          ? buyBackData.customId
+          : null;
       await sendDocEmail(
         policyType,
         invoiceData.vehicleDetails.vinNumber,
@@ -273,7 +283,8 @@ exports.editInvoice = async (req, res) => {
         rmEmail,
         gmEmail,
         agentData.email,
-        agentData.agentName
+        agentData.agentName,
+        policyId
       );
       await sendCustomerDocEmail(
         invoiceData.billingDetail.customerName,
@@ -284,7 +295,8 @@ exports.editInvoice = async (req, res) => {
         pdfPolicyBuffer,
         pdfInvoiceBuffer,
         policyFileName,
-        invoiceFilename
+        invoiceFilename,
+        policyId
       );
     } catch (saveError) {
       console.error("Error saving invoice:", saveError);

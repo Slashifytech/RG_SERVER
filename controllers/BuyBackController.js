@@ -157,7 +157,8 @@ exports.updateBuyBackStatus = async (req, res) => {
         agent.agentName,
         reason,
         "Buyback",
-        buyBackdata.vinNumber
+        buyBackdata.vinNumber,
+        buyBackdata.customId
       );
 
       return res

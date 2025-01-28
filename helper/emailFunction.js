@@ -46,7 +46,9 @@ const getEmailTemplate = (
   reason,
   policyType,
   vinNumber,
-  invoiceId
+  invoiceId,
+  policyId
+
 ) => {
   let template;
   let userName = agentName || "user";
@@ -72,12 +74,12 @@ const getEmailTemplate = (
             <p>Your account has been successfully created on RaamGroup. You can now log in and start managing customers effortlessly.</p>
             <p>Login Details:</p>
           
-            <p>Portal Link - <a href="https://360carprotect.in/raamgroup-portal/login">RaamFourWheelersLLP Portal</a></p>
+            <p>Portal Link - <a href="https://360carprotect.in/raamgroup-portal/login">Raam4Wheelers LLP Portal</a></p>
             <p>Email ID - ${email}</p>
             <p>Password: - ${password}</p>
             <p>If you need assistance, feel free to contact us.</p></br>
             <p>Best regards,</p>
-            <p>RaamFourWheelersLLP</p>
+            <p>Raam4Wheelers LLP</p>
           </div>
         </div>
       `;
@@ -92,10 +94,10 @@ const getEmailTemplate = (
             
               <p>Email ID - ${email}</p>
               <p>Password: - ${password}</p>
-              <p>Please use these credentials to log in to the portal:<a href="https://360carprotect.in/raamgroup-portal/login">RaamFourWheelersLLP Portal</a></p>
+              <p>Please use these credentials to log in to the portal:<a href="https://360carprotect.in/raamgroup-portal/login">Raam4Wheelers LLP Portal</a></p>
               <p>If need any assistance, please contact us immediately.</p></br>
               <p>Best regards,</p>
-              <p>RaamFourWheelersLLP</p>
+              <p>Raam4Wheelers LLP</p>
             </div>
           </div>
         `;
@@ -108,12 +110,12 @@ const getEmailTemplate = (
                 <p>Your account has been created on RaamGroup Portal to manage and process policies efficiently. You can now log in to approve/reject all the policies and generate invoices.</p>
                 <p>Login Details:</p>
               
-                <p>Portal Link - <a href="https://360carprotect.in/raamgroup-portal/login">RaamFourWheelersLLP Portal</a></p>
+                <p>Portal Link - <a href="https://360carprotect.in/raamgroup-portal/login">Raam4Wheelers LLP Portal</a></p>
                 <p>Email ID - ${email}</p>
                 <p>Password: - ${password}</p>
                 <p>If you need any assistance, feel free to reach out.</p></br>
                 <p>Best regards,</p>
-                <p>RaamFourWheelersLLP</p>
+                <p>Raam4Wheelers LLP</p>
               </div>
             </div>
           `;
@@ -128,10 +130,10 @@ const getEmailTemplate = (
                 
                   <p>Email ID - ${email}</p>
                   <p>Password: - ${password}</p>
-                  <p>Please use these credentials to log in to the portal:<a href="https://360carprotect.in/raamgroup-portal/login">RaamFourWheelersLLP Portal</a></p>
+                  <p>Please use these credentials to log in to the portal:<a href="https://360carprotect.in/raamgroup-portal/login">Raam4Wheelers LLP Portal</a></p>
                   <p>If you have any questions or did not request this update, please contact us immediately.</p></br>
                   <p>Best regards,</p>
-                  <p>RaamFourWheelersLLP</p>
+                  <p>Raam4Wheelers LLP</p>
                 </div>
               </div>
             `;
@@ -145,11 +147,12 @@ const getEmailTemplate = (
                     <p>Customer Details:</p>
                       <p>Name: ${customerName}</p>
                     <p>Policy Type: ${policyType}</p>
+                    <p>Policy Id: ${policyId}</p>
                     <p>Policy Vin Number: ${vinNumber}</p>
                     <p>Invoice Number: ${invoiceId}</p>
                     <p>If you require any further information or assistance, please let us know.</p>
                     <p>Best regards,</p>
-                    <p>RaamFourWheelersLLP</p>
+                    <p>Raam4Wheelers LLP</p>
                   </div>
                 </div>
               `;
@@ -160,14 +163,15 @@ const getEmailTemplate = (
                     <div style="text-align: center;">
                       <div style="${styles}">
                         <p>Dear ${clientName},</p>
-                        <p>Thank you for choosing RaamFourWheelersLLP. Please find below the details of your policy and invoice for your reference.</p>
+                        <p>Thank you for choosing Raam4Wheelers LLP. Please find below the details of your policy and invoice for your reference.</p>
                         <p>Policy and Invoice Details:</p>
                         <p>Policy Type: ${policyType}</p>
+                        <p>Policy Id: ${policyId}</p>
                         <p>Policy Vin Number: ${vinNumber}</p>
                         <p>Invoice Number: ${invoiceId}</p>
                         <p>If you have any questions or need further assistance, feel free to contact us.</p>
                         <p>Best regards,</p>
-                        <p>RaamFourWheelersLLP</p>
+                        <p>Raam4Wheelers LLP</p>
                       </div>
                     </div>
                   `;
@@ -180,13 +184,14 @@ const getEmailTemplate = (
               <p>Dear ${userName},</p>
               <p>The ${policyType}, you submitted for approval has been rejected.</p>
               <p>Rejection Details:</p>
+              <p>Policy Id: ${policyId} </p>
               <p>Policy Vin Number: ${vinNumber} </p>
               <p>Reason for Rejection: ${reason}</p>
               <p>Please review the feedback and make the necessary corrections before resubmitting. For further assistance, feel free to reach out.</p>
               </br>
               <p>Best Regards,</p>
               <p>Accounts Team</p>
-              <p>RaamFourWheelersLLP</p>
+              <p>Raam4Wheelers LLP</p>
             </div>
           </div>
         `;
@@ -295,7 +300,8 @@ exports.AgentPolicyRejectedEmail = async (
   name,
   reason,
   policyType,
-  vinNumber
+  vinNumber,
+  policyId
 ) => {
   const subject = "Policy Submission Rejected";
   const htmlContent = getEmailTemplate(
@@ -307,7 +313,8 @@ exports.AgentPolicyRejectedEmail = async (
     reason, // reason
     policyType, // policyType
     vinNumber, // vinNumber
-    null // invoiceId
+    null, // invoiceId
+    policyId
   );
 
   await sendUserEmail({
@@ -331,7 +338,9 @@ exports.sendDocEmail = async (
   rmEmail,
   gmEmail,
   agentEmail,
-  agentName
+  agentName,
+  policyId
+
 ) => {
   const subject = "Customer Policy and Invoice Details";
   const recipients = [
@@ -353,7 +362,8 @@ exports.sendDocEmail = async (
         null, // reason
         policyType, // policyType
         vinNumber, // vinNumber
-        invoiceId // invoiceId
+        invoiceId, // invoiceId
+        policyId
       );
 
       await sendUserEmail({
@@ -383,6 +393,7 @@ exports.sendCustomerDocEmail = async (
   pdfInvoiceBuffer,
   policyFilename,
   invoiceFilename,
+  policyId
 ) => {
   const subject = "Your Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
@@ -394,7 +405,8 @@ exports.sendCustomerDocEmail = async (
     null, // reason
     policyType, // policyType
     vinNumber, // vinNumber
-    invoiceId // invoiceId
+    invoiceId, // invoiceId
+    policyId
   );
 
   await sendUserEmail({

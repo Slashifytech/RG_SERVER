@@ -173,7 +173,8 @@ exports.updateAMCStatus = async (req, res) => {
         agent.agentName,
         reason,
         "AMC(Annual Maintenance Contract)",
-        AMCdata.vehicleDetails.vinNumber
+        AMCdata.vehicleDetails.vinNumber,
+        AmcData.customId
       );
 
       return res.status(200).json({ message: "AMC rejected", AMCdata });
