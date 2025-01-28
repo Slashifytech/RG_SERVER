@@ -98,7 +98,6 @@ exports.addInvoice = async (req, res) => {
     const invoiceData = await Invoice.findOne({
       "vehicleDetails.vinNumber": vinNumber,
     });
-    const agentData = await User.findOne({ _id: createdBy });
     const invoiceHTML = await renderEmailTemplate(
       invoiceData,
       "../Templates/InvoicePdf.ejs"
@@ -126,11 +125,12 @@ exports.addInvoice = async (req, res) => {
         : invoiceTypeData === "buyback"
         ? buyBackFileName
         : null;
-const policyId =   invoiceTypeData === "amc"
-? amcData.customId
-: invoiceTypeData === "buyback"
-? buyBackData.customId
-: null;
+        const policyData =   invoiceTypeData === "amc"
+        ? amcData
+        : invoiceTypeData === "buyback"
+        ? buyBackData
+        : null;
+    const agentData = await User.findOne({ _id: policyData.createdBy });
     await sendDocEmail(
       policyType,
       invoiceData.vehicleDetails.vinNumber,
@@ -144,7 +144,7 @@ const policyId =   invoiceTypeData === "amc"
       gmEmail,
       agentData.email,
       agentData.agentName,
-      policyId
+       policyData.customId
       
 
     );
@@ -158,7 +158,7 @@ const policyId =   invoiceTypeData === "amc"
       pdfInvoiceBuffer,
       policyFileName,
       invoiceFilename,
-      policyId
+       policyData.customId
     );
     res
       .status(201)
@@ -238,7 +238,6 @@ exports.editInvoice = async (req, res) => {
       const invoiceData = await Invoice.findOne({
         "vehicleDetails.vinNumber": vinNumber,
       });
-      const agentData = await User.findOne({ _id: existingInvoice.createdBy });
       const invoiceHTML = await renderEmailTemplate(
         invoiceData,
         "../Templates/InvoicePdf.ejs"
@@ -266,11 +265,13 @@ exports.editInvoice = async (req, res) => {
           : invoiceTypeData === "buyback"
           ? buyBackFileName
           : null;
-          const policyId =   invoiceTypeData === "amc"
-          ? amcData.customId
+          const policyData =   invoiceTypeData === "amc"
+          ? amcData
           : invoiceTypeData === "buyback"
-          ? buyBackData.customId
+          ? buyBackData
           : null;
+      const agentData = await User.findOne({ _id: policyData.createdBy });
+
       await sendDocEmail(
         policyType,
         invoiceData.vehicleDetails.vinNumber,
@@ -284,7 +285,7 @@ exports.editInvoice = async (req, res) => {
         gmEmail,
         agentData.email,
         agentData.agentName,
-        policyId
+        policyData.customId
       );
       await sendCustomerDocEmail(
         invoiceData.billingDetail.customerName,
@@ -296,7 +297,7 @@ exports.editInvoice = async (req, res) => {
         pdfInvoiceBuffer,
         policyFileName,
         invoiceFilename,
-        policyId
+        policyData.customId
       );
     } catch (saveError) {
       console.error("Error saving invoice:", saveError);
