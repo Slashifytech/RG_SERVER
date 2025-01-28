@@ -106,7 +106,7 @@ exports.updateBuyBackStatus = async (req, res) => {
   try {
     const { id, type } = req.body;
     const { reason } = req.query;
-    const validTypes = ["pending", "approved", "rejected", "approvedReq"];
+    const validTypes = ["pending", "approved", "rejected", "approvedReq", "reqCancel"];
 
     // Validate policy type
     if (!validTypes.includes(type)) {
@@ -131,7 +131,16 @@ exports.updateBuyBackStatus = async (req, res) => {
         isCancelReq: buyBackdata.isCancelReq,
       });
     }
+    if (type === "reqCancel") {
+      buyBackdata.isCancelReq = "reqCancel";
+      await buyBackdata.save();
 
+      return res.status(200).json({
+        message: "Requested for cancellation",
+        isCancelReq: buyBackdata.isCancelReq,
+        status: 200,
+      });
+    }
     // Handle rejection case
     if (type === "rejected") {
       if (!reason) {
@@ -157,8 +166,9 @@ exports.updateBuyBackStatus = async (req, res) => {
         agent.agentName,
         reason,
         "Buyback",
-        buyBackdata.vinNumber,
-        buyBackdata.customId
+        buyBackdata.vehicleDetails.vinNumber,
+        buyBackdata.customId,
+        "Buyback"
       );
 
       return res

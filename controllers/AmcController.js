@@ -162,7 +162,7 @@ exports.updateAMCStatus = async (req, res) => {
       AMCdata.rejectionReason = reason;
       AMCdata.rejectedAt = deletionDate;
       AMCdata.amcStatus = "rejected";
-
+     
       await AMCdata.save();
       console.log(
         `AMCdata with ID: ${id} scheduled for deletion with reason: ${reason}.`
@@ -174,7 +174,8 @@ exports.updateAMCStatus = async (req, res) => {
         reason,
         "AMC(Annual Maintenance Contract)",
         AMCdata.vehicleDetails.vinNumber,
-        AmcData.customId
+        AMCdata.customId,
+        "AMC"
       );
 
       return res.status(200).json({ message: "AMC rejected", AMCdata });

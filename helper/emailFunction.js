@@ -48,7 +48,6 @@ const getEmailTemplate = (
   vinNumber,
   invoiceId,
   policyId
-
 ) => {
   let template;
   let userName = agentName || "user";
@@ -301,7 +300,8 @@ exports.AgentPolicyRejectedEmail = async (
   reason,
   policyType,
   vinNumber,
-  policyId
+  policyId,
+  emailType
 ) => {
   const subject = "Policy Submission Rejected";
   const htmlContent = getEmailTemplate(
@@ -324,6 +324,10 @@ exports.AgentPolicyRejectedEmail = async (
     optional: null,
     optional: null,
     optional: null,
+    optional: null,
+    optional: null,
+    optional: null,
+    emailType,
   });
 };
 exports.sendDocEmail = async (
@@ -340,7 +344,6 @@ exports.sendDocEmail = async (
   agentEmail,
   agentName,
   policyId
-
 ) => {
   const subject = "Customer Policy and Invoice Details";
   const recipients = [
@@ -417,9 +420,8 @@ exports.sendCustomerDocEmail = async (
     pdfInvoiceBuffer,
     policyFilename,
     invoiceFilename,
-    option:null,
     option: null,
-    policyType
-
+    option: null,
+    policyType,
   });
 };
