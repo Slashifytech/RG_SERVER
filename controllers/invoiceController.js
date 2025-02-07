@@ -275,21 +275,21 @@ exports.editInvoice = async (req, res) => {
           : null;
       const agentData = await User.findOne({ _id: policyData.createdBy });
 
-      await sendDocEmail(
-        policyType,
-        invoiceData.vehicleDetails.vinNumber,
-        invoiceData.invoiceId,
-        invoiceData.billingDetail.customerName,
-        pdfPolicyBuffer,
-        pdfInvoiceBuffer,
-        policyFileName,
-        invoiceFilename,
-        rmEmail,
-        gmEmail,
-        agentData.email,
-        agentData.agentName,
-        policyData.customId
-      );
+      // await sendDocEmail(
+      //   policyType,
+      //   invoiceData.vehicleDetails.vinNumber,
+      //   invoiceData.invoiceId,
+      //   invoiceData.billingDetail.customerName,
+      //   pdfPolicyBuffer,
+      //   pdfInvoiceBuffer,
+      //   policyFileName,
+      //   invoiceFilename,
+      //   rmEmail,
+      //   gmEmail,
+      //   agentData.email,
+      //   agentData.agentName,
+      //   policyData.customId
+      // );
 
       await sendCustomerDocEmail(
         invoiceData.billingDetail.customerName,
