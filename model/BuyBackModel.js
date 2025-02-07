@@ -14,6 +14,11 @@ const vehicleDetailsSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  dealerLocation: {
+    type: String,
+    required: false,
+  },
+
   agreementStartDate: {
     type: String,
     required: false,
@@ -57,7 +62,7 @@ const BuyBackSchema = mongoose.Schema(
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
-    customId:{
+    customId: {
       type: String,
       required: true,
     },
