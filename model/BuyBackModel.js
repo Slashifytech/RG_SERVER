@@ -37,6 +37,12 @@ const vehicleDetailsSchema = mongoose.Schema({
   gmEmail: {
     type: String,
   },
+  rmName: {
+    type: String,
+  },
+  rmEmployeeId: {
+    type: String,
+  },
   rmEmail: {
     type: String,
   },

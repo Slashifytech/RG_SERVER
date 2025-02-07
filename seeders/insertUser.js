@@ -10,11 +10,11 @@ const { encryptText } = require('../Utility/utilityFunc');
 
     const adminData = {
       agentId: "admin@01",
-      agentName: "test name",
-      contact: "2356892356",
-      email: "theslashifytech@gamil.com",
+      agentName: "Dinesh Pathiwada",
+      contact: "2356856232",
+      email: "dineshpathiwada@mghyderabad.com",
       roleType: "0",
-      password: encryptText("slashifytech0023"),
+      password: encryptText("mghyderabad@123"),
       role: "0",
     };
 

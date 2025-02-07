@@ -37,9 +37,15 @@ const vehicleDetailSchema = mongoose.Schema({
   gmEmail: {
     type: String,
   },
-  rmEmail:{
+  rmName: {
     type: String,
-  }
+  },
+  rmEmployeeId: {
+    type: String,
+  },
+  rmEmail: {
+    type: String,
+  },
 });
 const invoiceSchema = mongoose.Schema(
   {

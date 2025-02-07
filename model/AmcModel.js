@@ -42,7 +42,7 @@ const amcVehicleDetailSchema = mongoose.Schema({
   fuelType: {
     type: String,
   },
-  
+
   vinNumber: {
     type: String,
   },
@@ -74,6 +74,12 @@ const amcVehicleDetailSchema = mongoose.Schema({
   gmEmail: {
     type: String,
   },
+  rmName: {
+    type: String,
+  },
+  rmEmployeeId: {
+    type: String,
+  },
   rmEmail: {
     type: String,
   },
@@ -88,7 +94,7 @@ const AMCschema = mongoose.Schema(
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
-    customId:{
+    customId: {
       type: String,
       required: true,
     },
