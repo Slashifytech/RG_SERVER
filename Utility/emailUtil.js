@@ -23,7 +23,7 @@ const sendEmail = async ({
   policyFilename,
   invoiceFilename,
   policyType,
-  ccEmails 
+  ccEmails =[]
 }) => {
   try {
 
@@ -44,7 +44,7 @@ const sendEmail = async ({
     ];
 
     sendSmtpEmail.to = recipients;
-    if (ccEmails.length > 0) {
+    if (ccEmails?.length > 0) {
       sendSmtpEmail.cc = ccEmails.map((email) => ({ email }));
     }
 
