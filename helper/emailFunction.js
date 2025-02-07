@@ -13,10 +13,8 @@ const sendUserEmail = async ({
   pdfInvoiceBuffer,
   policyFilename,
   invoiceFilename,
-  rmEmail,
-  gmEmail,
   policyType,
-  agentEmail,
+  ccEmails
 }) => {
   // if (to && subject && htmlContent) {
   await sendEmail({
@@ -27,10 +25,9 @@ const sendUserEmail = async ({
     pdfInvoiceBuffer,
     policyFilename,
     invoiceFilename,
-    rmEmail,
-    gmEmail,
     policyType,
-    agentEmail,
+    ccEmails
+    
   });
   // } else {
   //   throw new Error("Missing required parameters to send email");
@@ -377,10 +374,8 @@ exports.sendDocEmail = async (
         pdfInvoiceBuffer,
         policyFilename,
         invoiceFilename,
-        rmEmail,
-        gmEmail,
+    
         policyType,
-        agentEmail,
       });
     }
   }
@@ -396,8 +391,13 @@ exports.sendCustomerDocEmail = async (
   pdfInvoiceBuffer,
   policyFilename,
   invoiceFilename,
-  policyId
+  policyId,
+  rmEmail,
+  gmEmail,
+  agentEmail
 ) => {
+  console.log(rmEmail, gmEmail, agentEmail, "checkingemailscc");
+
   const subject = "Your Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
     "customerDoc",
@@ -411,7 +411,7 @@ exports.sendCustomerDocEmail = async (
     invoiceId, // invoiceId
     policyId
   );
-
+  const ccEmails = [rmEmail, gmEmail, agentEmail].filter(Boolean);  
   await sendUserEmail({
     to: userEmail,
     subject,
@@ -420,8 +420,7 @@ exports.sendCustomerDocEmail = async (
     pdfInvoiceBuffer,
     policyFilename,
     invoiceFilename,
-    option: null,
-    option: null,
     policyType,
+    ccEmails
   });
 };

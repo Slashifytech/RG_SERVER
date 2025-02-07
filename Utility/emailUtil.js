@@ -22,13 +22,10 @@ const sendEmail = async ({
   pdfInvoiceBuffer,
   policyFilename,
   invoiceFilename,
-  rmEmail,
-  gmEmail,
   policyType,
-  agentEmail,
+  ccEmails 
 }) => {
   try {
-    // console.log(to);
 
     let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
     sendSmtpEmail.subject = subject;
@@ -47,6 +44,10 @@ const sendEmail = async ({
     ];
 
     sendSmtpEmail.to = recipients;
+    if (ccEmails.length > 0) {
+      sendSmtpEmail.cc = ccEmails.map((email) => ({ email }));
+    }
+
 
     if (pdfPolicyBuffer && pdfInvoiceBuffer) {
       sendSmtpEmail.attachment = [

@@ -158,7 +158,10 @@ exports.addInvoice = async (req, res) => {
       pdfInvoiceBuffer,
       policyFileName,
       invoiceFilename,
-       policyData.customId
+       policyData.customId,
+       rmEmail,
+       gmEmail,
+       agentData.email,
     );
     res
       .status(201)
@@ -287,6 +290,7 @@ exports.editInvoice = async (req, res) => {
         agentData.agentName,
         policyData.customId
       );
+
       await sendCustomerDocEmail(
         invoiceData.billingDetail.customerName,
         invoiceData.billingDetail.email,
@@ -297,7 +301,10 @@ exports.editInvoice = async (req, res) => {
         pdfInvoiceBuffer,
         policyFileName,
         invoiceFilename,
-        policyData.customId
+        policyData.customId,
+        rmEmail,
+        gmEmail,
+        agentData.email,
       );
     } catch (saveError) {
       console.error("Error saving invoice:", saveError);
