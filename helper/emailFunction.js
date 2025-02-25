@@ -3,7 +3,6 @@ const { sendEmail } = require("../Utility/emailUtil");
 
 dotenv.config();
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 const COMMON_EMAIL = process.env.COMMON_EMAIL;
 const sendUserEmail = async ({
   to,
@@ -14,7 +13,8 @@ const sendUserEmail = async ({
   policyFilename,
   invoiceFilename,
   policyType,
-  ccEmails
+  ccEmails,
+ 
 }) => {
   // if (to && subject && htmlContent) {
   await sendEmail({
@@ -26,7 +26,8 @@ const sendUserEmail = async ({
     policyFilename,
     invoiceFilename,
     policyType,
-    ccEmails
+    ccEmails,
+ 
     
   });
   // } else {
@@ -44,7 +45,8 @@ const getEmailTemplate = (
   policyType,
   vinNumber,
   invoiceId,
-  policyId
+  policyId,
+  companyName
 ) => {
   let template;
   let userName = agentName || "user";
@@ -159,7 +161,7 @@ const getEmailTemplate = (
                     <div style="text-align: center;">
                       <div style="${styles}">
                         <p>Dear ${clientName},</p>
-                        <p>Thank you for choosing Raam4Wheelers LLP. Please find below the details of your policy and invoice for your reference.</p>
+                        <p>Thank you for choosing ${companyName}. Please find below the details of your policy and invoice for your reference.</p>
                         <p>Policy and Invoice Details:</p>
                         <p>Policy Type: ${policyType}</p>
                         <p>Policy Id: ${policyId}</p>
@@ -167,7 +169,7 @@ const getEmailTemplate = (
                         <p>Invoice Number: ${invoiceId}</p>
                         <p>If you have any questions or need further assistance, feel free to contact us.</p>
                         <p>Best regards,</p>
-                        <p>Raam4Wheelers LLP</p>
+                        <p>${companyName}</p>
                       </div>
                     </div>
                   `;
@@ -187,7 +189,7 @@ const getEmailTemplate = (
               </br>
               <p>Best Regards,</p>
               <p>Accounts Team</p>
-              <p>Raam4Wheelers LLP</p>
+              <p>${companyName}</p>
             </div>
           </div>
         `;
@@ -298,7 +300,8 @@ exports.AgentPolicyRejectedEmail = async (
   policyType,
   vinNumber,
   policyId,
-  emailType
+  emailType,
+  companyName
 ) => {
   const subject = "Policy Submission Rejected";
   const htmlContent = getEmailTemplate(
@@ -311,7 +314,8 @@ exports.AgentPolicyRejectedEmail = async (
     policyType, // policyType
     vinNumber, // vinNumber
     null, // invoiceId
-    policyId
+    policyId,
+    companyName
   );
 
   await sendUserEmail({
@@ -394,9 +398,11 @@ exports.sendCustomerDocEmail = async (
   policyId,
   rmEmail,
   gmEmail,
-  agentEmail
+  agentEmail,
+  companyName,
+
 ) => {
-  console.log(rmEmail, gmEmail, agentEmail, "checkingemailscc");
+ 
 
   const subject = "Your Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
@@ -409,7 +415,8 @@ exports.sendCustomerDocEmail = async (
     policyType, // policyType
     vinNumber, // vinNumber
     invoiceId, // invoiceId
-    policyId
+    policyId,
+    companyName,
   );
   const ccEmails = [rmEmail, gmEmail, agentEmail].filter(Boolean);  
   await sendUserEmail({
@@ -421,6 +428,7 @@ exports.sendCustomerDocEmail = async (
     policyFilename,
     invoiceFilename,
     policyType,
-    ccEmails
+    ccEmails,
+    
   });
 };

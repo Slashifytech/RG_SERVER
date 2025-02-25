@@ -60,7 +60,10 @@ const invoiceSchema = mongoose.Schema(
     serviceType: {
       type: String,
       required: true,
-      enum: ["BuyBacks", "AMCs"],
+      enum: ["BuyBacks", "AMCs", "EwPolicy"],
+    },
+    location:{
+      type: String
     },
 
     billingDetail: customerPersonalDetais,

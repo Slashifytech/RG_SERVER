@@ -1,138 +1,110 @@
 const mongoose = require("mongoose");
+const { customerPersonalDetais } = require("./AmcModel");
 
-const customerPersonalDetais = mongoose.Schema({
-  customerName: {
+const vehicleDetailsSchema = mongoose.Schema({
+  vehicleModel: {
     type: String,
     required: false,
   },
-  address: {
+  vinNumber: {
     type: String,
     required: false,
-  },
-  contact: {
-    type: String,
-    required: false,
-  },
-  email: {
-    type: String,
-    required: false,
-  },
-  pan: {
-    type: String,
-    required: false,
-  },
-  customerGst: {
-    type: String,
-    required: false,
-  },
-  zipCode: {
-    type: String,
-    required: false,
-  },
-  stateCode: {
-    type: String,
-    required: false,
-  },
-  city:{
-    type:String
-  },
-  state:{
-    type:String
-  },
-  dob:{
-    type:String
-  }
-});
-
-const amcVehicleDetailSchema = mongoose.Schema({
-  model: {
-    type: String,
   },
   fuelType: {
     type: String,
-  },
-
-  vinNumber: {
-    type: String,
-  },
-
-  agreementPeriod: {
-    type: String,
-  },
-  agreementStartDate: {
-    type: String,
-  },
-  agreementValidDate: {
-    type: String,
-  },
-  agreementStartMilage: {
-    type: String,
-  },
-  agreementValidMilage: {
-    type: String,
-  },
-  MaximumValidPMS: {
-    type: String,
+    required: false,
   },
   dealerLocation: {
     type: String,
+    required: false,
   },
-  total: {
-    type: String,
-  },
-  gmEmail: {
-    type: String,
-  },
-  rmName: {
-    type: String,
-  },
-  rmEmployeeId: {
-    type: String,
-  },
-  rmEmail: {
-    type: String,
-  },
-});
 
-const uploadDataSchema = mongoose.Schema({
-  serviceVinNumber: {
+  saleDate: {
+    type: String,
+    required: false,
+  },
+
+  deliveryDate: {
+    type: String,
+    required: false,
+  },
+  presentKm: {
+    type: String,
+    required: false,
+  },
+  warrantyLimit: {
+    type: String,
+    required: false,
+  },
+  engineNumber: {
     type: String,
   },
-  serviceDate: {
-    type: String,
-    required: true
+ 
+  registrationNumber:{
+    type:String
   },
-  partsPrice: {
-    type: String,
-  },
-  labourPrice: {
-    type: String,
-  },
-  vasPrice: {
-    type: String,
-  },
-  issueType:{
-    trype:String,
-  },
-  serviceTotalAmount: {
-    type: String,
-  }
+    rmName: {
+      type: String,
+    },
+    rmEmployeeId: {
+      type: String,
+    },
+    rmEmail: {
+      type: String,
+    },
+    gmEmail: {
+      type: String,
+    },
 
 });
+const ewPolicySchema = mongoose.Schema({
 
-const AMCschema = mongoose.Schema(
+  policyDate: {
+    type: String,
+  },
+  warrantyAmount: {
+    type: String,
+  },
+  planType: {
+    type: String,
+  },
+  planSubType: {
+    type: String,
+  },
+  registrationType: {
+    type: String,
+  },
+  warrantyCoveragePeriod: {
+    type: String,
+  },
+  startKm: {
+    type: String,
+  },
+  endKm: {
+    type: String,
+  },
+  ewStatus: {
+    type: String,
+  },
+
+});
+const ewSchema = mongoose.Schema(
   {
     customerDetails: customerPersonalDetais,
-    vehicleDetails: amcVehicleDetailSchema,
-    amcExpense: [uploadDataSchema],
-    amcStatus: {
+    vehicleDetails: vehicleDetailsSchema,
+    ewDetails: ewPolicySchema,
+    ewStatus: {
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
+
     customId: {
       type: String,
       required: true,
+    },
+    backendPolicyId: {
+      type: String,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -148,7 +120,6 @@ const AMCschema = mongoose.Schema(
       type: Date,
       required: false,
     },
-
     rejectedAt: {
       type: Date,
       required: false,
@@ -165,8 +136,6 @@ const AMCschema = mongoose.Schema(
   { timestamps: true }
 );
 
-const AMCs = mongoose.model("AMCs", AMCschema);
-module.exports = {
-  AMCs,
-  customerPersonalDetais,
-};
+const EwPolicy = mongoose.model("EwPolicy", ewSchema);
+
+module.exports = EwPolicy;

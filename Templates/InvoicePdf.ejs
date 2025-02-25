@@ -14,28 +14,22 @@
     <div style="  padding-bottom: 10px; margin-bottom: 10px;">
       <div style="display: flex; justify-content: center ; align-items: center; gap: 50px;">
         <div style="text-align: center;">
-          <h2 style="margin: 0; font-size: 18px; font-weight: bold;">RAAM4WHEELERS LLP</h2>
-          <p style="text-align: center; font-size: 12px; line-height: 1.5; margin: 3px 0;">
-            8-2-120/86/10,10A,11B,11C and 11D,
-            <br />
-            Opp: Hotel Park Hyatt,
-            <br />
-            Road Number 2, Banjara Hills Hyderabad, PIN-500033
-            <br />
-            Ph: 7799935258, Email Id: hyderabad.crmhead@mgdealer.co.in
-            <br />
-            Website: https://www.mghyderabad.co.in
-            <br />
-            GSTIN: 36AAYFR9176L1ZY, CIN NO: AAN-7654, PAN: AAYFR9176L
+          <h2 style="margin: 0; font-size: 18px; font-weight: bold;"><%=titleData%></h2>
+          <p style="text-align: center; font-size: 12px; line-height: 1.5; margin: 3px 0; padding: 0 30% 0 30%;">
+            <%=addressData%>
           </p>
         </div>
-        <div style="display: flex; flex-direction: column;">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FMG-symbol-black-2010-1920x1080-removebg-preview.png?alt=media&token=4df87beb-002a-4956-9ad4-36902a5a6bdd"
-            alt="MG Logo" style="height: 80px;" />
-          <h3>Morris Garages</h3>
-        </div>
-      </div>
+        <% if (imageDataOne) { %>
+          <div style="display: flex; flex-direction: column;">
+            <img 
+              src="<%= imageDataOne %>" 
+              alt="MG Logo" 
+              style="height: 80px;" 
+            />
+            <h3>Morris Garages</h3>
+          </div>
+        <% } %>
+        </div>        
 
       <hr />
 
@@ -243,9 +237,24 @@
         <p>
           Whether tax is payable on reverse charge basis - <b>No</b>
         </p>
-        <p style="text-align: right; margin-top: 20px;">
-          For <b>RAAM4WHEELERS LLP</b>
-        </p>
+
+        <div style="display: flex; flex-direction: column; align-items: flex-end;">
+  
+          <% if (imageData) { %>
+            <img 
+              src="<%= imageData %>" 
+              alt="stamp" 
+              style="width: 10%; margin-bottom: 10px;" 
+            />
+          <% } %>
+        
+          <p style="text-align: right; margin-top: 10px;">
+            For <b><%= titleData %></b>
+          </p>
+        
+        </div>
+        
+
       </div>
 </body>
 

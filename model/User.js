@@ -14,6 +14,9 @@ const userSchema = mongoose.Schema(
       enum: ["0", "1", "2"],
       default: "2",
     },
+    location: {
+      type: String,
+    }
   },
   { timestamps: true }
 );

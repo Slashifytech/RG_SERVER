@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+  <title>EW Policy</title>
+</head>
+
+<body>
+  <div class="bg-white shadow-md">
+    <div class="p-6">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FRG%20Portal%2FEW%20Page%201%20Header.jpeg?alt=media&token=75f90fc6-30c7-40d2-bcbf-4e96ba8ca37e"
+        alt="img" class="w-full mt-[7%]" />
+      <div class="border border-black pt-6 mx-6 px-6 mb-6">
+        The contract under <b>policy number</b>
+        <%=data?.customId%> has
+          been concluded based on the details and declarations provided by you.
+          The summarized transcript of the same is outlined below. You are
+          required to review and confirm the accuracy of this information. <br />
+          <br />
+          <p>
+            If you identify any discrepancies, require modifications, or disagree
+            with any aspect of the details mentioned, you must notify us within 15
+            days from the date of receipt of this document. Failure to respond
+            within this timeframe will be considered as your acceptance of the
+            accuracy of the provided details.
+          </p>
+          <br />
+          <p>
+            Please be advised that the statements and disclosures contained within
+            this transcript serve as the foundation for the issuance of this
+            policy. It is imperative that all material facts have been truthfully
+            disclosed, as any misrepresentation, omission, or non-disclosure of
+            critical information will render the policy void from inception. In
+            such cases, no claims will be entertained, and any paid amount may be
+            forfeited
+          </p>
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FRG%20Portal%2FEW%20page%201%20Below.png?alt=media&token=acbb9f2f-849f-4ab9-9179-41e4ec5e516b"
+            alt="img" class="mt-12" />
+      </div>
+    </div>
+    <div>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FRG%20Portal%2FEW%20page%202%20Header.png?alt=media&token=62fab21b-b6e9-4706-ae7a-4408097cbda3"
+        alt="header" loading="lazy" class="mt-9" />
+      <div class="p-6">
+        <div class="bg-[#1F2A44] text-white font-bold p-6 text-sm uppercase tracking-widest mt-9 pb-4 ">
+          Customer Details
+        </div>
+        <div class=" pl-6 space-y-2 bg-white">
+          <div class="grid grid-cols-1 gap-4">
+            <div class="flex items-center">
+              <span class="font-semibold w-44">Name :</span>
+              <span class="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+                <%=data?.customerDetails?.customerName%>
+              </span>
+            </div>
+            <div class="flex items-center">
+              <span class="font-semibold w-44">Address :</span>
+              <span class="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+                <%=data?.customerDetails?.address%>
+              </span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 w-full">
+            <div class="flex items-center w-full">
+              <span class="font-semibold w-44 ">City :</span>
+              <span class="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+                <%=data?.customerDetails?.city%>
+              </span>
+            </div>
+            <div class="flex items-center w-full">
+              <span class="font-semibold w-44 ">State :</span>
+              <span class="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+                <%=data?.customerDetails?.state%>
+              </span>
+            </div>
+            <div class="flex items-center w-full">
+              <span class="font-semibold w-44 ">Pin Code :</span>
+              <span class="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+                <%=data?.customerDetails?.zipCode%>
+              </span>
+            </div>
+            <div class="flex items-center w-full">
+              <span class="font-semibold w-44 ">Mobile No. :</span>
+              <span class="border border-gray-400 p-1 bg-blue-100 h-9  mt-3 flex-1 w-3/4">
+                <%=data?.customerDetails?.contact%>
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex items-center">
+              <span class="font-semibold w-44">Email :</span>
+              <span class="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+                <%=data?.customerDetails?.email%>
+              </span>
+            </div>
+            <div class="flex items-center">
+              <span class="font-semibold w-44">DOB :</span>
+              <span class="flex-1 border border-gray-400 p-1 bg-blue-100 h-9  mt-3">
+                <%=data?.customerDetails?.dob%>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4">
+          Extended Warranty Policy Details
+        </div>
+        <div class="pl-6 space-y-2 bg-white pt-6 ">
+          <div class="grid grid-cols-1 gap-4 w-full">
+            <div class="flex items-center w-full">
+              <span class="font-semibold w-44 ">Policy Number :</span>
+              <span class="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+                <%=data?.customId%>
+              </span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 w-full">
+            <div class="flex items-center w-full">
+              <span class="font-semibold w-44 ">Warranty Amount:</span>
+              <span class="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+                <%=data?.ewDetails?.warrantyAmount%>
+              </span>
+            </div>
+
+            <div class="flex items-center w-full">
+              <span class="font-semibold w-44 ">Policy Issue Date :</span>
+              <span class="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+                <%=data?.ewDetails?.policyDate%>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 w-full mt-3 pl-6">
+          <div class="flex items-center w-full">
+            <span class="font-semibold w-44 ">Plan Type :</span>
+            <span class="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+              <%=data?.ewDetails?.planType%>
+            </span>
+          </div>
+          <div class="flex items-center w-full">
+            <span class="font-semibold w-44 ">Plan Sub Type :</span>
+            <span class="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+              <%=data?.ewDetails?.planSubType%>
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-center pl-6">
+          <span class="font-semibold w-44">Registration Type :</span>
+          <span class="flex-1 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+            <%=data?.ewDetails?.registrationType%>
+          </span>
+        </div>
+        <div class="grid grid-cols-2 gap-4 w-full mt-3 pl-6">
+          <div class="flex items-center w-full">
+            <span class="font-semibold w-44 ">Kilometers :</span>
+            <span class="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-2/3">
+              <%=data?.ewDetails?.startKm%>
+            </span>
+          </div>
+          <div class="flex items-center w-full">
+            <span class="font-semibold w-44 ">KM To :</span>
+            <span class="border border-gray-400 p-1 bg-blue-100 h-9 mt-3 flex-1 w-1/2">
+              <%=data?.ewDetails?.endKm%> KM
+            </span>
+          </div>
+        </div>
+        <div class="flex items-center pl-6">
+          <span class="font-semibold w-44 ">Status :</span>
+          <span class="flex-1  border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+            <%=data?.ewDetails?.ewStatus%>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="bg-[#1F2A44] text-white font-bold p-2 text-sm uppercase tracking-widest mt-6 pb-4 mx-6">
+      Vehicles Details
+    </div>
+  </div>
+  <div class="flex items-center mt-[60%] px-6 pt-16">
+    <span class="font-semibold w-44 ">Registration Number :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.registrationNumber%>
+    </span>
+  </div>
+  <div class="flex items-center px-6 pt-16">
+    <span class="font-semibold w-44 ">Date of Sale :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.saleDate%>
+    </span>
+  </div>
+  <div class="flex items-center px-6">
+    <span class="font-semibold w-44 ">Present Kilometer :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.presentKm%>
+    </span>
+  </div>
+  <div class="flex items-center px-6 ">
+    <span class="font-semibold w-44 ">Date of Delivery:</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.deliveryDate%>
+    </span>
+  </div>
+  <div class="flex items-center px-6 ">
+    <span class="font-semibold w-44 ">Warranty Limit :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.warrantyLimit%>
+    </span>
+  </div>
+  <div class="flex items-center px-6 ">
+    <span class="font-semibold w-44 ">Model :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.vehicleModel%>
+    </span>
+  </div>
+  <div class="flex items-center px-6 ">
+    <span class="font-semibold w-44 ">Fuel Type :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.fuelType%>
+    </span>
+  </div>
+  <div class="flex items-center px-6 ">
+    <span class="font-semibold w-44 ">Vin Number/ Chesis No. :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.vinNumber%>
+    </span>
+  </div>
+  <div class="flex items-center px-6 ">
+    <span class="font-semibold w-44 ">Engine Number :</span>
+    <span class="flex-1 ml-3 border border-gray-400 p-1 bg-blue-100 h-9 mt-3">
+      <%=data?.vehicleDetails?.engineNumber%>
+    </span>
+  </div>
+  <hr class="border border-black mt-8 mx-6" />
+  <p class="pt-9 font-bold px-6">
+    RSA (Roadside Assistance) Coverage Details:
+  </p>
+  <p class="mt-6 px-6 ">
+    One towing service per policy year from the breakdown location to the
+    nearest authorized OEM service center, up to a distance of 50 km. <br />
+    Onsite repair assistance, including battery jump-start, minor repairs,
+    tire replacement, and more. <br />
+    Toll-Free Number for RSA Assistance: 1800-209-1030.
+  </p>
+
+  <img
+    src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FRG%20Portal%2FPage%204%20EW.png?alt=media&token=06bb2e27-f8f8-4a74-916a-2d465666b522"
+    alt="img">
+  <img
+    src="https://firebasestorage.googleapis.com/v0/b/car-protect-99a26.firebasestorage.app/o/files%2FRG%20Portal%2FPage%205%20EW.png?alt=media&token=2963714d-cc83-472c-9469-24447a65032b"
+    alt="img">
+
+  </div>
+  </div>
+  </div>
+</body>
+
+</html>

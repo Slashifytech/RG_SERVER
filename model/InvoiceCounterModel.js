@@ -8,6 +8,8 @@ const counterSchema = new mongoose.Schema({
 const invoiceCounterSchema = new mongoose.Schema({
   amcCounter: counterSchema,
   buyBackCounter: counterSchema,
+  ewCounter: counterSchema,
+
 });
 
 const InvoiceCounter = mongoose.model("InvoiceCounter", invoiceCounterSchema);

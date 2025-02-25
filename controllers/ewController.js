@@ -1,29 +1,26 @@
 const {
-  sendAgentRejected,
-  sendAgentAccepted,
-  sendCustomerAccepted,
+
   AgentPolicyRejectedEmail,
 } = require("../helper/emailFunction");
-const BuyBacks = require("../model/BuyBackModel");
+const EwPolicy = require("../model/EwModel");
 const User = require("../model/User");
 const fs = require("fs");
 const path = require("path");
 const { parse: json2csv } = require("json2csv");
 const { formatNumber } = require("../helper/countreunvtion");
-
-exports.BuyBackFormData = async (req, res) => {
+exports.ewPolicyFormData = async (req, res) => {
   try {
-    const BuyBack = req.body;
-    const vinNumber = BuyBack.vehicleDetails.vinNumber;
-    const email = BuyBack.customerDetails.email;
-    const duplicateVinNumber = await BuyBacks.findOne({ vinNumber });
+    const ewPolicy = req.body;
+    const vinNumber = ewPolicy.vehicleDetails.vinNumber;
+    const email = ewPolicy.customerDetails.email;
+    const duplicateVinNumber = await EwPolicy.findOne({ vinNumber });
     if (duplicateVinNumber) {
       return res.status(400).json({
         message: "Vehicle vin number already exists",
       });
     }
 
-    const duplicateEmail = await BuyBacks.findOne({ email });
+    const duplicateEmail = await EwPolicy.findOne({ email });
     if (duplicateEmail) {
       return res.status(400).json({
         message: "Email already exists",
@@ -32,38 +29,38 @@ exports.BuyBackFormData = async (req, res) => {
 
     const currentYear = new Date().getFullYear();
     const last5DigitsOfVin = vinNumber.slice(-5);
-    const customId = `Raam-BB-${currentYear}-${last5DigitsOfVin}`;
+    const customId = `360-EW-${currentYear}-${last5DigitsOfVin}`;
 
-    const newBuyBack = new BuyBacks({
-      ...BuyBack,
+    const newEwPolicy = new EwPolicy({
+      ...ewPolicy,
       customId,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
 
-    await newBuyBack.save();
+    await newEwPolicy.save();
 
     return res.status(201).json({
-      message: "BuyBack saved successfully.",
-      BuyBack: newBuyBack,
+      message: "ewPolicy saved successfully.",
+      ewPolicy: newEwPolicy,
     });
   } catch (error) {
-    console.error("Error saving BuyBack data:", error);
+    console.error("Error saving ewPolicy data:", error);
     return res.status(500).json({
-      message: "Failed to save BuyBack data",
+      message: "Failed to save ewPolicy data",
       error: error.message,
     });
   }
 };
 
-exports.editBuyBack = async (req, res) => {
+exports.editEwPolicy = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
 
     // Check for duplicates
     if (updatedData.vinNumber) {
-      const duplicateVinNumber = await BuyBacks.findOne({
+      const duplicateVinNumber = await EwPolicy.findOne({
         vinNumber: updatedData.vinNumber,
         _id: { $ne: id }, // Exclude the current being updated
       });
@@ -75,35 +72,35 @@ exports.editBuyBack = async (req, res) => {
     }
 
     if (updatedData.email) {
-      const duplicateEmail = await BuyBacks.findOne({
+      const duplicateEmail = await EwPolicy.findOne({
         email: updatedData.email,
-        _id: { $ne: id }, // Exclude the current buyback being updated
+        _id: { $ne: id }, // Exclude the current ewPolicy being updated
       });
       if (duplicateEmail) {
         return res.status(400).json({ message: "Email already exists" });
       }
     }
 
-    const updateVinNumber = await BuyBacks.findByIdAndUpdate(id, updatedData, {
+    const updateVinNumber = await EwPolicy.findByIdAndUpdate(id, updatedData, {
       new: true,
       runValidators: true,
     });
 
     if (!updateVinNumber) {
-      return res.status(404).json({ message: "BuyBacks not found" });
+      return res.status(404).json({ message: "EwPolicy not found" });
     }
 
     res.status(200).json({
-      message: "BuyBacks updated successfully",
+      message: "EwPolicy updated successfully",
       data: updateVinNumber,
     });
   } catch (err) {
-    console.error("Error updating BuyBacks data:", err);
+    console.error("Error updating EwPolicy data:", err);
     res.status(500).json({ message: "Something went wrong", error: err });
   }
 };
 
-exports.updateBuyBackStatus = async (req, res) => {
+exports.updateEwStatus = async (req, res) => {
   try {
     const { id, type } = req.body;
     const { reason } = req.query;
@@ -121,28 +118,28 @@ exports.updateBuyBackStatus = async (req, res) => {
     }
 
     // Find the policy by ID
-    const buyBackdata = await BuyBacks.findById(id);
+    const ewPolicydata = await EwPolicy.findById(id);
 
-    if (!buyBackdata) {
-      return res.status(404).json({ message: "Buyback not found." });
+    if (!ewPolicydata) {
+      return res.status(404).json({ message: "Ew Policy not found." });
     }
-    const agent = await User.findById(buyBackdata.createdBy);
-    if (type === "approvedReq" && buyBackdata.isCancelReq === "reqCancel") {
-      buyBackdata.isCancelReq = "approvedReq";
-      await buyBackdata.save();
+    const agent = await User.findById(ewPolicydata.createdBy);
+    if (type === "approvedReq" && ewPolicydata.isCancelReq === "reqCancel") {
+      ewPolicydata.isCancelReq = "approvedReq";
+      await ewPolicydata.save();
 
       return res.status(200).json({
         message: "Cancellation request approved.",
-        isCancelReq: buyBackdata.isCancelReq,
+        isCancelReq: ewPolicydata.isCancelReq,
       });
     }
     if (type === "reqCancel") {
-      buyBackdata.isCancelReq = "reqCancel";
-      await buyBackdata.save();
+      ewPolicydata.isCancelReq = "reqCancel";
+      await ewPolicydata.save();
 
       return res.status(200).json({
         message: "Requested for cancellation",
-        isCancelReq: buyBackdata.isCancelReq,
+        isCancelReq: ewPolicydata.isCancelReq,
         status: 200,
       });
     }
@@ -157,52 +154,52 @@ exports.updateBuyBackStatus = async (req, res) => {
       const deletionDate = new Date();
       deletionDate.setDate(deletionDate.getDate() + 3);
 
-      buyBackdata.rejectionReason = reason;
-      buyBackdata.rejectedAt = deletionDate;
-      buyBackdata.buyBackStatus = "rejected";
+      ewPolicydata.rejectionReason = reason;
+      ewPolicydata.rejectedAt = deletionDate;
+      ewPolicydata.ewStatus = "rejected";
 
-      await buyBackdata.save();
+      await ewPolicydata.save();
       console.log(
-        `buyBackdata with ID: ${id} scheduled for deletion with reason: ${reason}.`
+        `EW Policy with ID: ${id} scheduled for deletion with reason: ${reason}.`
       );
 
       await AgentPolicyRejectedEmail(
         agent.email,
         agent.agentName,
         reason,
-        "Buyback",
-        buyBackdata.vehicleDetails.vinNumber,
-        buyBackdata.customId,
-        "Buyback",
-        "Raam4Wheelers LLP"
+        "ewPolicy",
+        ewPolicydata.vehicleDetails.vinNumber,
+        ewPolicydata.customId,
+        "ewPolicy",
+        "360 CAR PROTECT INDIA LLP"
       );
 
       return res
         .status(200)
-        .json({ message: "Buyback rejected", buyBackdata, status: 200 });
+        .json({ message: "ewPolicy rejected", ewPolicydata, status: 200 });
     }
 
     // Handle approval case
     if (type === "approved") {
-      buyBackdata.buyBackStatus = "approved";
-      buyBackdata.approvedAt = new Date();
+      ewPolicydata.ewStatus = "approved";
+      ewPolicydata.approvedAt = new Date();
 
-      buyBackdata.buyBackStatus = "approved";
-      buyBackdata.approvedAt = new Date();
+      ewPolicydata.ewStatus = "approved";
+      ewPolicydata.approvedAt = new Date();
 
-      await buyBackdata.save();
+      await ewPolicydata.save();
       return res
         .status(200)
-        .json({ message: "buyBackData approved", buyBackdata, status: 200 });
+        .json({ message: "ewPolicydata approved", ewPolicydata, status: 200 });
     }
 
-    buyBackdata.buyBackStatus = "pending";
+    ewPolicydata.ewStatus = "pending";
 
-    await buyBackdata.save();
+    await ewPolicydata.save();
 
     return res.status(200).json({
-      message: "Buy Back Data Status Changed Successfully.",
-      buyBackdata,
+      message: "Ew Policy Data Status Changed Successfully.",
+      ewPolicydata,
       status: 200,
     });
   } catch (error) {
@@ -211,22 +208,22 @@ exports.updateBuyBackStatus = async (req, res) => {
   }
 };
 
-exports.disableBuyBack = async (req, res) => {
+exports.disableEwPolicy = async (req, res) => {
   try {
-    const { buyBackId } = req.query;
+    const { ewId } = req.query;
 
-    const buyBackdata = await BuyBacks.findById(buyBackId);
-    if (!buyBackdata) {
-      return res.status(404).json({ message: "buyback not found" });
+    const ewPolicydata = await EwPolicy.findById(ewId);
+    if (!ewPolicydata) {
+      return res.status(404).json({ message: "ewPolicy not found" });
     }
 
-    if (!buyBackdata.approvedAt) {
+    if (!ewPolicydata.approvedAt) {
       return res.status(403).json({
-        message: "Buy Back must be approved before it can be disabled",
+        message: "Ew Policy must be approved before it can be disabled",
       });
     }
 
-    const approvedDate = new Date(buyBackdata.approvedAt);
+    const approvedDate = new Date(ewPolicydata.approvedAt);
     const currentDate = new Date();
     const diffInDays = Math.floor(
       (currentDate - approvedDate) / (1000 * 60 * 60 * 24)
@@ -234,42 +231,40 @@ exports.disableBuyBack = async (req, res) => {
 
     if (diffInDays > 15) {
       return res.status(403).json({
-        message: "buyBackdata cannot be disabled after 15 days of creation",
+        message: "ewPolicydata cannot be disabled after 15 days of creation",
       });
     }
 
-    buyBackdata.isDisabled = true;
+    ewPolicydata.isDisabled = true;
     const oneMonthFromApproval = new Date(approvedDate);
     oneMonthFromApproval.setMonth(approvedDate.getMonth() + 1);
-    buyBackdata.disabledAt = oneMonthFromApproval;
+    ewPolicydata.disabledAt = oneMonthFromApproval;
 
-    await buyBackdata.save();
+    await ewPolicydata.save();
 
     res
       .status(200)
-      .json({ message: "Buy Back disabled successfully", data: buyBackdata });
+      .json({ message: "Ew Policy disabled successfully", data: ewPolicydata });
   } catch (err) {
-    console.error("Error disabling Buy Back:", err);
+    console.error("Error disabling Ew Policy:", err);
     res.status(500).json({ message: "Something went wrong", error: err });
   }
 };
 
-exports.buyBackById = async (req, res) => {
+exports.ewById = async (req, res) => {
   const { id, status } = req.query;
   try {
     if (!id && !status) {
       return res.status(400).json({
-        message: "Please provide either buyBackId or status",
+        message: "Please provide either ewId or status",
       });
     }
 
-    // Build the query dynamically based on available parameters
     const query = {};
     if (id) query._id = id;
     if (status) query.status = status;
 
-    const data = await BuyBacks.findOne(query);
-
+    const data = await EwPolicy.findOne(query);
     if (!data) {
       return res.status(404).json({
         message: "No data found with the provided criteria",
@@ -281,7 +276,7 @@ exports.buyBackById = async (req, res) => {
       data: data,
     });
   } catch (error) {
-    console.error("Error fetching BuyBack data:", error);
+    console.error("Error fetching ewPolicy data:", error);
     return res.status(500).json({
       message: "Something went wrong",
       error: error.message,
@@ -289,11 +284,9 @@ exports.buyBackById = async (req, res) => {
   }
 };
 
-exports.getAllBuyBackLists = async (req, res) => {
+exports.getAllEwLists = async (req, res) => {
   const { page = 1, limit = 10, search = "", id, status } = req.query;
   const {roleType, location} = req.user
-  
-   console.log(req.user)
   try {
     const query = {};
     const orConditions = [];
@@ -308,7 +301,7 @@ exports.getAllBuyBackLists = async (req, res) => {
         orConditions.push({ isDisabled: status === "true" });
       } else if (typeof status === "string") {
         orConditions.push({
-          $or: [{ buyBackStatus: status }, { isCancelReq: status }],
+          $or: [{ ewStatus: status }, { isCancelReq: status }],
         });
       }
     }
@@ -323,18 +316,17 @@ exports.getAllBuyBackLists = async (req, res) => {
     if (roleType === "1" && location) {
       query["vehicleDetails.dealerLocation"] = location;
     }
-    // console.log("Constructed Query:", JSON.stringify(query, null, 2));
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
-    const data = await BuyBacks.find(query)
+    const data = await EwPolicy.find(query)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit));
-    const totalCount = await BuyBacks.countDocuments(query);
+    const totalCount = await EwPolicy.countDocuments(query);
 
     if (!data || data.length === 0) {
-      return res.status(404).json({ message: "No Buyback Available" });
+      return res.status(404).json({ message: "No Ew Policy Available" });
     }
 
     return res.status(200).json({
@@ -347,7 +339,7 @@ exports.getAllBuyBackLists = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching buyback data:", error.message);
+    console.error("Error fetching ewPolicy data:", error.message);
     return res.status(500).json({
       message: "Something went wrong",
       error: error.message,
@@ -355,90 +347,33 @@ exports.getAllBuyBackLists = async (req, res) => {
   }
 };
 
-exports.buyBackResubmit = async (req, res) => {
-  const { buyBackId } = req.query;
+exports.EwResubmit = async (req, res) => {
+  const { ewId } = req.query;
 
   try {
-    const buyBackdata = await BuyBacks.findById({ _id: buyBackId });
-    if (!buyBackdata) {
-      return res.status(404).json({ message: "Buy Back not found" });
+    const ewPolicydata = await EwPolicy.findById({ _id: ewId });
+    if (!ewPolicydata) {
+      return res.status(404).json({ message: "Ew Policy not found" });
     }
-    buyBackdata.buyBackStatus = "pending";
-    await buyBackdata.save();
+    ewPolicydata.ewStatus = "pending";
+    await ewPolicydata.save();
 
     return res
       .status(200)
-      .json({ message: "Buy Back fetched successfully", buyBackdata });
+      .json({ message: "Ew Policy fetched successfully", ewPolicydata });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong", error });
     console.log(error);
   }
 };
 
-exports.getBuyBackStats = async (req, res) => {
-  try {
-    const { location, vehicleModel, startDate, endDate } = req.query;
-
-    let filter = {};
-    if (location) {
-      filter["vehicleDetails.dealerLocation"] = location;
-    }
-    if (vehicleModel) {
-      filter["vehicleDetails.vehicleModel"] = vehicleModel;
-    }
-    if (startDate || endDate) {
-      if (startDate && endDate) {
-        // If both startDate and endDate are provided, filter between them
-        filter["createdAt"] = {
-          $gte: new Date(`${startDate}T00:00:00.000Z`),
-          $lte: new Date(`${endDate}T23:59:59.999Z`),
-        };
-      } else if (startDate) {
-        // If only startDate is provided, match only that date
-        filter["createdAt"] = {
-          $gte: new Date(`${startDate}T00:00:00.000Z`),
-          $lte: new Date(`${startDate}T23:59:59.999Z`),
-        };
-      } else if (endDate) {
-        // If only endDate is provided, match only that date
-        filter["createdAt"] = {
-          $gte: new Date(`${endDate}T00:00:00.000Z`),
-          $lte: new Date(`${endDate}T23:59:59.999Z`),
-        };
-      }
-    }
-    
-    const buyBackDocs = await BuyBacks.find(filter);
-    const totalBuyBackCount = buyBackDocs.length;
-    const totalRevenue = buyBackDocs.reduce((sum, doc) => {
-      return sum + Number(doc.vehicleDetails?.totalPayment || 0);
-    }, 0);
-
-    const totalExpense = buyBackDocs.reduce((sum, doc) => {
-      return sum + Number(doc.buyBackDetails?.raamGroupPrice || 0);
-    }, 0);
-
-    return res.status(200).json({
-      success: true,
-      totalBuyBackCount: formatNumber(totalBuyBackCount),
-      totalRevenue: formatNumber(totalRevenue),
-      totalExpense: formatNumber(totalExpense),
-    });
-  } catch (error) {
-    console.error("Error fetching buyback stats:", error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Internal Server Error" });
-  }
-};
-
-exports.downloadBuyBackCsv = async (req, res) => {
+exports.downloadEwCsv = async (req, res) => {
   try {
     let query = {
       $and: [{ isDisabled: { $ne: true } }],
     };
 
-    const data = await BuyBacks.find(query);
+    const data = await EwPolicy.find(query);
 
     const csvData = data.map((policy) => ({
       "Customer Name": policy.customerDetails.customerName || "",
@@ -450,18 +385,29 @@ exports.downloadBuyBackCsv = async (req, res) => {
       "Vehicle Model": policy.vehicleDetails.model || "",
       "Vin Number": policy.vehicleDetails.vinNumber || "",
       "Fuel Type": policy.vehicleDetails.fuelType || "",
-      "Agreement Start Date": policy.vehicleDetails.agreementStartDate || "",
-      "Agreement Valid Date": policy.vehicleDetails.agreementValidDate || "",
-      "Validity Milage": policy.vehicleDetails.validityMilage || "",
       "Delivery Date": policy.vehicleDetails.deliveryDate || "",
+      "Sale Date": policy.vehicleDetails.saleDate || "",
+      "Present Kilo Meter": policy.vehicleDetails.presentKm || "",
+      "Warranty Limit": policy.vehicleDetails.warrantyLimit || "",
+      "Engine Number": policy.vehicleDetails.engineNumber || "",
       "Dealer Location": policy.vehicleDetails.dealerLocation || "",
-      "Total Price": policy.vehicleDetails.totalPayment || "",
+      "Policy Date": policy.ewDetails.policyDate || "",
+      "Warranty Amount": policy.ewDetails.warrantyAmount || "",
+      "Plan Type": policy.ewDetails.planType || "",
+      "PlanSub Type": policy.ewDetails.planSubType || "",
+      "Registration Type": policy.ewDetails.registrationType || "",
+      "Warranty Coverage Period": policy.ewDetails.warrantyCoveragePeriod || "",
+      "Start KM": policy.ewDetails.startKm || "",
+      "End KM": policy.ewDetails.endKm || "",
+      "EW Status": policy.ewDetails.ewStatus || "",
+      "Plan Type": policy.ewDetails.planType || "",
+      "Policy Number": policy.ewDetails.policyNumber || "",
       "Regional Manager Name": policy.vehicleDetails.rmName || "",
       "RM Employee Id": policy.vehicleDetails.rmEmployeeId || "",
       "RM Email": policy.vehicleDetails.rmEmail || "",
       "GM Email": policy.vehicleDetails.gmEmail || "",
 
-      "Current Status": policy.buyBackStatus || "",
+      "Current Status": policy.ewStatus || "",
     }));
 
     const csvDataString = json2csv(csvData, {
@@ -481,7 +427,17 @@ exports.downloadBuyBackCsv = async (req, res) => {
         "Validity Milage",
         "Delivery Date",
         "Dealer Location",
-        "Total Price",
+        "Policy Date",
+        "Warranty Amount",
+        "Plan Type",
+        "PlanSub Type",
+        "Registration Type",
+        "Warranty Coverage Period",
+        "Start KM",
+        "End KM",
+        "EW Status",
+        "Plan Type",
+        "Policy Number",
         "Regional Manager Name",
         "RM Employee Id",
         "RM Email",
@@ -514,5 +470,59 @@ exports.downloadBuyBackCsv = async (req, res) => {
   } catch (error) {
     console.error("Error downloading CSV:", error);
     res.status(500).send("Internal Server Error");
+  }
+};
+exports.getEwStats = async (req, res) => {
+  try {
+    const { location, vehicleModel, startDate, endDate } = req.query;
+
+    let filter = {};
+    if (location) {
+      filter["vehicleDetails.dealerLocation"] = location;
+    }
+    if (vehicleModel) {
+      filter["vehicleDetails.vehicleModel"] = vehicleModel;
+    }
+    if (startDate || endDate) {
+      if (startDate && endDate) {
+        // If both startDate and endDate are provided, filter between them
+        filter["createdAt"] = {
+          $gte: new Date(`${startDate}T00:00:00.000Z`),
+          $lte: new Date(`${endDate}T23:59:59.999Z`),
+        };
+      } else if (startDate) {
+        // If only startDate is provided, match only that date
+        filter["createdAt"] = {
+          $gte: new Date(`${startDate}T00:00:00.000Z`),
+          $lte: new Date(`${startDate}T23:59:59.999Z`),
+        };
+      } else if (endDate) {
+        // If only endDate is provided, match only that date
+        filter["createdAt"] = {
+          $gte: new Date(`${endDate}T00:00:00.000Z`),
+          $lte: new Date(`${endDate}T23:59:59.999Z`),
+        };
+      }
+    }
+    
+
+    const EwDocs = await EwPolicy.find(filter);
+    const totalEwCount = EwDocs.length;
+    const totalRevenue = EwDocs.reduce((sum, doc) => {
+      return sum + Number(doc.ewDetails?.warrantyAmount || 0);
+    }, 0);
+
+
+
+    return res.status(200).json({
+      success: true,
+      totalEwCount :formatNumber(totalEwCount),
+      totalRevenue : formatNumber(totalRevenue),
+    });
+  } catch (error) {
+    console.error("Error fetching buyback stats:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 };

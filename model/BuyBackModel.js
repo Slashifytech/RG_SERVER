@@ -52,16 +52,31 @@ const vehicleDetailsSchema = mongoose.Schema({
     type: String,
   },
 });
-
+const buyBackDetailSchema = mongoose.Schema({
+  deliveryDate: {
+    type: String,
+  },
+  marketPrice: {
+    type: String,
+  },
+  raamGroupPrice: {
+    type: String,
+  },
+  priceDifference: {
+    type: String,
+  },
+});
 const BuyBackSchema = mongoose.Schema(
   {
     customerDetails: customerPersonalDetais,
     vehicleDetails: vehicleDetailsSchema,
+    buyBackDetails: buyBackDetailSchema,
     buyBackStatus: {
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
+
     customId: {
       type: String,
       required: true,

@@ -9,15 +9,16 @@ const {
   invoiceById,
   invoiceResubmit,
 } = require('../controllers/invoiceController');
+const { authCheck } = require('../middleware/Auth');
 
 // Define routes
-router.post('/add-invoice', addInvoice);
-router.patch('/update-invoice', editInvoice);
-router.patch('/update-approval', invoiceApproval);
-router.get('/all-invoice-approval', getAllInvoice);
-router.get('/invoice-all', getInvoicesByStatus);
-router.get('/invoice', invoiceById);
-router.patch('/invoice-resubmit', invoiceResubmit);
+router.post('/add-invoice',authCheck, addInvoice);
+router.patch('/update-invoice',authCheck, editInvoice);
+router.patch('/update-approval',authCheck, invoiceApproval);
+router.get('/all-invoice-approval',authCheck, getAllInvoice);
+router.get('/invoice-all',authCheck, getInvoicesByStatus);
+router.get('/invoice',authCheck, invoiceById);
+router.patch('/invoice-resubmit',authCheck, invoiceResubmit);
 
 // Export the router
 module.exports = router;

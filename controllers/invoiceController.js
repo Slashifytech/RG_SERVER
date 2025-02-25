@@ -10,6 +10,7 @@ const { generatePdf, renderEmailTemplate } = require("../helper/pdfDownlaod");
 const { AMCs } = require("../model/AmcModel");
 const BuyBacks = require("../model/BuyBackModel");
 const User = require("../model/User");
+const EwPolicy = require("../model/EwModel");
 
 exports.addInvoice = async (req, res) => {
   const { invoiceType, createdBy, ...payload } = req.body;
@@ -18,19 +19,13 @@ exports.addInvoice = async (req, res) => {
   const gmEmail = req.body.vehicleDetails.gmEmail;
 
   try {
-    const existingVinNumber = await Invoice.findOne({
-      "vehicleDetails.vinNumber": vinNumber,
-    });
-    if (existingVinNumber) {
-      return res.status(400).json({ message: "VIN number already exists" });
-    }
+  
 
     let prefix;
     let serviceType;
     let counterField;
 
     const invoiceTypeData = invoiceType.toLowerCase();
-
     if (invoiceTypeData === "amc") {
       prefix = "AMC";
       serviceType = "AMCs";
@@ -39,6 +34,10 @@ exports.addInvoice = async (req, res) => {
       prefix = "BYBK";
       serviceType = "BuyBacks";
       counterField = "buyBackCounter";
+    } else if (invoiceTypeData === "ewpolicy") {
+      prefix = "EW";
+      serviceType = "EwPolicy";
+      counterField = "ewCounter";
     } else {
       return res.status(400).json({ message: "Invalid invoice type" });
     }
@@ -67,11 +66,14 @@ exports.addInvoice = async (req, res) => {
     await newInvoice.save();
     let amcData;
     let buyBackData;
+    let ewPolicyData;
     let amcFileName;
+    let ewPolicyFileName;
     let buyBackFileName;
     let pdfBuybackBuffer;
+    let pdfEwPolicyBuffer;
     let pdfAmcBuffer;
-
+    
     if (invoiceTypeData === "amc") {
       amcData = await AMCs.findOne({ "vehicleDetails.vinNumber": vinNumber });
       const amcHTML = await renderEmailTemplate(
@@ -94,13 +96,28 @@ exports.addInvoice = async (req, res) => {
       buyBackFileName = `${buyBackData?.vehicleDetails?.vinNumber}_${
         buyBackData?.customerDetails?.customerName || "Buyback"
       }.pdf`;
+    } else if (invoiceTypeData === "ewpolicy") {
+      ewPolicyData = await EwPolicy.findOne({
+        "vehicleDetails.vinNumber": vinNumber,
+      });
+      const ewPolicyHTML = await renderEmailTemplate(
+        ewPolicyData,
+        "../Templates/EwPolicyTemplate.ejs",
+     
+      );
+      pdfEwPolicyBuffer = await generatePdf(ewPolicyHTML, "pdfEwPolicy");
+      ewPolicyFileName = `${ewPolicyData?.vehicleDetails?.vinNumber}_${
+        ewPolicyData?.customerDetails?.customerName || "EwPolicy"
+      }.pdf`;
     }
     const invoiceData = await Invoice.findOne({
       "vehicleDetails.vinNumber": vinNumber,
     });
     const invoiceHTML = await renderEmailTemplate(
       invoiceData,
-      "../Templates/InvoicePdf.ejs"
+      "../Templates/InvoicePdf.ejs",
+   "ewPolicy"
+
     );
     const pdfInvoiceBuffer = await generatePdf(invoiceHTML, "pdfInvoice");
 
@@ -112,23 +129,32 @@ exports.addInvoice = async (req, res) => {
         ? "AMC"
         : invoiceTypeData === "buyback"
         ? "Buyback"
+        : invoiceTypeData === "ewpolicy"
+        ? "EwPolicy"
         : null;
     const pdfPolicyBuffer =
       invoiceTypeData === "amc"
         ? pdfAmcBuffer
         : invoiceTypeData === "buyback"
         ? pdfBuybackBuffer
+        : invoiceTypeData === "ewpolicy"
+        ? pdfEwPolicyBuffer
         : null;
     const policyFileName =
       invoiceTypeData === "amc"
         ? amcFileName
         : invoiceTypeData === "buyback"
         ? buyBackFileName
+        : invoiceTypeData === "ewpolicy"
+        ? ewPolicyFileName
         : null;
-        const policyData =   invoiceTypeData === "amc"
+    const policyData =
+      invoiceTypeData === "amc"
         ? amcData
         : invoiceTypeData === "buyback"
         ? buyBackData
+        : invoiceTypeData === "ewpolicy"
+        ? ewPolicyData
         : null;
     const agentData = await User.findOne({ _id: policyData.createdBy });
     // await sendDocEmail(
@@ -145,7 +171,6 @@ exports.addInvoice = async (req, res) => {
     //   agentData.email,
     //   agentData.agentName,
     //    policyData.customId
-      
 
     // );
     await sendCustomerDocEmail(
@@ -158,10 +183,14 @@ exports.addInvoice = async (req, res) => {
       pdfInvoiceBuffer,
       policyFileName,
       invoiceFilename,
-       policyData.customId,
-       rmEmail,
-       gmEmail,
-       agentData.email,
+      policyData.customId,
+      rmEmail,
+      gmEmail,
+      agentData.email,
+      invoiceTypeData === "ewpolicy"
+      ? "360 CAR PROTECT INDIA LLP"
+      : "Raam4Wheelers LLP",
+   
     );
     res
       .status(201)
@@ -191,17 +220,14 @@ exports.editInvoice = async (req, res) => {
     }
 
     const invoiceTypeData = existingInvoice.invoiceType.toLowerCase();
-
+   
+       
     // Check for VIN number duplication
     if (vinNumber && vinNumber !== existingInvoice.vehicleDetails?.vinNumber) {
       const vinNumberExists = await Invoice.findOne({
         "vehicleDetails.vinNumber": vinNumber,
       });
-      if (vinNumberExists) {
-        return res
-          .status(400)
-          .json({ message: "VIN number is already in use" });
-      }
+      
     }
     Object.assign(existingInvoice, payload);
 
@@ -210,11 +236,13 @@ exports.editInvoice = async (req, res) => {
 
       let amcData;
       let buyBackData;
+      let ewPolicyData;
       let amcFileName;
+      let ewPolicyFileName;
       let buyBackFileName;
       let pdfBuybackBuffer;
+      let pdfEwPolicyBuffer;
       let pdfAmcBuffer;
-
       if (invoiceTypeData === "amc") {
         amcData = await AMCs.findOne({ "vehicleDetails.vinNumber": vinNumber });
         const amcHTML = await renderEmailTemplate(
@@ -237,13 +265,28 @@ exports.editInvoice = async (req, res) => {
         buyBackFileName = `${buyBackData?.vehicleDetails?.vinNumber}_${
           buyBackData?.customerDetails?.customerName || "Buyback"
         }.pdf`;
+      } else if (invoiceTypeData === "ewpolicy") {
+        ewPolicyData = await EwPolicy.findOne({
+          "vehicleDetails.vinNumber": vinNumber,
+        });
+
+        const ewPolicyHTML = await renderEmailTemplate(
+          ewPolicyData,
+          "../Templates/EwPolicyTemplate.ejs",
+        
+        );
+        pdfEwPolicyBuffer = await generatePdf(ewPolicyHTML, "pdfEwPolicy");
+        ewPolicyFileName = `${ewPolicyData?.vehicleDetails?.vinNumber}_${
+          ewPolicyData?.customerDetails?.customerName || "EwPolicy"
+        }.pdf`;
       }
       const invoiceData = await Invoice.findOne({
         "vehicleDetails.vinNumber": vinNumber,
       });
       const invoiceHTML = await renderEmailTemplate(
         invoiceData,
-        "../Templates/InvoicePdf.ejs"
+        "../Templates/InvoicePdf.ejs",
+          "ewPolicy"
       );
       const pdfInvoiceBuffer = await generatePdf(invoiceHTML, "pdfInvoice");
 
@@ -255,23 +298,32 @@ exports.editInvoice = async (req, res) => {
           ? "AMC"
           : invoiceTypeData === "buyback"
           ? "Buyback"
+          : invoiceTypeData === "ewpolicy"
+          ? "EwPolicy"
           : null;
       const pdfPolicyBuffer =
         invoiceTypeData === "amc"
           ? pdfAmcBuffer
           : invoiceTypeData === "buyback"
           ? pdfBuybackBuffer
+          : invoiceTypeData === "ewpolicy"
+          ? pdfEwPolicyBuffer
           : null;
       const policyFileName =
         invoiceTypeData === "amc"
           ? amcFileName
           : invoiceTypeData === "buyback"
           ? buyBackFileName
+          : invoiceTypeData === "ewpolicy"
+          ? ewPolicyFileName
           : null;
-          const policyData =   invoiceTypeData === "amc"
+      const policyData =
+        invoiceTypeData === "amc"
           ? amcData
           : invoiceTypeData === "buyback"
           ? buyBackData
+          : invoiceTypeData === "ewpolicy"
+          ? ewPolicyData
           : null;
       const agentData = await User.findOne({ _id: policyData.createdBy });
 
@@ -305,6 +357,9 @@ exports.editInvoice = async (req, res) => {
         rmEmail,
         gmEmail,
         agentData.email,
+        invoiceTypeData === "ewpolicy"
+          ? "360 CAR PROTECT INDIA LLP"
+          : "Raam4Wheelers LLP"
       );
     } catch (saveError) {
       console.error("Error saving invoice:", saveError);
@@ -373,7 +428,7 @@ exports.getInvoicesByStatus = async (req, res) => {
     searchTerm,
     createdBy,
   } = req.query;
-
+  const { roleType, location } = req.user;
   try {
     const pageNumber = Math.max(1, parseInt(page, 10));
     const pageSize = Math.min(100, Math.max(1, parseInt(limit, 10)));
@@ -385,6 +440,7 @@ exports.getInvoicesByStatus = async (req, res) => {
       ...(invoiceType && { invoiceType }),
       ...(searchTerm && { invoiceId: { $regex: searchTerm, $options: "i" } }),
       ...(createdBy && { createdBy }),
+      ...(roleType === "1" && { location }),
     };
 
     const [totalInvoicesCount, invoices] = await Promise.all([
