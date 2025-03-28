@@ -161,7 +161,7 @@ const getEmailTemplate = (
                     <div style="text-align: center;">
                       <div style="${styles}">
                         <p>Dear ${clientName},</p>
-                        <p>Thank you for choosing ${companyName}. Please find below the details of your policy and invoice for your reference.</p>
+                        <p>Thank you for choosing Raam4Wheelers LLP.  Please find below the details of your policy and invoice for your reference.</p>
                         <p>Policy and Invoice Details:</p>
                         <p>Policy Type: ${policyType}</p>
                         <p>Policy Id: ${policyId}</p>
@@ -169,7 +169,7 @@ const getEmailTemplate = (
                         <p>Invoice Number: ${invoiceId}</p>
                         <p>If you have any questions or need further assistance, feel free to contact us.</p>
                         <p>Best regards,</p>
-                        <p>${companyName}</p>
+                        <p>Raam4Wheelers LLP. </p>
                       </div>
                     </div>
                   `;
@@ -189,7 +189,7 @@ const getEmailTemplate = (
               </br>
               <p>Best Regards,</p>
               <p>Accounts Team</p>
-              <p>${companyName}</p>
+              <p>Raam4Wheelers LLP. </p>
             </div>
           </div>
         `;
@@ -301,7 +301,7 @@ exports.AgentPolicyRejectedEmail = async (
   vinNumber,
   policyId,
   emailType,
-  companyName
+ 
 ) => {
   const subject = "Policy Submission Rejected";
   const htmlContent = getEmailTemplate(
@@ -326,7 +326,7 @@ exports.AgentPolicyRejectedEmail = async (
     optional: null,
     optional: null,
     optional: null,
-    policyType: "EwPolicy",
+    optional: null,
     optional: null,
     emailType,
   });
@@ -402,7 +402,6 @@ exports.sendCustomerDocEmail = async (
   rmEmail,
   gmEmail,
   agentEmail,
-  companyName
 ) => {
   const subject = "Your Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
@@ -416,7 +415,6 @@ exports.sendCustomerDocEmail = async (
     vinNumber, // vinNumber
     invoiceId, // invoiceId
     policyId,
-    companyName
   );
   const ccEmails = [rmEmail, gmEmail, agentEmail, COMMONTWO_EMAIL, COMMONTHREE_EMAIL].filter(Boolean);
   await sendUserEmail({
