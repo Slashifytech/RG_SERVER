@@ -3,8 +3,9 @@ const { sendEmail } = require("../Utility/emailUtil");
 
 dotenv.config();
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 const COMMON_EMAIL = process.env.COMMON_EMAIL;
+const COMMONTWO_EMAIL = process.env.COMMONTWO_EMAIL;
+const COMMONTHREE_EMAIL = process.env.COMMONTHREE_EMAIL;
 const sendUserEmail = async ({
   to,
   subject,
@@ -14,9 +15,10 @@ const sendUserEmail = async ({
   policyFilename,
   invoiceFilename,
   policyType,
-  ccEmails
+  ccEmails,
 }) => {
   // if (to && subject && htmlContent) {
+    console.log(ccEmails, "email")
   await sendEmail({
     to,
     subject,
@@ -26,8 +28,7 @@ const sendUserEmail = async ({
     policyFilename,
     invoiceFilename,
     policyType,
-    ccEmails
-    
+    ccEmails,
   });
   // } else {
   //   throw new Error("Missing required parameters to send email");
@@ -44,7 +45,8 @@ const getEmailTemplate = (
   policyType,
   vinNumber,
   invoiceId,
-  policyId
+  policyId,
+  companyName
 ) => {
   let template;
   let userName = agentName || "user";
@@ -159,7 +161,7 @@ const getEmailTemplate = (
                     <div style="text-align: center;">
                       <div style="${styles}">
                         <p>Dear ${clientName},</p>
-                        <p>Thank you for choosing Raam4Wheelers LLP. Please find below the details of your policy and invoice for your reference.</p>
+                        <p>Thank you for choosing ${companyName}. Please find below the details of your policy and invoice for your reference.</p>
                         <p>Policy and Invoice Details:</p>
                         <p>Policy Type: ${policyType}</p>
                         <p>Policy Id: ${policyId}</p>
@@ -167,7 +169,7 @@ const getEmailTemplate = (
                         <p>Invoice Number: ${invoiceId}</p>
                         <p>If you have any questions or need further assistance, feel free to contact us.</p>
                         <p>Best regards,</p>
-                        <p>Raam4Wheelers LLP</p>
+                        <p>${companyName}</p>
                       </div>
                     </div>
                   `;
@@ -187,7 +189,7 @@ const getEmailTemplate = (
               </br>
               <p>Best Regards,</p>
               <p>Accounts Team</p>
-              <p>Raam4Wheelers LLP</p>
+              <p>${companyName}</p>
             </div>
           </div>
         `;
@@ -298,7 +300,8 @@ exports.AgentPolicyRejectedEmail = async (
   policyType,
   vinNumber,
   policyId,
-  emailType
+  emailType,
+  companyName
 ) => {
   const subject = "Policy Submission Rejected";
   const htmlContent = getEmailTemplate(
@@ -311,7 +314,8 @@ exports.AgentPolicyRejectedEmail = async (
     policyType, // policyType
     vinNumber, // vinNumber
     null, // invoiceId
-    policyId
+    policyId,
+    companyName
   );
 
   await sendUserEmail({
@@ -322,7 +326,7 @@ exports.AgentPolicyRejectedEmail = async (
     optional: null,
     optional: null,
     optional: null,
-    optional: null,
+    policyType: "EwPolicy",
     optional: null,
     emailType,
   });
@@ -347,11 +351,14 @@ exports.sendDocEmail = async (
     { email: rmEmail, salutation: "Relationship Manager/ Service Advisor" },
     { email: gmEmail, salutation: "General Manager" },
     { email: COMMON_EMAIL, salutation: "Admin" },
+    { email: COMMONTWO_EMAIL, salutation: "AdminTwo" },
+    { email: COMMONTHREE_EMAIL, salutation: "AdminThree" },
     { email: agentEmail, salutation: agentName || "user" },
   ];
   const validRecipients = recipients.filter((recipient) => recipient.email);
 
   for (const recipient of validRecipients) {
+ 
     if (recipient.email) {
       const htmlContent = getEmailTemplate(
         "commonTemp",
@@ -374,7 +381,7 @@ exports.sendDocEmail = async (
         pdfInvoiceBuffer,
         policyFilename,
         invoiceFilename,
-    
+
         policyType,
       });
     }
@@ -394,10 +401,9 @@ exports.sendCustomerDocEmail = async (
   policyId,
   rmEmail,
   gmEmail,
-  agentEmail
+  agentEmail,
+  companyName
 ) => {
-  console.log(rmEmail, gmEmail, agentEmail, "checkingemailscc");
-
   const subject = "Your Policy and Invoice Details";
   const htmlContent = getEmailTemplate(
     "customerDoc",
@@ -409,9 +415,10 @@ exports.sendCustomerDocEmail = async (
     policyType, // policyType
     vinNumber, // vinNumber
     invoiceId, // invoiceId
-    policyId
+    policyId,
+    companyName
   );
-  const ccEmails = [rmEmail, gmEmail, agentEmail].filter(Boolean);  
+  const ccEmails = [rmEmail, gmEmail, agentEmail, COMMONTWO_EMAIL, COMMONTHREE_EMAIL].filter(Boolean);
   await sendUserEmail({
     to: userEmail,
     subject,
@@ -421,6 +428,6 @@ exports.sendCustomerDocEmail = async (
     policyFilename,
     invoiceFilename,
     policyType,
-    ccEmails
+    ccEmails,
   });
 };
