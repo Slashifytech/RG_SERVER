@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-const SibApiV3Sdk = require("@getbrevo/brevo");
+const SibApiV3Sdk = require("@getbrevo/brevo")
 
 dotenv.config();
 
